@@ -1,0 +1,90 @@
+.search {
+  margin-top: 7px;
+  position: relative;
+  input {
+    position: relative;
+    border: #fff;
+    border-radius: 15px;
+    padding-left: 10px;
+    width: 100%;
+  }
+  a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 35px;
+    line-height: 35px;
+    display: block;
+    padding: 0 14px;
+  }
+  i {
+    color: black;
+  }
+}
+
+@media only screen and (max-width: 739px) {
+  .search {
+    input {
+      border: #fff;
+      border-radius: 15px;
+      padding-left: 10px;
+      width: 140px;
+      position: relative;
+    }
+    i {
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      width: 30px;
+      top: 3px;
+      left: 85%;
+      border-radius: 0px 15px 15px 0px;
+      background-color: #fff;
+    }
+  }
+}
+
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+  .search {
+    input {
+      border: #fff;
+      border-radius: 15px;
+      padding-left: 10px;
+      width: 300px;
+      position: relative;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      width: 30px;
+      top: 0;
+      left: 60%;
+      border-radius: 0px 15px 15px 0px;
+      background-color: #fff;
+    }
+  }
+}
+
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+  .search {
+    margin-top: 30px;
+    input {
+      border: #fff;
+      border-radius: 15px;
+      padding-left: 10px;
+      width: 300px;
+      position: relative;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      width: 30px;
+      top: 0;
+      left: 85%;
+      border-radius: 0px 15px 15px 0px;
+      background-color: #fff;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.login {
+  &__btn {
+    &--login {
+      margin-right: 10px;
+    }
+  }
+}
+.group__button__modal {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}

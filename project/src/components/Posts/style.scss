@@ -1,0 +1,29 @@
+.listPosts {
+  &__item {
+    display:  flex;
+    justify-content: space-between;
+    &--img {
+      width: 30%;
+      margin-bottom: 30px;
+      img {
+        width: 300px;
+        height: 150px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    }
+    &--title {
+      width: 65%;
+      h3 {
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          color: #80bb35;
+        }
+      }
+      p {
+        color: #ccc;
+      }
+    }
+  }
+}

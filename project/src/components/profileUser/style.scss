@@ -1,0 +1,76 @@
+.profile {
+  &-title {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    &-changePassword {
+      margin-top: 20px;
+      margin-right: 140px;
+      button {
+        background-color: #fe9705 !important;
+        border-radius: 5px;
+        color: #fff;
+        border: none;
+        font-weight: 500;
+        &:hover {
+          background-color: #80bb35 !important;
+        }
+      }
+    }
+  }
+
+  &-form {
+    width: 80%;
+    margin: auto;
+  }
+
+  &-img {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &-info {
+    &-item {
+      width: 60%;
+      height: 50px;
+      span {
+        font-weight: 500;
+      }
+    }
+
+    &-button {
+      margin-left: 70px;
+      button {
+        background-color: #fe9705 !important;
+        border-radius: 5px;
+        color: #fff;
+        border: none;
+        font-weight: 500;
+        &:hover {
+          background-color: #80bb35 !important;
+        }
+      }
+    }
+  }
+}
+.profile-content {
+  margin-bottom: 20px;
+  width: 90%;
+  margin: auto;
+}
+.ChangeImg {
+  input {
+    width: 100%;
+    margin: 20px 0px 30px 100px;
+  }
+}

@@ -1,0 +1,69 @@
+.manageProduct {
+  .logo {
+    width: 100%;
+    height:6rem;
+  }
+  .anticon[tabindex] {
+    font-size: 25px;
+    margin-left: 20px;
+    line-height: 64px;
+    transition: color 0.3s;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  #components-layout-demo-custom-trigger .trigger:hover {
+    color: #1890ff;
+  }
+
+  .site-layout .site-layout-background {
+    background: #fff;
+  }
+
+  .ant-layout-header {
+    display:  flex;
+    justify-content: space-between;
+    .accountUser {
+      position: relative;
+      margin-right: 20px;
+      &-img {
+        span {
+          margin-left: 10px;
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        .accountUser-logout {
+          visibility: visible;
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      &-logout {
+        width: 140px;
+        line-height: 40px;
+        margin-left: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        position: absolute;
+        background-color: rgba(#ccc, 0.8);
+        visibility: hidden;
+        opacity: 0;
+        z-index: 999999;
+        text-align: center;
+        transform: translateY(30%);
+        transition: all 0.3s ease-in-out;
+        span {
+          cursor: pointer;
+          display: block;
+          font-weight: bold;
+          text-decoration: underline;
+          &:hover {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

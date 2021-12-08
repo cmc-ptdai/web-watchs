@@ -1,0 +1,60 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@ckeditor/ckeditor5-build-classic": "^31.0.0",
+    "@ckeditor/ckeditor5-ckfinder": "^31.0.0",
+    "@ckeditor/ckeditor5-image": "^31.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
+    "@reduxjs/toolkit": "^1.6.2",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "antd": "^4.15.1",
+    "axios": "^0.21.4",
+    "chart.js": "^3.5.1",
+    "ckeditor4-react": "^2.0.1",
+    "jw-react-pagination": "^1.1.0",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
+    "query-string": "^7.0.0",
+    "react": "^17.0.2",
+    "react-chartjs-2": "^3.0.5",
+    "react-csv": "^2.0.3",
+    "react-dom": "^17.0.2",
+    "react-highlight-words": "^0.17.0",
+    "react-redux": "^7.2.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "set PORT=8080 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

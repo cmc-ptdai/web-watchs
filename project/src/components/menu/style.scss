@@ -1,0 +1,148 @@
+$Orange: #fe9705;
+$Green: #80bb35;
+.navbar {
+  padding: 0px !important;
+}
+.list__menu {
+  width: 100%;
+  height: 51px;
+  text-align: center;
+  line-height: 35px;
+  margin: auto;
+  padding: 0px 1.8%;
+  background-color: $Green;
+  z-index: 99;
+  a {
+    color:#fff;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  li {
+    position: relative;
+    transition: all 0.35s ease;
+    text-transform: uppercase;
+  }
+  li:hover {
+    background-color: $Orange
+  }
+  .active {
+    background-color: $Orange;
+  }
+  &__children {
+    top: 99%;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0 0 15px -5px rgba(0,0,0,0.4);
+    li {
+      width: 200px;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+    a {
+      color: black;
+      font-weight: 400;
+      font-size: 18px;
+    }
+  }
+  li > ul {
+    display: none;
+  }
+  li:hover > ul{
+    display: block;
+    animation-duration: 0.5s;
+    z-index: 10;
+  }
+  ul li > ul li > ul {
+    margin-left: 201px;
+    margin-top: -52px;
+    border-radius: 10px;
+  }
+  .cart {
+    font-size: 20px;
+    font-weight: 200;
+    text-align: right;
+    margin: 10px 40px 0px 0px;
+    i {
+      font-size: 40px;
+      position: relative;
+      color: #fe9705;
+
+      span {
+        position: absolute;
+        background: #fff;
+        padding: 2px 7px;
+        color: #000;
+        font-size: 20px;
+        border-radius: 50px;
+        top: -20%;
+        right: -30%;
+      }
+    }
+  }
+
+}
+
+@media only screen and (max-width: 739px) {
+  .navbar {
+    .navbar-toggler {
+      padding: 0px;
+      line-height: 35px;
+      border: 1px solid $Orange !important;
+      margin-top: 6px;
+      i {
+        padding-top: 0px;
+        font-size: 25px;
+        color: $Orange;
+        margin: 5px 10px;
+      }
+    }
+  }
+  .navbar-collapse {
+    background-color: $Green;
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1366px) {
+  .navbar {
+    .navbar-toggler {
+      padding: 0px;
+      line-height: 35px;
+      border: 1px solid $Orange !important;
+      margin-top: 6px;
+      i {
+        padding-top: 0px;
+        font-size: 25px;
+        color: $Orange;
+        margin: 5px 10px;
+      }
+    }
+    .navbar-collapse {
+      background-color: $Green;
+    }
+  }
+}
+
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+  .list__menu {
+    height: 102px;
+    .navbar {
+      .navbar-toggler {
+        padding: 0px;
+        line-height: 35px;
+        border: 1px solid $Orange !important;
+        margin-top: 6px;
+        i {
+          padding-top: 0px;
+          font-size: 25px;
+          color: $Orange;
+          margin: 5px 10px;
+        }
+      }
+    }
+    .navbar-collapse {
+      background-color: $Green;
+    }
+  }
+}

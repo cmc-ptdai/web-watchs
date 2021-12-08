@@ -1,0 +1,19 @@
+.concat {
+  &__info {
+    margin-top: 50px;
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+        margin: 10px 0px;
+      }
+    }
+    &--icon {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    &--text {
+      color: rgb(138, 138, 138);
+    }
+  }
+}

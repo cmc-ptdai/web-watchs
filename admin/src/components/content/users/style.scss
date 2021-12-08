@@ -1,0 +1,79 @@
+.tableUser {
+  &__button {
+    button {
+      width: 75px;
+      border-radius: 15px;
+      text-align: center;
+      &:nth-child(2) {
+        margin-top: 5px;
+      }
+    }
+  }
+  &__action {
+    width: 70%;
+    display: flex;
+    margin: auto;
+    margin-bottom: 4rem;
+    justify-items: 5rem;
+    &--search {
+      position: relative;
+      margin-right: 5rem;
+      width: 65%;
+      input {
+        width: 100%;
+        margin: auto;
+        height: 3.5rem;
+        padding: 1.2rem;
+        border-radius: 1.5rem;
+      }
+      i {
+        position: absolute;
+        cursor: pointer;
+        width: 3rem;
+        height: 3.5rem;
+        line-height: 3.5rem;
+        right: 0;
+      }
+    }
+    &--addUser {
+      margin-left: 5rem;
+      width: 25%;
+      display: flex;
+      justify-content: space-between;
+      button {
+        border-radius: 1.5rem;
+        font-weight: 600
+      }
+    }
+  }
+  .ant-table-tbody {
+    tr {
+      td {
+        padding: 8px 8px;
+        word-break: break-word;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.ant-modal-footer {
+  display: none !important;
+}
+
+.groupButton {
+  width: 40%;
+  margin: auto;
+  .ant-form-item-control {
+    .ant-form-item-control-input {
+      .ant-form-item-control-input-content {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+.table__user {
+
+}

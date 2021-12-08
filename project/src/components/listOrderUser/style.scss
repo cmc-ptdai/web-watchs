@@ -1,0 +1,74 @@
+.group-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid #ccc;
+  button {
+    width: 33.5%;
+    height: 50px;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 0;
+  }
+  &-active {
+    background-color: #fff;
+    color: rgb(37, 37, 220);
+  }
+}
+.Order {
+  background-color: #fff;
+  &-item {
+    margin-top: 20px;
+    padding: 10px 10px 10px 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    &-img {
+      width: 20%;
+      img {
+        width: 120px;
+        height: 90px;
+      }
+    }
+    &-name {
+      width: 20%;
+    }
+    &-count {
+      width: 5%;
+    }
+    &-sale {
+      width: 5%;
+    }
+    &-price {
+      width: 20%;
+    }
+  }
+  &-footer {
+    padding: 20px 50px 20px 0px;
+    text-align: right;
+    p {
+      font-size: 18px;
+      span {
+        font-size: 23px;
+        font-weight: bold;
+        color: #fe9705;
+      }
+    }
+    button {
+      background-color: #fe9705 !important;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      font-weight: 500;
+      margin: 0;
+      &:hover {
+        background-color: #ffa629 !important;
+      }
+    }
+  }
+}

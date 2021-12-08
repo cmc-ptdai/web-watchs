@@ -1,0 +1,24 @@
+.product {
+  text-align: center;
+  .item {
+    width: 90% !important;
+  }
+}
+
+.ant-notification-topRight {
+  .ant-notification-notice-with-icon .ant-notification-notice-description {
+    margin-left: 70px;
+    margin-right: 20px;
+  }
+  .ant-notification-notice {
+    background-color: #fff ;
+  }
+}
+
+@media only screen and (max-width: 739px) {
+
+}
+
+@media only screen and (min-width: 740px) and (max-width: 1024px) {
+
+}

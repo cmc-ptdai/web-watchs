@@ -1,0 +1,102 @@
+.cart {
+  &__box-img {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  &__box-text {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &__box-count {
+    width: 83px;
+    text-align: center;
+    border: 1px solid #ccc;
+    button {
+      margin: 0;
+      background-color: #fff;
+      width: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+    input {
+      text-align: center;
+      width: 40px;
+      border: none;
+    }
+  }
+  &__box--delete {
+    position: relative;
+    .overlay {
+      position: absolute;
+      width: 57px;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background:rgba($color: #000000, $alpha: 0.2);
+      z-index: 8;
+    }
+  }
+  h2 {
+    margin: 15px;
+    text-align: right;
+  }
+  &__button {
+    &--pay {
+      float: right;
+    }
+  }
+  &__mymodel__alert-btn {
+    display: flex;
+    justify-content: center;
+  }
+}
+.ship {
+  display: flex;
+  justify-content: flex-end;
+  &-text {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 32px;
+    margin-right: 15px;
+    margin-bottom: 0 !important;
+  }
+  .ant-select-selector {
+    width: 250px !important;
+    border-radius: 5px !important;
+  }
+}
+.paypal {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+#zoid-paypal-buttons-uid_a8df25972e_mtc6mtu6ndq {
+  width: 300px !important;
+}
+
+.ant-modal-footer {
+  display: none;
+}
+
+.btnSubmit {
+  padding: 5px 30px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 75px;
+}
+.ant-form-item-control-input-content {
+  display: flex;
+}
+.ant-notification {
+  margin-top: 50px;
+}
+.ant-notification-notice {
+  background-color: #ccc;
+}
