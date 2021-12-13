@@ -1,266 +1,196 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Input, Modal, Select } from 'antd';
-import { useDispatch } from 'react-redux';
-import { editProduct, getProduct } from '../../../redux/action/productAction'
-import userProduct from '../../../api/apiProduct'
-import './product.scss';
-import apiWarehouse from '../../../api/apiWarehouse';
+import React, { useEffect, useState } from "react";
+import { Button, Input, Modal, Select, Form } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { editProduct, getProduct } from "../../../redux/action/productAction";
+import userProduct from "../../../api/apiProduct";
+import "./product.scss";
+import apiWarehouse from "../../../api/apiWarehouse";
 
 const { Option } = Select;
 
 const FromEditProduct = (props) => {
-  const dispatch = useDispatch()
-  const [data, setData] = useState({...props.data})
-  const [imgEdit, setImgEdit] = useState('')
-  const [warehouse, setWarehouse] = useState(null)
+  const dataProduct = useSelector((store) => store.productReducer);
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const [data, setData] = useState({ ...props.data });
+  const [imgEdit, setImgEdit] = useState(data.img);
+  const [warehouse, setWarehouse] = useState(null);
 
   useEffect(() => {
-    fetchWarehouse()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    fetchWarehouse();
+  }, []);
 
   const fetchWarehouse = async () => {
-    const warehouse = await apiWarehouse.getWarehouseById(data.id)
+    const warehouse = await apiWarehouse.getWarehouseById(data.id);
     setWarehouse(warehouse);
-  }
+  };
 
-  const onFinish = () => {
-    if (props.data.countPay !== data.countPay) {
+  const onFinish = (values) => {
+    const newData = {
+      ...values,
+      id:data.id,
+      quantityPurchased:data.quantityPurchased,
+      dateAdd:data.dateAdd,
+      dateUpdate:new Date(),
+      type: data.type
+    }
+    if (props.data.countPay !== Number(values.countPay)) {
       const newWarehouse = {
         dateInput: new Date(),
-        numberCount: 0,
-        numberProduct: data.countPay
-      }
-      warehouse.listWarehouse.push(newWarehouse)
-
-      apiWarehouse.editWarehouse(warehouse.id, warehouse)
+        numberProduct: Number(values.countPay) - props.data.countPay,
+      };
+      warehouse.listWarehouse.push(newWarehouse);
+      apiWarehouse.editWarehouse(warehouse.id, warehouse);
     }
-    dispatch(editProduct(data))
-    setTimeout( async () => {
+    dispatch(editProduct(newData));
+    setTimeout(async () => {
       try {
-        const listProduct = await userProduct.getAllProduct()
-        dispatch(getProduct(listProduct))
+        const listProduct = await userProduct.getAllProduct();
+        dispatch(getProduct(listProduct));
       } catch (error) {
         console.log(error);
       }
     }, 500);
-    handleCancel()
-  }
-  const handleCancel =  () => {
-    props.editStatusFrom(false)
-  }
-  const onchangeInputName = (e) => {
-    setData({
-      ...data,
-      name: e.target.value,
-    })
-  }
-  const onchangeInputPrice = (e) => {
-    setData({
-      ...data,
-      price: e.target.value,
-    })
-  }
-  const onchangeInputCountPay = (e) => {
-    setData({
-      ...data,
-      countPay: e.target.value,
-    })
-  }
-  const onchangeInputSale = (e) => {
-    if (e.target.value >= 100) {
-      setData({
-        ...data,
-        sale: 99,
-      })
-    } else if (e.target.value < 0 || e.target.value === '' ){
-      setData({
-        ...data,
-        sale: 0,
-      })
-    } else {
-      setData({
-        ...data,
-        sale: e.target.value,
-      })
-    }
-  }
-  const onchangeInputContent = (e) => {
-    setData({
-      ...data,
-      content: e.target.value,
-    })
-  }
+    handleCancel();
+  };
+  const handleCancel = () => {
+    props.editStatusFrom(false);
+  };
+
   const imgChange = (e) => {
-    setImgEdit(e.target.value)
+    setImgEdit(e.target.value);
     setData({
       ...data,
       img: e.target.value,
-    })
-  }
-  const onchangeCountry = (e) => {
-    setData({
-      ...data,
-      country: e,
-    })
-  }
-  const onchangeModel = (e) => {
-    setData({
-      ...data,
-      model: e,
-    })
-  }
-  const onchangeBrand = (e) => {
-    setData({
-      ...data,
-      brand: e,
-    })
-  }
-  const onchangeType = (e) => {
-    setData({
-      ...data,
-      type: e,
-    })
-  }
-  const onchangeGender = (e) => {
-    setData({
-      ...data,
-      gender: e,
-    })
-  }
-  const onchangeInputSize = (e) => {
-    setData({
-      ...data,
-      size: e,
-    })
-  }
-  const onchangeInputSizeNu = (e) => {
-    setData({
-      ...data,
-      sizeNam: e,
-    })
-  }
-  const onchangeInputSizeNam = (e) => {
-    setData({
-      ...data,
-      sizeNu: e,
-    })
-  }
-  const onchangeInputShellMaterial = (e) => {
-    setData({
-      ...data,
-      shellMaterial: e,
-    })
-  }
-  const onchangeInputRopeMaterial = (e) => {
-    setData({
-      ...data,
-      ropeMaterial: e,
-    })
-  }
-  const onchangeInputWaterResistance = (e) => {
-    setData({
-      ...data,
-      waterResistance: e,
-    })
-  }
-  const onchangeInputOtherFunction = (e) => {
-    setData({
-      ...data,
-      otherFunction: e,
-    })
-  }
-  const onchangeInputInsurance = (e) => {
-    setData({
-      ...data,
-      Insurance: e,
-    })
-  }
-  const onchangeInputInternationalWarranty = (e) => {
-    setData({
-      ...data,
-      internationalWarranty: e,
-    })
-  }
-  const onchangeInputGlassMaterial = (e) => {
-    setData({
-      ...data,
-      glassMaterial: e,
-    })
-  }
+    });
+  };
 
   return (
-    <div>
+    <>
       <Modal
-       className="form__edit"
+        className="form__edit"
         visible={true}
         title="Chỉnh sửa sản phẩm"
         onCancel={handleCancel}
       >
-        <div className="row">
-          <div className="col-lg-6">
-            <label>Tên sản phẩm:</label>
-            <Input
-              name="name"
-              onChange={onchangeInputName}
-              defaultValue={data.name}
-            />
-
-            <label>giá sản phẩm:</label>
-            <Input
-              name="price"
-              onChange={onchangeInputPrice}
-              defaultValue={data.price}
-              type="number"
-            />
-
-            <label>giảm giá (%):</label>
-            <Input
-              name="sale"
-              onChange={onchangeInputSale}
-              type="number"
-              max="99"
-              defaultValue={data.sale}
-            />
-
-            <label>Số lượng sản phẩm:</label>
-            <Input
-              name="countPay"
-              onChange={onchangeInputCountPay}
-              type="number"
-              defaultValue={data.countPay}
-            />
-
-             <label>Nguồn gốc:</label>
-            <Select
-              placeholder="Chọn nguồn gốc"
-              defaultValue={data.country}
-              allowClear
-              onChange={onchangeCountry}
-              name="country"
-            >
+        <Form
+          name="basic"
+          form={form}
+          initialValues={{
+            name: data.name,
+            price: data.price,
+            sale: data.sale,
+            countPay: data.countPay,
+            country: data.country,
+            model: data.model,
+            brand: data.brand,
+            gender: data.gender,
+            size: data.size,
+            sizeNam: data.sizeNam,
+            sizeNu: data.sizeNu,
+            shellMaterial: data.shellMaterial,
+            ropeMaterial: data.ropeMaterial,
+            glassMaterial: data.glassMaterial,
+            waterResistance: data.waterResistance,
+            other: data.other,
+            Insurance: data.Insurance,
+            internationalWarranty: data.internationalWarranty,
+            img: data.img,
+            content: data.content,
+          }}
+          onFinish={onFinish}
+        >
+          <label>Tên sản phẩm:</label>
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your name of product!",
+              },
+              // ({ getFieldValue }) => ({
+              //   validator(rule, value = "") {
+              //     const userProduct = dataProduct.filter(
+              //       (item) => item.name.toLowerCase() === value.toLowerCase()
+              //     );
+              //     if (value.length > 50) {
+              //       return Promise.reject("Tối đa 50 kí tự");
+              //     } else if (userProduct.length > 0) {
+              //       return Promise.reject("tên sản phẩm đã tồn tại");
+              //     } else {
+              //       return Promise.resolve();
+              //     }
+              //   },
+              // }),
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>giá tiền:</label>
+          <Form.Item
+            name="price"
+            rules={[
+              {
+                required: true,
+                message: "Please input your price of product!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <label>giảm giá (%):</label>
+          <Form.Item
+            name="sale"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number sale of product!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <label>Số lượng sản phẩm:</label>
+          <Form.Item
+            name="countPay"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number of product!",
+              },
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <label>Nguồn gốc:</label>
+          <Form.Item
+            name="country"
+            rules={[{ required: true, message: "Please input your type!" }]}
+          >
+            <Select placeholder="Chọn nguồn gốc" allowClear name="country">
               <Option value="japan">Nhật Bản</Option>
               <Option value="switzerland">Thuỵ sỹ</Option>
             </Select>
-
-            <label>Kiểu máy:</label>
-            <Select
-              placeholder="Chọn kiểu máy"
-              defaultValue={data.model}
-              allowClear
-              onChange={onchangeModel}
-              name="model"
-            >
+          </Form.Item>
+          <label>Kiểu máy:</label>
+          <Form.Item
+            name="model"
+            rules={[{ required: true, message: "Please input your type!" }]}
+          >
+            <Select placeholder="Chọn kiểu máy" allowClear name="model">
               <Option value="quartz">Quartz</Option>
               <Option value="automatic">Automatic</Option>
+              <Option value="quartzpin">Quartz/pin</Option>
             </Select>
-
-            <label>Thương hiệu:</label>
+          </Form.Item>
+          <label>Thương hiệu:</label>
+          <Form.Item
+            name="brand"
+            rules={[{ required: true, message: "Please input your type!" }]}
+          >
             <Select
               placeholder="Chọn thương hiệu của máy"
-              defaultValue={data.brand}
               allowClear
-              onChange={onchangeBrand}
               name="brand"
             >
               <Option value="olympianus">Olym Pianus</Option>
@@ -268,163 +198,212 @@ const FromEditProduct = (props) => {
               <Option value="SRWatch">SRWatch</Option>
               <Option value="Orient">Orient</Option>
               <Option value="ogival">Ogival</Option>
+              <Option value="casio">casio</Option>
             </Select>
-
-            <label>kiểu (đơn, đôi):</label>
-            <Select
-              placeholder="Chọn kiểu máy"
-              defaultValue={data.type}
-              allowClear
-              onChange={onchangeType}
-              name="type"
-            >
-              <Option value="single">Đồng hồ đơn</Option>
-              <Option value="pair">Đồng hồ đôi</Option>
-            </Select>
-
-            <label>Giới tính:</label>
+          </Form.Item>
+          <label>Giới tính:</label>
+          <Form.Item
+            name="gender"
+            rules={[{ required: true, message: "Please input your type!" }]}
+          >
             <Select
               placeholder="Chọn giới tính phù hợp với máy"
-              defaultValue={data.gender}
               allowClear
-              onChange={onchangeGender}
               name="gender"
             >
               <Option value="nam">Nam</Option>
               <Option value="nu">nữ</Option>
               <Option value="doi">cả hai</Option>
             </Select>
+          </Form.Item>
+          <label>kiểu (đơn, đôi):</label>
+          <Form.Item
+            name="type"
+          >
+            <p>{data.type === 'single' ? 'Đồng hồ đơn' : 'Đồng hồ đôi'}</p>
+          </Form.Item>
+          {data.type === "single" ? (
+            <>
+              <label>kích cỡ (mm):</label>
+              <Form.Item
+                name="size"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your number sale of product!",
+                  },
+                ]}
+              >
+                <Input type="number" min="10" max="80" />
+              </Form.Item>
+            </>
+          ) : (
+            <>
+              <label>kích cỡ nam (mm):</label>
+              <Form.Item
+                name="sizeNam"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your number sale of product!",
+                  },
+                ]}
+              >
+                <Input type="number" min="10" max="80" />
+              </Form.Item>
+              <label>kích cỡ nữ (mm):</label>
+              <Form.Item
+                name="sizeNu"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your number sale of product!",
+                  },
+                ]}
+              >
+                <Input type="number" min="10" max="80" />
+              </Form.Item>
+            </>
+          )}
 
-          </div>
+          <label>Chất liệu vỏ:</label>
+          <Form.Item
+            name="shellMaterial"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number of product!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Chất liệu dây:</label>
+          <Form.Item
+            name="ropeMaterial"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number of product!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Chất liệu mặt:</label>
+          <Form.Item
+            name="glassMaterial"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number of product!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Độ chịu nước (m):</label>
+          <Form.Item
+            name="waterResistance"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number of product!",
+              },
+            ]}
+          >
+            <Input type="number" min="5" />
+          </Form.Item>
+          <label>Chức năng khác:</label>
+          <Form.Item
+            name="other"
+            rules={[
+              {
+                required: true,
+                message: "Please input other!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Bảo hành:</label>
+          <Form.Item
+            name="Insurance"
+            rules={[
+              {
+                required: true,
+                message: "Please input insurance!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Bảo hành toàn quốc:</label>
+          <Form.Item
+            name="internationalWarranty"
+            rules={[
+              {
+                required: true,
+                message: "Please input international warranty!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Ảnh mô tả sản phẩm:</label>
+          <Form.Item
+            name="img"
+            rules={[
+              { required: true, message: "Please input your link image!" },
+            ]}
+          >
+            <Input onChange={imgChange} />
+          </Form.Item>
 
-          <div className="col-lg-6">
-          {
-              data?.size ? (
-                <>
-                  <label>kích cỡ (mm):</label>
-                  <Input
-                    name="size"
-                    onChange={onchangeInputSize}
-                    type="number"
-                    min="10"
-                    max="80"
-                    defaultValue={data.size}
-                  />
-                </>
-              ) : (
-                <>
-                  <label>kích cỡ nam  (mm):</label>
-                  <Input
-                    name="sizeNam"
-                    onChange={onchangeInputSizeNam}
-                    type="number"
-                    min="10"
-                    max="80"
-                    defaultValue={data.sizeNam}
-                  />
-
-                  <label>kích cỡ nữ  (mm):</label>
-                  <Input
-                    name="sizeNu"
-                    onChange={onchangeInputSizeNu}
-                    type="number"
-                    min="10"
-                    max="80"
-                    defaultValue={data.sizeNu}
-                  />
-                </>
-              )
-            }
-
-            <label>Chất liệu vỏ:</label>
-            <Input
-              name="shellMaterial"
-              onChange={onchangeInputShellMaterial}
-              type="text"
-              defaultValue={data.shellMaterial}
-            />
-            <label>Chất liệu dây:</label>
-            <Input
-              name="ropeMaterial"
-              onChange={onchangeInputRopeMaterial}
-              type="text"
-              defaultValue={data.ropeMaterial}
-            />
-
-            <label>Chất liệu mặt:</label>
-            <Input
-              name="glassMaterial"
-              onChange={onchangeInputGlassMaterial}
-              type="text"
-              defaultValue={data.glassMaterial}
-            />
-
-            <label>Độ chịu nước (m):</label>
-            <Input
-              name="waterResistance"
-              onChange={onchangeInputWaterResistance}
-              type="number"
-              min="5"
-              defaultValue={data.waterResistance}
-            />
-            <label>Chức năng khác:</label>
-            <Input
-              name="otherFunction"
-              onChange={onchangeInputOtherFunction}
-              type="text"
-              defaultValue={data.otherFunction}
-            />
-
-            <label>Bảo hành:</label>
-            <Input
-              name="Insurance"
-              onChange={onchangeInputInsurance}
-              type="text"
-              defaultValue={data.Insurance}
-            />
-
-            <label>Bảo hành toàn quốc:</label>
-            <Input
-              name="internationalWarranty"
-              onChange={onchangeInputInternationalWarranty}
-              type="text"
-              defaultValue={data.internationalWarranty}
-            />
-          </div>
-        </div>
-
-
-        <label>Ảnh mô tả sản phẩm:</label>
-        <Input
-          onChange={imgChange}
-          name="img"
-          value={data.img}
-        />
-
-        <div className="form__edit__img">
-            <img src={imgEdit ? imgEdit : data.img} alt="img-product" />
-        </div>
-
-        <label>Mô tả sản phẩm:</label>
-          <Input.TextArea
+          {imgEdit && (
+            <div className="form__edit__img">
+              <img
+                src={imgEdit ? imgEdit : ""}
+                alt="link ảnh của bạn không đúng hoặc không tồn tại"
+              />
+            </div>
+          )}
+          <label>Mô tả và giới thiệu sản phẩm:</label>
+          <Form.Item
             name="content"
-            onChange={onchangeInputContent}
-            rows={4}
-            maxLength={500}
-            defaultValue={data.content}
-          />
+            rules={[
+              { required: true, message: "Please input your content product!" },
+              ({ getFieldValue }) => ({
+                validator(rule, value = "") {
+                  if (value.length > 500) {
+                    return Promise.reject("tối đa 500 kí tự");
+                  } else {
+                    return Promise.resolve();
+                  }
+                },
+              }),
+            ]}
+          >
+            <Input.TextArea rows={4} maxLength={500} />
+          </Form.Item>
 
-        <div className="groupButton">
-          <Button className="btnSubmit" type="primary" danger onClick={handleCancel}>
-            Huỷ
-          </Button>
-          {/* <Button className="btnSubmit" type="primary" onClick={onFinish} >
-            Chỉnh sửa
-          </Button> */}
-        </div>
+          <Form.Item className="groupButton">
+            <Button
+              className="btnSubmit"
+              type="primary"
+              danger
+              onClick={handleCancel}
+            >
+              Huỷ
+            </Button>
+            <Button className="btnSubmit" type="primary" htmlType="submit">
+              Chỉnh sửa
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default FromEditProduct;

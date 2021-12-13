@@ -31,11 +31,7 @@ const productReducer = (state = initialState, action) => {
       return state
     }
     case EDIT_PRODUCT: {
-      const newData = {
-        ...action.payload,
-        countPay: Number(action.payload.countPay),
-      }
-      productApi.editProducts(action.payload.id, newData)
+      productApi.editProducts(action.payload.id, action.payload)
       return state
     }
 

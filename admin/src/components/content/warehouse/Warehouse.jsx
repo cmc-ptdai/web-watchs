@@ -221,7 +221,6 @@ const Warehouse = () => {
                             <>
                               <div className="title">ngày nhập</div>
                               <div className="title"> số lượng nhâp</div>
-                              <div className="title"> số lượng bán</div>
                               <div className="title">action</div>
                             </>
                           )
@@ -230,7 +229,6 @@ const Warehouse = () => {
                       <div className="children-warehouse">
                         <p>ngày nhập: {item.dateInput.slice(0,10).split('-').reverse().join('-')}</p>
                         <p>số lượng nhâp: {item.numberProduct}</p>
-                        <p>số lượng bán: {item.numberCount}</p>
                         <div className="button1">
                           <Button
                             onClick={() => deleteWarehouseItem(record.id, index)}

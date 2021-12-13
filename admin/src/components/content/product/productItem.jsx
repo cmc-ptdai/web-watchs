@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import FormEditProduct from './FormEditProduct'
 import { deleteProduct as deleteProductAction ,getProduct } from '../../../redux/action/productAction'
 import ApiProduct from '../../../api/apiProduct'
+import apiComment from "../../../api/apiComment";
+import apiEvaluate from "../../../api/apiEvaluates";
+import apiWarehouse from "../../../api/apiWarehouse";
 import { Popconfirm } from 'antd'
 import {Link} from 'react-router-dom'
 
@@ -18,6 +21,9 @@ const ProductItem = ({data}) => {
     setStatusFrom(true)
   }
   const deleteProduct = () => {
+    apiComment.deleteComments(data.id);
+    apiEvaluate.deleteEvaluates(data.id);
+    apiWarehouse.deleteWarehouse(data.id);
     dispatch(deleteProductAction(data.id))
     setTimeout( async () => {
       try {

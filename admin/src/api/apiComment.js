@@ -9,9 +9,17 @@ const ApiComments = {
     const url = `/comments/${id}`
     return axiosClient.get(url)
   },
+  addComment: (data) => {
+    const url = '/comments'
+    return axiosClient.post(url, data)
+  },
   editComments: (id,data) => {
     const url = `/comments/${id}`
     return axiosClient.put(url,data)
+  },
+  deleteComments: (id) => {
+    const url = `/comments/${id}`
+    return axiosClient.delete(url)
   }
 
 }

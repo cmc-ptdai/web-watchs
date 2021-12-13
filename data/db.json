@@ -2,22 +2,27 @@
   "trademark": [
     {
       "id": "bentley",
+      "img": "",
       "name": "Bentley"
     },
     {
       "id": "casio",
+      "img": "",
       "name": "Casio"
     },
     {
       "id": "seiko",
+      "img": "",
       "name": "Seiko"
     },
     {
       "id": "orient",
+      "img": "",
       "name": "Orient"
     },
     {
       "id": "olympianus",
+      "img": "",
       "name": "Olym Pianus"
     }
   ],
@@ -43,7 +48,7 @@
       "img": "https://cdn.s3-hcm-r1.longvan.net/upload/cddsg/images/phu-gia-thuc-pham.jpg"
     }
   ],
-  "country" : [
+  "country": [
     {
       "id": "1",
       "name": "Nhật bản"
@@ -51,29 +56,29 @@
   ],
   "products": [
     {
-      "id": "1",
       "name": "ĐỒNG HỒ OLYM PIANUS OP89322GSK-T",
       "price": "3130000",
-      "sale": "13",
-      "countPay": 10,
-      "img": "https://xwatch.vn/images/products/2021/11/05/large/olym-pianus-op89322gsk-t_1636084476.jpg",
-      "brand": "olympianus",
+      "sale": "10",
+      "countPay": "20",
+      "country": "japan",
       "model": "quartz",
-      "content": "123123123",
-      "quantityPurchased": 34,
+      "brand": "olympianus",
+      "gender": "nam",
+      "type": "single",
       "size": "40",
-      "type":  "single",
       "shellMaterial": "Thép không gỉ",
       "ropeMaterial": "Thép không gỉ",
       "glassMaterial": "Kính Sapphire",
-      "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
-      "internationalWarranty": "Không có",
-      "gender": "nam",
+      "internationalWarranty": "1",
+      "img": "https://xwatch.vn/images/products/2021/11/05/large/olym-pianus-op89322gsk-t_1636084476.jpg",
+      "content": "wowww",
+      "id": "1",
+      "quantityPurchased": 34,
       "dateAdd": "2021-10-31",
-      "dateUpdate": "2021-11-09T05:05:14.618Z"
+      "dateUpdate": "2021-12-11T10:25:29.794Z"
     },
     {
       "id": "2",
@@ -88,12 +93,12 @@
       "quantityPurchased": 34,
       "size": "40",
       "shellMaterial": "Thép không gỉ/Mạ PVD",
-      "type":  "single",
+      "type": "single",
       "ropeMaterial": "Thép không gỉ/Mạ PVD",
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "30",
-      "otherFunction": "Lên cót tay, dừng kim giây",
+      "other": "Lên cót tay, dừng kim giây",
       "Insurance": "5",
       "internationalWarranty": "2",
       "gender": "nam",
@@ -111,14 +116,14 @@
       "model": "automatic",
       "content": "123123123",
       "quantityPurchased": 34,
-      "type":  "single",
+      "type": "single",
       "size": "40",
       "shellMaterial": "Thép không gỉ 316L/Mạ vàng PVD",
       "ropeMaterial": "Thép không gỉ 316L/Mạ vàng PVD",
       "glassMaterial": "Kính Sapphire",
       "country": "switzerland",
       "waterResistance": "30",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "1",
       "gender": "nam",
@@ -127,23 +132,23 @@
     },
     {
       "id": "4",
-      "name": "ĐỒNG HỒ CASIO A159WGEA-5DF",
-      "price": "1702000",
-      "sale": "13",
-      "countPay": 10,
-      "img": "https://xwatch.vn/images/products/2019/08/04/large/a159wgea-5df_1564910617.png",
+      "name": "ĐỒNG HỒ CASIO MTS-110L-7AVDF",
+      "price": "2449999",
+      "sale": "10",
+      "countPay": 14,
+      "img": "https://donghoduyanh.com/images/products/2020/11/19/large/dong-ho-casio-mts-110l-7avdf_1605773752.jpg",
       "brand": "casio",
-      "model": "quartz",
+      "model": "quartzpin",
       "content": "123123123",
       "quantityPurchased": 34,
       "size": "36",
       "shellMaterial": "Nhựa",
       "ropeMaterial": "Thép không gỉ",
-      "type":  "single",
+      "type": "single",
       "glassMaterial": "Kính Cứng",
       "country": "japan",
       "waterResistance": "30",
-      "otherFunction": "Lịch – Bộ Bấm Giờ – Giờ Kép – Đèn Led",
+      "other": "Lịch , Bộ Bấm Giờ , Giờ Kép , Đèn Led",
       "Insurance": "5",
       "internationalWarranty": "1",
       "gender": "nam",
@@ -151,29 +156,28 @@
       "dateUpdate": "2021-11-09T05:05:14.618Z"
     },
     {
-      "id": "5",
       "name": "CASIO G-SHOCK GD-100SC-6DR",
       "price": "3130000",
       "sale": "13",
-      "countPay": 10,
-      "img": "https://xwatch.vn/images/products/2019/08/04/large/gd-100sc-6dr_1564914246.png",
+      "countPay": 23,
+      "country": "japan",
+      "model": "quartzpin",
       "brand": "olympianus",
-      "model": "quartz",
-      "content": "123123123",
-      "quantityPurchased": 34,
+      "gender": "nam",
       "size": "55",
       "shellMaterial": "Nhựa",
-      "type":  "single",
       "ropeMaterial": "Nhựa",
       "glassMaterial": "Kính khoáng",
-      "country": "japan",
       "waterResistance": "200",
-      "otherFunction": "Lịch – Bộ Bấm Giờ – Giờ Kép – Đèn Led",
+      "other": "Lịch , Bộ Bấm Giờ, Giờ Kép,Đèn Led",
       "Insurance": "5",
       "internationalWarranty": "1",
-      "gender": "nam",
+      "img": "https://xwatch.vn/images/products/2019/08/04/large/gd-100sc-6dr_1564914246.png",
+      "content": "woww",
+      "id": "5",
+      "quantityPurchased": 34,
       "dateAdd": "2021-10-31",
-      "dateUpdate": "2021-11-09T05:05:14.618Z"
+      "dateUpdate": "2021-12-11T08:04:32.385Z"
     },
     {
       "id": "18",
@@ -185,7 +189,7 @@
       "brand": "SRWatch",
       "model": "quartz",
       "content": "123123123",
-      "type":  "single",
+      "type": "single",
       "quantityPurchased": 34,
       "size": "30",
       "shellMaterial": "Thép không gỉ 316L",
@@ -193,7 +197,7 @@
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "Không có",
       "gender": "nu",
@@ -211,14 +215,14 @@
       "model": "quartz",
       "content": "123123123",
       "quantityPurchased": 34,
-      "type":  "single",
+      "type": "single",
       "size": "34",
       "shellMaterial": "Thép không gỉ",
       "ropeMaterial": "Dây da",
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày, đính đá",
+      "other": "Lịch ngày, đính đá",
       "Insurance": "5",
       "internationalWarranty": "Không có",
       "gender": "nu",
@@ -234,7 +238,7 @@
       "img": "https://xwatch.vn/images/products/2021/10/11/large/dong-ho-olym-pianus-op24591dlk-t_1633949067.jpg",
       "brand": "olympianus",
       "model": "quartz",
-      "type":  "single",
+      "type": "single",
       "content": "123123123",
       "quantityPurchased": 34,
       "size": "28",
@@ -243,7 +247,7 @@
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "2",
       "gender": "nu",
@@ -260,14 +264,14 @@
       "model": "quartz",
       "content": "123123123",
       "quantityPurchased": 34,
-      "type":  "single",
+      "type": "single",
       "size": "26",
       "shellMaterial": "Thép không gỉ",
       "ropeMaterial": "Thép không gỉ",
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "2",
       "gender": "nu",
@@ -293,7 +297,7 @@
       "type": "pair",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "Không có",
       "gender": "doi",
@@ -319,7 +323,7 @@
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "1",
       "gender": "doi",
@@ -345,7 +349,7 @@
       "glassMaterial": "Kính Sapphire",
       "country": "switzerland",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "1",
       "gender": "doi",
@@ -365,13 +369,13 @@
       "quantityPurchased": 34,
       "sizeNam": "39",
       "sizeNu": "30",
-      "type":  "pair",
+      "type": "pair",
       "shellMaterial": "Thép không gỉ",
       "ropeMaterial": "Thép không gỉ",
       "glassMaterial": "Kính Sapphire",
       "country": "japan",
       "waterResistance": "50",
-      "otherFunction": "Lịch ngày",
+      "other": "Lịch ngày",
       "Insurance": "5",
       "internationalWarranty": "1",
       "gender": "doi",
@@ -569,131 +573,143 @@
   "warehouse": [
     {
       "id": "1",
+      "name": "ĐỒNG HỒ OLYM PIANUS OP89322GSK-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
+        },
+        {
+          "dateInput": "2021-12-11T10:23:38.931Z",
+          "numberProduct": 10
+        },
+        {
+          "dateInput": "2021-12-11T10:25:29.794Z",
+          "numberProduct": 0
         }
       ]
     },
     {
       "id": "2",
+      "name": "ĐỒNG HỒ OLYM PIANUS OP990-083AMSK-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "3",
+      "name": "ĐỒNG HỒ OGIVAL OG1929-24AGSR-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "4",
+      "name": "ĐỒNG HỒ CASIO MTS-110L-7AVDF",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
+        },
+        {
+          "dateInput": "2021-12-11T05:43:42.906Z",
+          "numberProduct": 9
         }
       ]
     },
     {
       "id": "5",
+      "name": "CASIO G-SHOCK GD-100SC-6DR",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "18",
+      "name": "ĐỒNG HỒ SRWATCH SL1072.1102TE",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "118",
+      "name": "ĐỒNG HỒ SRWATCH SL5006.4102BL",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "3jCghSh",
+      "name": "ĐỒNG HỒ OLYM PIANUS OP24591DLK-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 3
         }
       ]
     },
     {
       "id": "At_QrF7",
+      "name": "ĐỒNG HỒ OLYM PIANUS OP2467LK-Ts",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 33
         }
       ]
     },
     {
       "id": "WBqq6V8",
+      "name": "ĐỒNG HỒ ĐÔI ORIENT FUNG8002W0 + FUNG7002W0",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 3
         }
       ]
     },
     {
       "id": "kiC_R3J",
+      "name": "ĐỒNG HỒ ĐÔI OP OP130-03MK-GL-T + OP130-03LK-GL-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 3
         }
       ]
     },
     {
       "id": "1223",
+      "name": "ĐỒNG HỒ ĐÔI OGIVAL OG385-022DGSK-T + OG385-022DLSK-T",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 1,
-          "numberProduct": "33"
+          "numberProduct": 3
         }
       ]
     },
     {
       "id": "13333",
+      "name": "ĐỒNG HỒ ĐÔI SRWATCH SG1072.1102TE + SL1072.1102TE",
       "listWarehouse": [
         {
           "dateInput": "2021-11-05T16:01:58.343Z",
-          "numberCount": 11,
-          "numberProduct": "33"
+          "numberProduct": 13
         }
       ]
     }
