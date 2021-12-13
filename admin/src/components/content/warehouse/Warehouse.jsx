@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { Table, Button, DatePicker,Input, Space } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import apiProduct from '../../../api/apiProduct'
+//import apiProduct from '../../../api/apiProduct'
 import apiWarehouse from '../../../api/apiWarehouse'
 import './warehouse.scss'
 
@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker;
 
 const Warehouse = () => {
 
-  const [listProduct, setListProduct] = useState(null)
+  //const [listProduct, setListProduct] = useState(null)
   const [warehouses, setWarehouses] = useState(null)
   const [status, setStatus] = useState(false)
   const [inputSearch, setInputSearch] = useState(null)
@@ -18,20 +18,20 @@ const Warehouse = () => {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
 
-  useEffect(() => {
-    fetchProduct()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // useEffect(() => {
+  //   fetchProduct()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
 
   useEffect(() => {
     fetchWarehouse()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[status])
 
-  const fetchProduct = async () => {
-    const newData = await apiProduct.getAllProduct()
-    setListProduct(newData)
-  }
+  // const fetchProduct = async () => {
+  //   const newData = await apiProduct.getAllProduct()
+  //   setListProduct(newData)
+  // }
 
   const fetchWarehouse = async () => {
     const listWarehouse = await apiWarehouse.getWarehouse()
@@ -127,21 +127,22 @@ const Warehouse = () => {
     },
     {
       title: 'Name product',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'name',
+      key: 'name',
       render: (text, record) => (
-        <p>{ fetchNameProduct(text)}</p>
+        // <p>{ fetchNameProduct(text)}</p>
+        <p>{text}</p>
       )
     },
   ];
 
-  const fetchNameProduct = (id) => {
-    const a = listProduct.filter(item => item.id === id);
-    if (a.length > 0) {
-      return a[0].name
-    }
-    return false
-  }
+  // const fetchNameProduct = (id) => {
+  //   const a = listProduct.filter(item => item.id === id);
+  //   if (a.length > 0) {
+  //     return a[0].name
+  //   }
+  //   return false
+  // }
 
   const deleteWarehouseItem = (id, index) => {
     dateSearch.forEach((elem,index2) => {
@@ -206,7 +207,7 @@ const Warehouse = () => {
         </div>
       </div>
       {
-        listProduct && warehouses && (
+        warehouses && (
           <Table
             className="components-table-demo-nested"
             columns={columns}

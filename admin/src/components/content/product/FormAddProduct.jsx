@@ -41,7 +41,7 @@ const FromAddProduct = (props) => {
     const warehouse = {
       id: newValue.id,
       name: newValue.name,
-      children: [
+      listWarehouse: [
         {
           dateInput: new Date(),
           numberCount: 0,

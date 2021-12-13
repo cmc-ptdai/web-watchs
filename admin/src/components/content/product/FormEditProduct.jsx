@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, Select, Form } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editProduct, getProduct } from "../../../redux/action/productAction";
 import userProduct from "../../../api/apiProduct";
 import "./product.scss";
@@ -9,7 +9,7 @@ import apiWarehouse from "../../../api/apiWarehouse";
 const { Option } = Select;
 
 const FromEditProduct = (props) => {
-  const dataProduct = useSelector((store) => store.productReducer);
+  //const dataProduct = useSelector((store) => store.productReducer);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [data, setData] = useState({ ...props.data });

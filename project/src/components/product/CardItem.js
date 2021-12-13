@@ -17,10 +17,10 @@ const openNotification = (item) => {
 
 const CardItem = ({item}) => {
   const dispatch = useDispatch()
-  const addToCart = async () => {
+  const addToCart = () => {
     const id = localStorage.getItem('userID')
     if(id) {
-      await dispatch(addCartAction(item))
+      dispatch(addCartAction(item))
       setTimeout(() => {
         openNotification(item)
       }, 100);
@@ -35,11 +35,7 @@ const CardItem = ({item}) => {
   }
 
   const expiredProduct = () => {
-    const myDate = new Date();
-    const time = myDate.getTime();
-    const endDate = new Date(item.endDate)
-    const timeDate = endDate.getTime()
-    if (time - timeDate >  0 || item.countPay <= 0 ) {
+    if (item.countPay <= 0 ) {
       return true
     } else {
       return false
@@ -59,11 +55,13 @@ const CardItem = ({item}) => {
         <p className="item__card__name">{item.name}</p >
         <div className="item__card__groupPrice">
           {
-            item.sale > 0 && (
-              <span className="item__card--priceSale">{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND</span>
+            item.sale > 0 ? (
+              <p className="item__card--priceSale">{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND</p>
+            ) : (
+              <p className="item__card--priceSale">&nbsp;</p>
             )
           }
-          <span className="item__card--price">{(item.price - (item.price * item.sale / 100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND</span>
+          <p className="item__card--price">{(item.price - (item.price * item.sale / 100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND</p>
         </div>
         <Link to={`/products/${item.id}`}>
           <button className="item__card--seeMore">Xem thêm</button>

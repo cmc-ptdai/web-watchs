@@ -83,7 +83,7 @@ const App = () => {
                     const {Component} = item
                     return (
                       <Route path={item.path} exact={item.exact} key={index}>
-                        <Component typeID={item.type} species1={item.species1}/>
+                        <Component gender={item.gender}/>
                       </Route>
                     )
                   })

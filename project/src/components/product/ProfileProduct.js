@@ -140,7 +140,7 @@ const ProfileProduct = () => {
                 </Breadcrumb.Item>
               </Breadcrumb>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-4">
               <div className="box" >
                 <div className="search__title">
                   <p>SẢN PHẨM NỔI BẬT</p>
@@ -173,7 +173,7 @@ const ProfileProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-9 profile">
+            <div className="col-lg-8 profile">
               <div className="row">
 
                 <div className="col-md-7">
@@ -182,7 +182,7 @@ const ProfileProduct = () => {
 
                 <div className="col-md-5 profile__content">
 
-                  <h2 className="title">{product.name}</h2>
+                  <h3 className="title">{product.name}</h3>
 
                   <p className="status"><b>Trạng Thái:</b>
                     { product.countPay > 0 ? (
@@ -191,14 +191,12 @@ const ProfileProduct = () => {
                       <span className="status--OutOfStock"> <i className="fas fa-times"></i> Hết hàng</span>
                     )}
                   </p>
-                  <p><b>Hạn sử dụng đến ngày: </b> {product.endDate} </p>
                   <div className="price">
                     {
                       product.sale > 0 && (
                         <div className="price__sale">
                           <span className="price__sale-text"><b>Giá gốc:</b></span>
                           <span className="price__sale-number">{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND</span>
-                          <span className="price__sale-numberSale">(-{product.sale}%)</span>
                         </div>
                       )
                     }
@@ -208,14 +206,6 @@ const ProfileProduct = () => {
                         {(product.price - (product.price * product.sale / 100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND
                       </span>
                       </div>
-                  </div>
-
-                  <div className="nutrition">
-                  <textarea
-                    className="content-product"
-                    readOnly
-                    defaultValue={product.content}
-                  />
                   </div>
 
                   <div className="profile__addCart">

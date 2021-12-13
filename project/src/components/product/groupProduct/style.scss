@@ -8,7 +8,7 @@
     top: 17px;
     position: absolute;
     content: "";
-    width: 85%;
+    width: 80%;
     height: 2px;
     background-color: #80bb35;
   }
@@ -47,12 +47,12 @@
     }
 
     .slick-initialized .slick-slide {
-      width: 300px !important;
+      width: 315px !important;
     }
 
   }
   &__title {
-    width: 15%;
+    width: 20%;
     background-color: #80bb35;
     border-radius: 50px;
     font-size: 23px;

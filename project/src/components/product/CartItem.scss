@@ -5,11 +5,12 @@
     overflow: hidden;
     text-align: center;
     width: 280px;
-    margin-bottom: 35px;
+    height: 415px;
+    margin-bottom: 20px;
     img {
       width: 180px;
       height: 180px;
-      aspect-ratio: 1/1;
+      aspect-ratio: 1/0.5;
       margin: auto;
       margin-top: 15px;
       transition: all 0.5s ease;
@@ -39,11 +40,10 @@
     }
 
     &__groupPrice {
-      display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
-      span {
+      p {
         font-weight: 600;
       }
     }

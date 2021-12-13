@@ -23,51 +23,31 @@ const MyMenu = () => {
       path: '/products',
       children: [
         {
-          title: 'Rau xanh',
-          path: '/vegetable'
+          title: 'Đồng hồ nam',
+          path: '/nam'
         },
         {
-          title: 'Củ',
-          path: '/tubers',
-          children: [
-            {
-              title: 'Quả tươi',
-              path: '/tubers/fresh'
-            },
-            {
-              title: 'Quả khô',
-              path: '/tubers/dried'
-            }
-          ]
+          title: 'Đồng hồ nữ',
+          path: '/nu',
         },
         {
-          title: 'Quả',
-          path: '/fruit',
-          children: [
-            {
-              title: 'Quả tươi',
-              path: '/fruit/fresh'
-            },
-            {
-              title: 'Quả khô',
-              path: '/fruit/dried'
-            }
-          ]
-        },
-        {
-          title: 'Nấm',
-          path: '/mushroom',
-          children: [
-            {
-              title: 'Quả tươi',
-              path: '/mushroom/fresh'
-            },
-            {
-              title: 'Quả khô',
-              path: '/mushroom/dried'
-            }
-          ]
-        },
+          title: 'Đồng hồ đôi',
+          path: '/doi',
+        }
+        // {
+        //   title: 'Nấm',
+        //   path: '/mushroom',
+        //   children: [
+        //     {
+        //       title: 'Quả tươi',
+        //       path: '/mushroom/fresh'
+        //     },
+        //     {
+        //       title: 'Quả khô',
+        //       path: '/mushroom/dried'
+        //     }
+        //   ]
+        // },
       ]
     },
     {

@@ -15,7 +15,7 @@ const settings = {
 
 };
 
-const GroupProduct = ({title, products, loai, species}) => {
+const GroupProduct = ({title, products, loai}) => {
   return (
     <div className="group-product">
       {
@@ -28,7 +28,7 @@ const GroupProduct = ({title, products, loai, species}) => {
               <Slider {...settings}>
                 {
                     products.map((item, index) => {
-                      if(item.typeID === loai || item.species === species) {
+                      if(item.gender === loai) {
                         return (
                           <div className="item"  key={index}>
                             <CardItem item={item}/>
