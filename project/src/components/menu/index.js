@@ -51,6 +51,10 @@ const MyMenu = () => {
       ]
     },
     {
+      title: 'Thương hiệu',
+      path: '/trademark'
+    },
+    {
       title: 'Giới thiệu',
       path: '/introduce'
     },

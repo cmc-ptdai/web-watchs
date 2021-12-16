@@ -1,51 +1,63 @@
 {
   "trademark": [
     {
-      "id": "bentley",
-      "img": "",
-      "name": "Bentley"
-    },
-    {
       "id": "casio",
-      "img": "",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/casio_1579065603.png",
       "name": "Casio"
     },
     {
       "id": "seiko",
-      "img": "",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/seiko_1579066795.png",
       "name": "Seiko"
     },
     {
       "id": "orient",
-      "img": "",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/untitled-6_1578900675_1579064428.png",
       "name": "Orient"
     },
     {
       "id": "olympianus",
-      "img": "",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/op_1586012983.png",
       "name": "Olym Pianus"
+    },
+    {
+      "id": "longines",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/logo-longines_1617939728.png",
+      "name": "Longines"
+    },
+    {
+      "id": "danielWellington",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/dw_1579064560.png",
+      "name": "Daniel Wellington"
+    },
+    {
+      "id": "tissot",
+      "img": "https://donghoduyanh.com/images/products/menufactories/resized/logo-tissot_1617940518.png",
+      "name": "Tissot"
+    },
+    {
+      "id": "Ogival",
+      "img": "https://xwatch.vn/images/products/menufactories/original/brand-ogival_1561519995.png",
+      "name": "ogival"
+    },
+    {
+      "id": "SRWatch",
+      "img": "https://xwatch.vn/images/products/menufactories/original/brand-ogival_1561519995.png",
+      "name": "srwatch"
     }
   ],
   "slide": [
     {
       "id": "1",
-      "img": "https://chupanhvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2016/01/25030855/thuc-pham-tuoi-song3-1.jpg"
+      "img": "https://xwatch.vn/images/slideshow/2021/05/10/original/bao-hiem-dong-ho_1620641319.jpg"
+    },
+    {
+      "id": "2",
+      "img": "https://xwatch.vn/images/slideshow/2021/09/07/original/banner-dong-ho-that-gia-1170x400_1630986458.jpg"
     },
     {
       "id": "3",
-      "img": "https://chupanhvn.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2016/01/25030550/thuc-pham-tuoi-song.jpg"
-    },
-    {
-      "id": "4",
-      "img": "https://i.pinimg.com/originals/2f/94/76/2f9476b754a398f10b5c6602d4625170.png"
-    },
-    {
-      "id": "5",
-      "img": "https://nauco-tainha.com/wp-content/uploads/2018/10/thuc-pham-an-toan.jpg"
-    },
-    {
-      "id": "6",
-      "img": "https://cdn.s3-hcm-r1.longvan.net/upload/cddsg/images/phu-gia-thuc-pham.jpg"
+      "img": "https://vinawatch.com/wp-content/uploads/2020/04/banner-desktop-10-1400x499.jpg"
     }
   ],
   "country": [
@@ -112,7 +124,7 @@
       "sale": "13",
       "countPay": 10,
       "img": "https://xwatch.vn/images/products/2021/05/11/large/ogival-og1929-24agsr-t-avatar_1620718218.jpg",
-      "brand": "Ogival",
+      "brand": "ogival",
       "model": "automatic",
       "content": "123123123",
       "quantityPurchased": 34,
@@ -285,7 +297,7 @@
       "sale": "13",
       "countPay": 10,
       "img": "https://xwatch.vn/images/products/2020/02/13/large/fung8002w0fung7002w0_1581579068.jpg",
-      "brand": "Orient",
+      "brand": "orient",
       "model": "quartz",
       "content": "123123123",
       "quantityPurchased": 34,
@@ -337,7 +349,7 @@
       "sale": "13",
       "countPay": 10,
       "img": "https://xwatch.vn/images/products/2020/02/14/large/donghodoi-og385-022dgsk-tog385-022dlsk-t_1581674869.jpg",
-      "brand": "Ogival",
+      "brand": "ogival",
       "model": "quartz",
       "content": "123123123",
       "quantityPurchased": 34,
@@ -363,7 +375,7 @@
       "sale": "13",
       "countPay": 10,
       "img": "https://xwatch.vn/images/products/2020/02/14/large/donghodoi-srwatch-sg10721102te-sl10721102te_1581677718.jpg",
-      "brand": "SRWatch",
+      "brand": "srwatch",
       "model": "quartz",
       "content": "123123123",
       "quantityPurchased": 34,

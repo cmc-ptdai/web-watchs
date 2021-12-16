@@ -5,7 +5,7 @@ import Slide from '../Slide/Slide'
 import GroupProduct from './groupProduct/index';
 import UserApi from '../../api/userApi'
 import {getUser as getUserAction} from '../../redux/actions/userAction'
-import ListBannerHeader from './listBannerheader/index'
+//import ListBannerHeader from './listBannerheader/index'
 
 const Home = () => {
   const products = useSelector(store => store.productReducer)
@@ -29,7 +29,7 @@ const Home = () => {
         <div className="col-12">
           <Slide />
         </div>
-        <ListBannerHeader />
+        {/* <ListBannerHeader /> */}
         <GroupProduct title="Đồng hồ nam" loai="nam" products={products}/>
         <GroupProduct title="Đồng hồ nữ" loai="nu" products={products}/>
         <GroupProduct title="Đồng hồ đôi" loai="doi" products={products}/>

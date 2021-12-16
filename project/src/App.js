@@ -92,7 +92,7 @@ const App = () => {
             </Col>
           </div>
         </Row>
-        <ListBanner />
+        {/* <ListBanner /> */}
         <Footer />
       </Router>
       <BackTop >

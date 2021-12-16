@@ -39,8 +39,10 @@ const Footer = () => {
           <ul>
             <li>Trang chủ</li>
             <li>Sản phẩm</li>
+            <li>Thương hiệu</li>
+            <li>Giới thiệu</li>
+            <li>Tin tức</li>
             <li>Liên hệ</li>
-            <li>Chỉ đường</li>
           </ul>
         </div>
         <div className="footer__content__right">

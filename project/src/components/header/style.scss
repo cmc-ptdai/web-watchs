@@ -66,11 +66,12 @@
     }
 
     .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       img {
-        width: 190px;
-        height: 80px;
+        height: 75px;
       }
-      text-align: center;
     }
 
     .cart {
