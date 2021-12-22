@@ -41,7 +41,7 @@ const GroupProduct = ({title, products, loai}) => {
               </Slider>
             </div>
             <div className="group-product__seeMore">
-              <Link to="/vegetable">xem thêm <i className="fad fa-chevron-double-right"></i></Link>
+              <Link to={"/" + loai}>xem thêm <i className="fad fa-chevron-double-right"></i></Link>
             </div>
           </>
         )

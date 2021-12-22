@@ -6,6 +6,7 @@ import GroupProduct from './groupProduct/index';
 import UserApi from '../../api/userApi'
 import {getUser as getUserAction} from '../../redux/actions/userAction'
 //import ListBannerHeader from './listBannerheader/index'
+import ScrollToTop from '../../ScrollToTop';
 
 const Home = () => {
   const products = useSelector(store => store.productReducer)
@@ -25,6 +26,7 @@ const Home = () => {
   }, [])
   return (
     <div className="product">
+      <ScrollToTop/>
       <div className="row">
         <div className="col-12">
           <Slide />

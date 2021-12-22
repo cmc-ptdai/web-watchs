@@ -18,7 +18,7 @@ import {getUser as getUserAction} from './redux/actions/userAction';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from './ScrollToTop';
-import ListBanner from './components/product/listBanner/index'
+//import ListBanner from './components/product/listBanner/index'
 import Footer from './components/footer/Footer'
 
 const style = {

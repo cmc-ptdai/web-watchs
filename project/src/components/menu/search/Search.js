@@ -13,7 +13,7 @@ const Search = () => {
     setSearch(event.target.value)
   }
   const onSearch = () => {
-    const newSort = listProduct.filter(item => (item.name.toLowerCase().indexOf(search) !== -1) || (item.typeID.toLowerCase().indexOf(search) !== -1) || (item.species.toLowerCase().indexOf(search) !== -1))
+    const newSort = listProduct.filter(item => item.name.toLowerCase().indexOf(search) !== -1)
     dispatch(keyWordSearchAction(newSort))
     setSearch('')
   }

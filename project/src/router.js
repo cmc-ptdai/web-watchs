@@ -15,12 +15,12 @@ import DetailedPosts from './components/Posts/DetailedPosts'
 
 const router = [
   {path: '/', exact: true, Component: Home},
+  {path: '/products', exact: true,  gender: '', Component: Products},
   {path: '/nam', exact: true, gender: 'nam', Component: Products},
   {path: '/nu', exact: true, gender: 'nu', Component: Products},
   {path: '/doi', exact: true, gender: 'doi', Component: Products},
   {path: '/cart', exact: true, Component: Cart},
   {path: '/products/:id', exact: true, Component: Product},
-  {path: '/products', exact: true, Component: Products},
   {path: '/searchProducts', exact: true, Component: searchProduct},
   {path: '/login', exact: true, Component: Login},
   {path: '/singup', exact: true, Component: SingUp},
