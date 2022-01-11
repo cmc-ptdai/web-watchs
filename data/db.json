@@ -86,11 +86,11 @@
       "Insurance": "5",
       "internationalWarranty": "1",
       "img": "https://xwatch.vn/images/products/2021/11/05/large/olym-pianus-op89322gsk-t_1636084476.jpg",
-      "content": "wowww",
+      "content": "wowwwwwwwwwww",
       "id": "1",
       "quantityPurchased": 34,
       "dateAdd": "2021-10-31",
-      "dateUpdate": "2021-12-11T10:25:29.794Z"
+      "dateUpdate": "2021-12-22T17:06:55.261Z"
     },
     {
       "id": "2",
@@ -399,7 +399,7 @@
       "name": "ĐỒNG HỒ CASIO MTS-100D-7AVDF",
       "price": "2331900",
       "sale": "10",
-      "countPay": 10,
+      "countPay": 9,
       "country": "japan",
       "model": "quartzpin",
       "brand": "casio",
@@ -418,7 +418,7 @@
       "id": "76beb216-1f41-47bc-a7a2-71bcb020fb20",
       "dateAdd": "2021-12-13T13:47:14.284Z",
       "dateUpdate": "2021-12-13T13:47:14.284Z",
-      "quantityPurchased": 0
+      "quantityPurchased": 1
     }
   ],
   "users": [
@@ -471,7 +471,7 @@
       "id": "LrZbTJt"
     },
     {
-      "name": "sád",
+      "name": "phung thế đại",
       "gender": "nam",
       "email": "daiphung.hd@gmail.com",
       "address": "2131231231231",
@@ -483,11 +483,37 @@
       "cart": [],
       "order": [],
       "dateCreate": "2021-10-25T18:55:12.299Z",
-      "dateUpdate": "2021-10-31T19:44:58.748Z",
+      "dateUpdate": "2021-12-22T17:06:11.188Z",
       "id": "_5RDUG5"
     }
   ],
-  "order": [],
+  "order": [
+    {
+      "id": "4f8a4753-123f-448c-8308-dd67afa57914",
+      "idUser": "",
+      "listProduct": [
+        {
+          "id": "76beb216-1f41-47bc-a7a2-71bcb020fb20",
+          "name": "ĐỒNG HỒ CASIO MTS-100D-7AVDF",
+          "img": "https://donghoduyanh.com/images/products/2020/03/17/large/dong_ho_casio_mts-100d-7avdf.jpg.webp",
+          "price": "2331900",
+          "sale": "10",
+          "countPay": 10,
+          "count": 1
+        }
+      ],
+      "address": "18T1 theGolden An khánh, Hoài đức, Hà Nộs",
+      "email": "daiphung.hd@gmail.com",
+      "phone": "0963310331",
+      "username": "daiphung",
+      "transportFee": "fastShipping",
+      "money": 2128710,
+      "payments": "off",
+      "status": "delivery",
+      "dateCreate": "2021-12-28T13:51:20.755Z",
+      "dateUpdate": "2021-12-28T13:52:00.297Z"
+    }
+  ],
   "comments": [
     {
       "id": "1",
@@ -617,6 +643,10 @@
         {
           "dateInput": "2021-12-11T10:23:38.931Z",
           "numberProduct": 10
+        },
+        {
+          "dateInput": "2021-12-22T17:06:55.261Z",
+          "numberProduct": 0
         }
       ]
     },
@@ -750,7 +780,7 @@
       "listWarehouse": [
         {
           "dateInput": "2021-12-13T13:47:14.284Z",
-          "numberCount": 0,
+          "numberCount": 1,
           "numberProduct": "10"
         }
       ]

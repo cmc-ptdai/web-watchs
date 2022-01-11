@@ -8,32 +8,11 @@ import MyPagination from './MyPagination'
 import { Breadcrumb } from 'antd'
 
 const Products = ({gender}) => {
-  //console.log(gender);
   const [products, setProducts] = useState(null)
   const [listSort, setListSort] = useState(null)
   const [listKeySort, setListKeySort] = useState({})
 
   const fetchProducts = async () => {
-    // if(typeID !== '' && species1 !== '') {
-    //   params.typeID = typeID
-    //   params.species = species1
-    // } else {
-    //   params.typeID = typeID
-    // }
-    // try {
-    //   let response = []
-    //   if (params.typeID === '') {
-    //     response = await productApi.getAll()
-    //   } else {
-    //     response = await productApi.getAll(params)
-    //   }
-    //   setProducts(response)
-    //   setListSort(response)
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-
     try {
       let response = []
       if (gender === '') {

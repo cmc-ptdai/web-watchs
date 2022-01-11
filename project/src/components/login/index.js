@@ -129,7 +129,7 @@ const Login = () => {
               <Button className="login__btn--login" type="primary" htmlType="submit">
                 Đăng nhập
               </Button>
-              <Link to='/singup'>
+              <Link to='/signup'>
                 <Button type="primary" danger htmlType="submit">
                   Đăng ký
                 </Button>

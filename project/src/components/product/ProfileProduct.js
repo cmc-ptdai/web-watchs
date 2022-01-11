@@ -11,6 +11,7 @@ import {
 import { Tabs, notification, Breadcrumb } from 'antd';
 import ShowComment from './commentProduct/index'
 import Evaluate from './evaluateProduct/Evaluate'
+import Specifications from './specifications/Specifications'
 import UserApi from '../../api/userApi'
 
 const { TabPane } = Tabs;
@@ -121,9 +122,9 @@ const ProfileProduct = () => {
     <>
       {
         product &&
-        <div>
+        <>
           <div className="row">
-            <div className="col-12 directional">
+            <div className="col-12 directional mt-3">
               <Breadcrumb>
                 <Breadcrumb.Item>
                   <Link to="/">
@@ -182,7 +183,7 @@ const ProfileProduct = () => {
 
                 <div className="col-md-5 profile__content">
 
-                  <h3 className="title">{product.name}</h3>
+                  <h4 className="title">{product.name}</h4>
 
                   <p className="status"><b>Trạng Thái:</b>
                     { product.countPay > 0 ? (
@@ -227,22 +228,24 @@ const ProfileProduct = () => {
           </div>
 
           <Tabs defaultActiveKey={keyDf} type="card">
-            <TabPane tab="Thông tin chung về sản phẩm" key="1">
+            <TabPane tab="Thông tin chung" key="1">
               <textarea
                 className="content-product"
                 readOnly
                 value={product.content}
               />
             </TabPane>
-            <TabPane tab="Đánh giá" key="2">
+            <TabPane tab="Thông số kỹ thuật" key="2">
+              <Specifications data={product}/>
+            </TabPane>
+            <TabPane tab="Đánh giá" key="3">
               <Evaluate data={product}/>
             </TabPane>
-
-            <TabPane tab="Bình luận" key="3">
+            <TabPane tab="Bình luận" key="4">
               <ShowComment  data={product}/>
             </TabPane>
           </Tabs>
-        </div>
+        </>
       }
     </>
   )

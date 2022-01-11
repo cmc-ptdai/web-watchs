@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import 'antd/dist/antd.css'
 import Header from './components/header/Header'
 import './App.scss'
 import Menu from './components/menu/index'
@@ -20,6 +19,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from './ScrollToTop';
 //import ListBanner from './components/product/listBanner/index'
 import Footer from './components/footer/Footer'
+import 'antd/dist/antd.css';
 
 const style = {
   height: 40,

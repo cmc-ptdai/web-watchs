@@ -49,6 +49,7 @@
       font-weight: 700;
     }
     .status {
+      margin-top: 20px;
       span {
         color: #fff;
         font-weight: 600;
@@ -64,6 +65,7 @@
       }
     }
     .price {
+      margin-top: 20px;
       &__sale {
         display: flex;
         align-items: center;
@@ -81,6 +83,7 @@
         }
       }
       &__real {
+        margin-top: 10px;
         font-size: 25px;
         font-weight: bold;
         color: #fe9705;
@@ -93,7 +96,7 @@
       border-bottom: 1px solid black;
     }
     .address {
-      margin-top: 15px;
+      margin-top: 30px;
     }
   }
   &__addCart {
@@ -102,7 +105,7 @@
     margin-top: 20px;
     label {
       font-weight: 600;
-      font-size: 20px;
+      font-size: 17px;
     }
     .addNumber {
       position: relative;
@@ -119,9 +122,9 @@
         border: none;
         background-color: #fff;
         top: 1px;
-        right: 6px;
+        right: 13%;
         width: 20px;
-        height: 96%;
+        height: 95%;
         transition: all 0.25s ease;
         &:hover {
           background-color: #ccc;
@@ -133,9 +136,9 @@
         border: none;
         background-color: #fff;
         top: 1px;
-        left: 16px;
+        left: 13%;
         width: 20px;
-        height: 96%;
+        height: 95%;
         transition: all 0.25s ease;
         &:hover {
           background-color: #ccc;
@@ -240,13 +243,7 @@
   }
 }
 .ant-tabs {
-  margin-top: 20px;
-}
-.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active, .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
-  background-color: #fe9705 !important;
-}
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #fff;
+  margin-top: 40px !important;
 }
 .ant-tabs-tabpane {
   border: 1px solid black;
@@ -254,13 +251,13 @@
   padding: 20px 10px;
   background-color: #fff;
 }
-.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab, .ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
-  background-color: #80bb35;
-  color: #fff ;
-}
 .ant-notification {
   margin-top: 50px;
 }
 .ant-notification-notice {
   background-color: #ccc;
+}
+.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+  background-color: #fe9705 !important;
+  color: #fff !important;
 }

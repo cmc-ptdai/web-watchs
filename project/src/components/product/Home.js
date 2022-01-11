@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className="product">
       <ScrollToTop/>
-      <div className="row">
+      <div className="row mt-2">
         <div className="col-12">
           <Slide />
         </div>

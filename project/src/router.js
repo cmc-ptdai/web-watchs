@@ -5,13 +5,14 @@ import Product from './components/product/ProfileProduct'
 import Products from './components/product/Products'
 import searchProduct from './components/menu/search/SearchProductByName'
 import Login from './components/login/index'
-import SingUp from './components/signUp/index'
+import SignUp from './components/signUp/index'
 import Concat from './components/product/contact/index'
 import Introduce from './components/product/introduce/index'
 import ProfileUser from './components/profileUser/ProfileUser'
 import Orders from './components/listOrderUser/index'
 import Posts from './components/Posts/Posts'
 import DetailedPosts from './components/Posts/DetailedPosts'
+import Trademark from './components/trademark/index'
 
 const router = [
   {path: '/', exact: true, Component: Home},
@@ -22,8 +23,9 @@ const router = [
   {path: '/cart', exact: true, Component: Cart},
   {path: '/products/:id', exact: true, Component: Product},
   {path: '/searchProducts', exact: true, Component: searchProduct},
+  {path: '/trademark', exact: true, Component: Trademark},
   {path: '/login', exact: true, Component: Login},
-  {path: '/singup', exact: true, Component: SingUp},
+  {path: '/signup', exact: true, Component: SignUp},
   {path: '/concat', exact: true, Component: Concat},
   {path: '/posts', exact: true, Component: Posts},
   {path: '/detailedPosts/:id', exact: true, Component: DetailedPosts},
