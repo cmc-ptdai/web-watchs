@@ -1,5 +1,5 @@
 $Orange: #fe9705;
-$Green: #80bb35;
+$Green: #000000;
 .navbar {
   padding: 0px !important;
 }
@@ -13,9 +13,12 @@ $Green: #80bb35;
   background-color: $Green;
   z-index: 99;
   a {
-    color:#fff !important;
+    color:#fff;
     font-size: 20px;
     font-weight: 500;
+    &:hover {
+      color: #fff ;
+    }
   }
   li {
     position: relative;
@@ -45,6 +48,9 @@ $Green: #80bb35;
       color: black;
       font-weight: 400;
       font-size: 18px;
+      &:hover {
+        color: #fe9705;
+      }
     }
   }
   li > ul {

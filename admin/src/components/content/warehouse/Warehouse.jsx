@@ -152,6 +152,7 @@ const Warehouse = () => {
             const newList =  elem.listWarehouse.filter((item,index1)=> index1 !== index)
             const newItem = {
               id: elem.id,
+              name: elem.name,
               listWarehouse: newList
             }
             dateSearch[index2].listWarehouse = newList

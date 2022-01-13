@@ -1,9 +1,13 @@
 import React from 'react'
 
-export default function Trademark() {
+const Trademark = () => {
   return (
     <>
-      <h1>thương hiệu</h1>
+      <div className="row">
+        <h1>thương hiệu</h1>
+      </div>
     </>
   )
 }
+
+export default Trademark;

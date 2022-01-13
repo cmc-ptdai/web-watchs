@@ -262,6 +262,7 @@ const Cart = () => {
       const index = dataProducts.findIndex(elem => elem.id === item)
       price = price + ((dataProducts[index].count * dataProducts[index].price) - ((dataProducts[index].count * dataProducts[index].price) * dataProducts[index].sale / 100))
     })
+    
     setTotalMoney(price)
   }
 
@@ -316,7 +317,7 @@ const Cart = () => {
     if (values.username !== undefined && values.phone !== undefined && values.email !== undefined && values.address !== undefined) {
       const listPayCart = []
       const newListKey = []
-      const listWarehouse1 = await WarehouseApi.getWarehouse()
+      //const listWarehouse1 = await WarehouseApi.getWarehouse()
 
       selectedRowKeys.forEach(item => {
         for (let ad = 0; ad < products.length; ad++) {
@@ -330,15 +331,15 @@ const Cart = () => {
           }
         }
 
-        for (let index = 0; index < listWarehouse1.length; index++) {
-          if (listWarehouse1[index].id === item) {
-            const indexProductCart = products.findIndex(a => a.id === listWarehouse1[index].id)
-            const lth = listWarehouse1[index].listWarehouse
-            lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-            WarehouseApi.editWarehouse(listWarehouse1[index].id, listWarehouse1[index])
-            break
-          }
-        }
+        // for (let index = 0; index < listWarehouse1.length; index++) {
+        //   if (listWarehouse1[index].id === item) {
+        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse1[index].id)
+        //     const lth = listWarehouse1[index].listWarehouse
+        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
+        //     WarehouseApi.editWarehouse(listWarehouse1[index].id, listWarehouse1[index])
+        //     break
+        //   }
+        // }
 
       })
       const ojb = {
@@ -383,15 +384,15 @@ const Cart = () => {
           }
         }
 
-        for (let index = 0; index < listWarehouse.length; index++) {
-          if (listWarehouse[index].id === item) {
-            const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
-            const lth = listWarehouse[index].listWarehouse
-            lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-            WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
-            break
-          }
-        }
+        // for (let index = 0; index < listWarehouse.length; index++) {
+        //   if (listWarehouse[index].id === item) {
+        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
+        //     const lth = listWarehouse[index].listWarehouse
+        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
+        //     WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
+        //     break
+        //   }
+        // }
 
       })
       onSelectChange([])
@@ -460,15 +461,15 @@ const Cart = () => {
           }
         }
 
-        for (let index = 0; index < listWarehouse.length; index++) {
-          if (listWarehouse[index].id === item) {
-            const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
-            const lth = listWarehouse[index].listWarehouse
-            lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-            WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
-            break
-          }
-        }
+        // for (let index = 0; index < listWarehouse.length; index++) {
+        //   if (listWarehouse[index].id === item) {
+        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
+        //     const lth = listWarehouse[index].listWarehouse
+        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
+        //     WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
+        //     break
+        //   }
+        // }
 
       })
 
@@ -487,7 +488,23 @@ const Cart = () => {
   }
 
   const onchangeShip = (e) => {
+    // if (transportFee === 'fastShipping') {
+    //   setTotalMoney(totalMoney - 30000)
+    // }
+    // if (transportFee === 'normalShipping') {
+    //   setTotalMoney(totalMoney - 15000)
+    // }
+    // console.log(totalMoney);
+
+    // if (e === 'fastShipping') {
+    //   setTotalMoney(totalMoney + 30000)
+    // } 
+    // if (e === 'normalShipping') {
+    //   setTotalMoney(totalMoney + 15000)
+    // }
+    // console.log(totalMoney);
     setTransportFee(e)
+    //console.log(e);
   }
   return (
     <div className="cart">

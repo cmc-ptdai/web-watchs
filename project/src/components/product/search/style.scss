@@ -6,7 +6,7 @@
     border-top: none;
   }
   &__title {
-    background-color: #80bb35;
+    background-color: #000000;
     border-radius: 10px;
     height: 35px;
     line-height: 35px;
@@ -31,11 +31,11 @@
     }
     li:hover {
       color: #fff;
-      background-color: #80bb35;
+      background-color: #000000;
     }
   }
   .active {
     color: #fff;
-    background-color: #80bb35;
+    background-color: #000000;
   }
 }

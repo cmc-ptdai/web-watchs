@@ -35,6 +35,11 @@ const style = {
 const App = () => {
   const dispatch = useDispatch()
   const fetchProducts = async () => {
+    const cartLocal = localStorage.getItem('cart')
+    if (cartLocal === null) {
+      const newCartLocal = []
+      localStorage.setItem('cart', JSON.stringify(newCartLocal))
+    }
     try {
       const listProduct = await ProductApi.getAll()
       dispatch(getProductAction(listProduct))

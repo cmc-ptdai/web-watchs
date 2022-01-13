@@ -58,7 +58,7 @@
         margin-left: 10px;
       }
       &--stocking {
-        background-color: #80bb35;
+        background-color: #000000;
       }
       &--OutOfStock {
         background-color: #fe9705;
@@ -147,8 +147,8 @@
     }
     .buy {
       cursor: pointer;
-      border: 1px solid #80bb35;
-      background-color: #80bb35;
+      border: 1px solid #000000;
+      background-color: #000000;
       border-radius: 10px;
       width: 80px;
       color: #fff;
@@ -193,7 +193,7 @@
       button {
         margin-left: 80px;
         margin-top: 20px;
-        background-color: #80bb35;
+        background-color: #000000;
         border-radius: 5px;
         padding: 5px 10px ;
         color: #fff;

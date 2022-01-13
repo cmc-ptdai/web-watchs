@@ -262,11 +262,11 @@ const useReducer  = (state = initialState, action) => {
           }
         })
       })
-      if (action.payload.transport === "fastShipping") {
-        money += 30000
-      } else {
-        money += 15000
-      }
+      // if (action.payload.transport === "fastShipping") {
+      //   money += 30000
+      // } else {
+      //   money += 15000
+      // }
       const newOder = {
         id: uuidv4(),
         idUser: "",
@@ -282,7 +282,6 @@ const useReducer  = (state = initialState, action) => {
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
-
       orderApi.addOrder(newOder)
       return state
     }
