@@ -48,35 +48,56 @@ const Products = ({gender}) => {
       products.forEach(item => {
         let count = 0
         for (let key in listKeySort) {
-          if (key === 'price') {
-            if (item.price >= listKeySort[key].price1 && item.price <= listKeySort[key].price2) {
-              count = count + 1
-            }
+          if (item[key] === listKeySort) {
+            
           }
-          if (key === 'type') {
-            if (item.typeID === listKeySort[key]) {
-              count = count + 1
-            }
-          }
-          if (key === 'country') {
-            if (listKeySort[key] === 'khac') {
-              if (item.country !== 'viet nam' && item.country !== 'uc' && item.country !== 'trung quoc') {
-                count = count + 1
-              }
-            } else {
-              if (item.country === listKeySort[key]) {
-                count = count + 1
-              }
-            }
-          }
+          // if (key === 'price') {
+          //   if (item.price >= listKeySort[key].price1 && item.price <= listKeySort[key].price2) {
+          //     count = count + 1
+          //   }
+          // }
+          // if (key === 'type') {
+          //   if (item.typeID === listKeySort[key]) {
+          //     count = count + 1
+          //   }
+          // }
+          // if (key === 'country') {
+          //   if (listKeySort[key] === 'khac') {
+          //     if (item.country !== 'viet nam' && item.country !== 'uc' && item.country !== 'trung quoc') {
+          //       count = count + 1
+          //     }
+          //   } else {
+          //     if (item.country === listKeySort[key]) {
+          //       count = count + 1
+          //     }
+          //   }
+          // }
         }
-        if (lengthKey.length === count) {
-          newArr.push(item)
-        }
+        // if (lengthKey.length === count) {
+        //   newArr.push(item)
+        // }
       })
     }
     setListSort(newArr)
   }
+  // const sortProduct = () => {
+  //   const newList = [];
+  //   products.forEach((element) => {
+  //     let status = true;
+  //     for (const key in listKeySort) {
+  //       if (element[key] !== listKeySort[key]) {
+  //         status = false;
+  //         break;
+  //       }
+  //     }
+  //     if (status === true) {
+  //       newList.push(element);
+  //     }
+  //   });
+  //   console.log(newList);
+  
+  //   //return newList;
+  // };
 
   const searchByPrice1 = value => {
     let newList = {}

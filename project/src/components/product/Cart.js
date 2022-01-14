@@ -50,7 +50,7 @@ const Cart = () => {
   const [totalMoney, setTotalMoney] = useState(0)
   const [visibleAlert , setVisibleAlert] = useState(false)
   const [checkPaypal, setCheckPaypal] = useState(false)
-  const [listWarehouse, setListWarehouse] = useState(null)
+  //const [listWarehouse, setListWarehouse] = useState(null)
   const [transportFee, setTransportFee] = useState(null)
   const [moneyPayOl, setMoneyPayOl] = useState(0)
   const [listProduct, setListProduct] = useState(null)
@@ -210,8 +210,8 @@ const Cart = () => {
   const fetchApi = async () => {
     try {
       const response = await userApi.getUserById(user.id)
-      const Warehouses = await WarehouseApi.getWarehouse()
-      setListWarehouse(Warehouses);
+      //const Warehouses = await WarehouseApi.getWarehouse()
+      //setListWarehouse(Warehouses);
       setProducts(response.cart)
     } catch (error) {
       console.log(error);
@@ -256,13 +256,19 @@ const Cart = () => {
     }, 100);
   }
 
-  const sumOfMoney = () => {
+  const sumOfMoney = (transportFee1) => {
     let price = 0
     selectedRowKeys.forEach(item => {
       const index = dataProducts.findIndex(elem => elem.id === item)
       price = price + ((dataProducts[index].count * dataProducts[index].price) - ((dataProducts[index].count * dataProducts[index].price) * dataProducts[index].sale / 100))
     })
-    
+    console.log(transportFee1);
+    if (transportFee1 === 'fastShipping') {
+      price= price + 30000
+    }
+    if (transportFee1 === 'normalShipping') {
+      price= price + 15000
+    }
     setTotalMoney(price)
   }
 
@@ -317,7 +323,6 @@ const Cart = () => {
     if (values.username !== undefined && values.phone !== undefined && values.email !== undefined && values.address !== undefined) {
       const listPayCart = []
       const newListKey = []
-      //const listWarehouse1 = await WarehouseApi.getWarehouse()
 
       selectedRowKeys.forEach(item => {
         for (let ad = 0; ad < products.length; ad++) {
@@ -331,21 +336,12 @@ const Cart = () => {
           }
         }
 
-        // for (let index = 0; index < listWarehouse1.length; index++) {
-        //   if (listWarehouse1[index].id === item) {
-        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse1[index].id)
-        //     const lth = listWarehouse1[index].listWarehouse
-        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-        //     WarehouseApi.editWarehouse(listWarehouse1[index].id, listWarehouse1[index])
-        //     break
-        //   }
-        // }
-
       })
       const ojb = {
         listId : listPayCart,
         profile: values,
-        transport: transportFee
+        transport: transportFee,
+        money: totalMoney
       }
       if (listPayCart.length > 0) {
         dispatch(addOrderNoUserAction(ojb))
@@ -384,16 +380,6 @@ const Cart = () => {
           }
         }
 
-        // for (let index = 0; index < listWarehouse.length; index++) {
-        //   if (listWarehouse[index].id === item) {
-        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
-        //     const lth = listWarehouse[index].listWarehouse
-        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-        //     WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
-        //     break
-        //   }
-        // }
-
       })
       onSelectChange([])
       setTotalMoney(0)
@@ -403,7 +389,7 @@ const Cart = () => {
         setSelectedRowKeys([])
       }, 100)
        setTransportFee(null)
-       dispatch(payCartAction({data:listPayCart, payments: 'off', transport: transportFee}))
+       dispatch(payCartAction({data:listPayCart, payments: 'off', transport: transportFee, money: totalMoney}))
        //openNotification("Đơn hàng của bạn đã đươc đặt thành công")
     } else {
       setVisible(true)
@@ -419,23 +405,24 @@ const Cart = () => {
   const PayCartOnline = async () => {
     setStatus(!status)
     if (user.id) {
-      const listPayCart = []
+      //const listPayCart = []
       let money = 0
       selectedRowKeys.forEach(item => {
         products.forEach(elem => {
           if (item === elem.id) {
-            const index = listProduct.findIndex(a => a.id === elem.id)
-            if (listProduct[index].countPay > elem.count ) {
-              listPayCart.push(elem);
-              if (Number(elem.sale) > 0 ) {
+            //const index = listProduct.findIndex(a => a.id === elem.id)
+            //if (listProduct[index].countPay > elem.count ) {
+              //listPayCart.push(elem);
+              //if (Number(elem.sale) > 0 ) {
                 money = money + ((elem.price * elem.count) - ((elem.price * elem.count)*elem.sale)/100)
-              } else {
-                money = money + (Number(elem.price) * Number(elem.count))
-              }
-            }
+              // } else {
+              //   money = money + (Number(elem.price) * Number(elem.count))
+              // }
+            //}
           }
-        });
+        }); 
       })
+      console.log(money, totalMoney);
       money = (money /22758).toFixed(2)
       setMoneyPayOl(money)
     }
@@ -461,19 +448,9 @@ const Cart = () => {
           }
         }
 
-        // for (let index = 0; index < listWarehouse.length; index++) {
-        //   if (listWarehouse[index].id === item) {
-        //     const indexProductCart = products.findIndex(a => a.id === listWarehouse[index].id)
-        //     const lth = listWarehouse[index].listWarehouse
-        //     lth[lth.length - 1].numberCount = lth[lth.length - 1].numberCount + products[indexProductCart].count
-        //     WarehouseApi.editWarehouse(listWarehouse[index].id, listWarehouse[index])
-        //     break
-        //   }
-        // }
-
       })
 
-      dispatch(payCartAction({data:listPayCart, payments: 'online', transport: 'free'}))
+      dispatch(payCartAction({data:listPayCart, payments: 'online', transport: 'free', money: totalMoney}))
       setTransportFee(null)
       onSelectChange([])
       setTotalMoney(0)
@@ -488,23 +465,8 @@ const Cart = () => {
   }
 
   const onchangeShip = (e) => {
-    // if (transportFee === 'fastShipping') {
-    //   setTotalMoney(totalMoney - 30000)
-    // }
-    // if (transportFee === 'normalShipping') {
-    //   setTotalMoney(totalMoney - 15000)
-    // }
-    // console.log(totalMoney);
-
-    // if (e === 'fastShipping') {
-    //   setTotalMoney(totalMoney + 30000)
-    // } 
-    // if (e === 'normalShipping') {
-    //   setTotalMoney(totalMoney + 15000)
-    // }
-    // console.log(totalMoney);
     setTransportFee(e)
-    //console.log(e);
+    sumOfMoney(e)
   }
   return (
     <div className="cart">

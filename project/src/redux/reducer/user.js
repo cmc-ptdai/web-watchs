@@ -216,26 +216,11 @@ const useReducer  = (state = initialState, action) => {
 
     case PAY_CART: {
       const listProduct = []
-      let money = 0
-      action.payload.data.forEach(item => {
-        cart.forEach(elem => {
-          if (item.id === elem.id) {
-            listProduct.push(elem)
-            money = money + ((Number(elem.price) * Number(elem.count)) - ((Number(elem.price) * Number(elem.count)*Number(elem.sale))/100))
-          }
-        })
-      })
-      if (action.payload.transport === "fastShipping") {
-        money += 30000
-      }
-      if (action.payload.transport === "normalShipping") {
-        money += 15000
-      }
       const newOder = {
         id: uuidv4(),
         idUser: idUser,
         listProduct: listProduct,
-        money: money,
+        money: action.payload.money,
         status: "pending",
         transportFee: action.payload.transport,
         payments: action.payload.payments,
@@ -254,19 +239,6 @@ const useReducer  = (state = initialState, action) => {
     }
 
     case ADD_ORDER_NO_USER: {
-      let money = 0
-      action.payload.listId.forEach(item => {
-        user.cart.forEach(elem => {
-          if (item.id === elem.id ) {
-            money = money + ((Number(elem.price) * Number(elem.count)) - ((Number(elem.price) * Number(elem.count)*Number(elem.sale))/100))
-          }
-        })
-      })
-      // if (action.payload.transport === "fastShipping") {
-      //   money += 30000
-      // } else {
-      //   money += 15000
-      // }
       const newOder = {
         id: uuidv4(),
         idUser: "",
@@ -276,12 +248,13 @@ const useReducer  = (state = initialState, action) => {
         phone: action.payload.profile.phone,
         username: action.payload.profile.username,
         transportFee: action.payload.transport,
-        money: money,
+        money: action.payload.money,
         payments: 'off',
         status: "pending",
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
+      console.log(newOder);
       orderApi.addOrder(newOder)
       return state
     }

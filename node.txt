@@ -1,2 +1,2 @@
-- thanh toán ko user đang lỗi phần công ơhis vận chuyển
 - user đang lỗi thanh toán thường
+- công tiền ship vào hóa đơn

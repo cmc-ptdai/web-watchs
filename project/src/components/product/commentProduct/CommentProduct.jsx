@@ -15,7 +15,7 @@ import apiComment from '../../../api/apiComment'
 
 const { TextArea } = Input;
 
-const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus}) => {
+const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus, statusChange}) => {
 
   const [form] = Form.useForm();
   const user = useSelector(store => store.userReducer.user)
@@ -62,7 +62,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus}
       comments: newListComment
     }
     dispatch(deleteCommentAction(newComment))
-    changeStatus(uuidv4())
+    changeStatus(!statusChange)
   }
 
   const deleteReplyComment = (id) => {

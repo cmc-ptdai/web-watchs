@@ -14,10 +14,11 @@ const { TextArea } = Input;
 
 const ShowComment = ({data}) => {
   const user = useSelector(store => store.userReducer.user)
-
+  const dispatch = useDispatch()
+  const [valueComment, setValueComment] = useState('')
   const [dataComments, setDataComment] = useState(null)
   const [listUsers, setListUsers] = useState(null)
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(false)
 
   useEffect(() => {
     fetchComment()
@@ -35,9 +36,6 @@ const ShowComment = ({data}) => {
       }
     }
   }
-
-  const dispatch = useDispatch()
-  const [valueComment, setValueComment] = useState('')
 
   const handleChangeComment = (e) => {
     setValueComment(e.target.value)
@@ -87,6 +85,7 @@ const ShowComment = ({data}) => {
             listUser={listUsers}
             data={dataComments}
             key={index}
+            statusChange={status}
             changeStatus={changeStatus1}
           />
           )
