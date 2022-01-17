@@ -1,47 +1,56 @@
 {
   "trademark": [
     {
-      "id": "casio",
+      "id": "1",
+      "type": "casio",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/casio_1579065603.png",
       "name": "Casio"
     },
     {
-      "id": "seiko",
+      "id": "12",
+      "type": "seiko",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/seiko_1579066795.png",
       "name": "Seiko"
     },
     {
-      "id": "orient",
+      "id": "13",
+      "type": "orient",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/untitled-6_1578900675_1579064428.png",
       "name": "Orient"
     },
     {
-      "id": "olympianus",
+      "id": "14",
+      "type": "olympianus",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/op_1586012983.png",
       "name": "Olym Pianus"
     },
     {
-      "id": "longines",
+      "id": "15",
+      "type": "longines",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/logo-longines_1617939728.png",
       "name": "Longines"
     },
     {
-      "id": "danielWellington",
+      "id": "16",
+      "type": "danielWellington",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/dw_1579064560.png",
       "name": "Daniel Wellington"
     },
     {
-      "id": "tissot",
+      "id": "17",
+      "type": "tissot",
       "img": "https://donghoduyanh.com/images/products/menufactories/resized/logo-tissot_1617940518.png",
       "name": "Tissot"
     },
     {
-      "id": "Ogival",
+      "id": "18",
+      "type": "Ogival",
       "img": "https://xwatch.vn/images/products/menufactories/original/brand-ogival_1561519995.png",
       "name": "ogival"
     },
     {
-      "id": "SRWatch",
+      "id": "19",
+      "type": "SRWatch",
       "img": "https://xwatch.vn/images/products/menufactories/original/brand-ogival_1561519995.png",
       "name": "srwatch"
     }
@@ -63,7 +72,45 @@
   "country": [
     {
       "id": "1",
-      "name": "Nhật bản"
+      "name": "Nhật bản",
+      "status": false,
+      "type": "japan"
+    },
+    {
+      "id": "2",
+      "name": "Thụy sĩ",
+      "status": false,
+      "type": "switzerland"
+    },
+    {
+      "id": "3",
+      "name": "Hoa Kỳ",
+      "status": false,
+      "type": "usa"
+    },
+    {
+      "id": "4",
+      "name": "Tây Ban Nha",
+      "status": false,
+      "type": "spain"
+    },
+    {
+      "id": "5",
+      "name": "Ba Lan",
+      "status": false,
+      "type": "poland"
+    },
+    {
+      "id": "6",
+      "name": "Đức",
+      "status": false,
+      "type": "germany"
+    },
+    {
+      "id": "7",
+      "name": "Pháp",
+      "status": false,
+      "type": "france"
     }
   ],
   "products": [
@@ -444,7 +491,7 @@
           "price": "16970000",
           "sale": "13",
           "countPay": 4,
-          "count": 1
+          "count": 2
         }
       ],
       "order": [

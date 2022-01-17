@@ -1,83 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import ApiCountry from '../../../api/country'
+import ApiTrandermark from '../../../api/tradermark'
 import './style.scss'
 
 const SearchProduct = (props) => {
-  const [country, setCountry] = useState([
-    {
-      type: 'viet nam',
-      status: false,
-      name: 'Việt Nam',
-    },
-    {
-      type: 'uc',
-      status: false,
-      name: 'Úc',
-    },
-    {
-      type: 'trung quoc',
-      name: 'Trung Quốc',
-      status: false,
-    },
-    {
-      type: 'khac',
-      name: 'khác',
-      status: false,
-    }
-  ])
-  const[typeProduct, setTypeProduct] = useState([
-    {
-      type: 'rau',
-      status: false,
-      name: 'Rau xanh',
-    },
-    {
-      type: 'cu',
-      status: false,
-      name: 'Các loại củ',
-    },
-    {
-      type: 'qua',
-      status: false,
-      name: 'Hoá quả tươi',
-    },
-    {
-      type: 'nam',
-      status: false,
-      name: 'Các loại nấm',
-    }
-  ])
+  const [country, setCountry] = useState(null)
+  const[typeProduct, setTypeProduct] = useState(null)
   const [prices, setPrices] = useState([
     {
       price1: 0,
       status: false,
-      price2: 100000
+      price2: 2000000
     },
     {
-      price1: 100000,
+      price1: 2000000,
       status: false,
-      price2: 200000
+      price2: 4000000
     },
     {
-      price1: 200000,
+      price1: 4000000,
       status: false,
-      price2: 300000
+      price2: 6000000
     },
     {
-      price1: 300000,
+      price1: 6000000,
       status: false,
-      price2: 500000
+      price2: 8000000
     },
     {
-      price1: 500000,
+      price1: 8000000,
       status: false,
-      price2: 1000000
+      price2: 10000000
     },
     {
-      price1: 1000000,
+      price1: 10000000,
       status: false,
       price2: 9999999999999
     }
   ])
+
+  useEffect(() => {
+    fetchApi()
+  }, []);
+
+  const  fetchApi = async () => {
+    try {
+     const newList = await ApiCountry.getCountry()
+     const newListTrandermark = await ApiTrandermark.gettTademark()
+     setTypeProduct(newListTrandermark)
+     setCountry(newList); 
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const searchByPrice = (item) => {
     const newData = [...prices]
@@ -161,12 +136,12 @@ const SearchProduct = (props) => {
     <div className="search">
       <div className="box">
         <div className="search__title">
-          <p>Loại sản phẩm</p>
+          <p>Thương hiệu</p>
         </div>
         <div className="search__content">
           <ul>
             {
-              typeProduct.map((item, index) => {
+              typeProduct && typeProduct.map((item, index) => {
                 return (
                   <li
                     className={item.status === true ? 'active' : ''}
@@ -183,7 +158,7 @@ const SearchProduct = (props) => {
       </div>
       <div className= "box" >
         <div className="search__title">
-          <p>GIÁ SẢN PHẨM</p>
+          <p>khoảng giá</p>
         </div>
         <div className="search__content">
           <ul>
@@ -196,8 +171,8 @@ const SearchProduct = (props) => {
                     onClick={() => searchByPrice(item)}
                   >
                     <p>
-                      {item.price1 === 0 ? 'Dưới ' : item.price1 === 1000000 ? 'Trên' : item.price1 + ' -> '}
-                      {item.price2 === 9999999999999 ? ' 1000000' : item.price2}
+                      {item.price1 === 0 ? 'Dưới ' : item.price1 === 10000000 ? 'Trên' : item.price1 + ' -> '}
+                      {item.price2 === 9999999999999 ? '10000000' : item.price2}
                     </p>
                   </li>
                 )
@@ -208,12 +183,12 @@ const SearchProduct = (props) => {
       </div>
       <div className= "box" >
         <div className="search__title">
-          <p>quốc gia</p>
+          <p>Xuất xứ</p>
         </div>
         <div className="search__content">
           <ul>
             {
-              country.map((item, index) => {
+              country && country.map((item, index) => {
                 return (
                   <li
                     className={item.status === true ? 'active' : ''}

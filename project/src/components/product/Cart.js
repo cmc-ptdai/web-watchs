@@ -23,7 +23,7 @@ import {
 } from './../../redux/actions/products'
 import userApi from '../../api/userApi'
 import ProductApi from '../../api/productApi'
-import WarehouseApi from '../../api/apiWarehouse';
+//import WarehouseApi from '../../api/apiWarehouse';
 import Paypal from './Paypal'
 
 const { Option } = Select;

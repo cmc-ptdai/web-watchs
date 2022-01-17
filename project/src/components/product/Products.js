@@ -8,7 +8,7 @@ import MyPagination from './MyPagination'
 import { Breadcrumb } from 'antd'
 
 const Products = ({gender}) => {
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState([])
   const [listSort, setListSort] = useState(null)
   const [listKeySort, setListKeySort] = useState({})
 
@@ -28,7 +28,6 @@ const Products = ({gender}) => {
     } catch (error) {
       console.log(error);
     }
-
   }
 
   useEffect(() => {
@@ -42,62 +41,22 @@ const Products = ({gender}) => {
   }, [listKeySort])
 
   const sortListKey = () => {
-    const newArr = []
     const lengthKey = Object.keys(listKeySort)
+    let newArr = [...products]
     if (lengthKey.length > 0) {
-      products.forEach(item => {
-        let count = 0
-        for (let key in listKeySort) {
-          if (item[key] === listKeySort) {
-            
-          }
-          // if (key === 'price') {
-          //   if (item.price >= listKeySort[key].price1 && item.price <= listKeySort[key].price2) {
-          //     count = count + 1
-          //   }
-          // }
-          // if (key === 'type') {
-          //   if (item.typeID === listKeySort[key]) {
-          //     count = count + 1
-          //   }
-          // }
-          // if (key === 'country') {
-          //   if (listKeySort[key] === 'khac') {
-          //     if (item.country !== 'viet nam' && item.country !== 'uc' && item.country !== 'trung quoc') {
-          //       count = count + 1
-          //     }
-          //   } else {
-          //     if (item.country === listKeySort[key]) {
-          //       count = count + 1
-          //     }
-          //   }
-          // }
+      for (const key in listKeySort) {
+        if (key === 'price') {
+          newArr = newArr.filter((element) => Number(element[key]) >= listKeySort.price.price1 && Number(element[key]) < listKeySort.price.price2)
+        } else {
+          newArr = newArr.filter((element) => element[key] === listKeySort[key] )
         }
-        // if (lengthKey.length === count) {
-        //   newArr.push(item)
-        // }
-      })
+      }
+      setListSort(newArr);
+    } else {
+      setListSort(products)
     }
-    setListSort(newArr)
   }
-  // const sortProduct = () => {
-  //   const newList = [];
-  //   products.forEach((element) => {
-  //     let status = true;
-  //     for (const key in listKeySort) {
-  //       if (element[key] !== listKeySort[key]) {
-  //         status = false;
-  //         break;
-  //       }
-  //     }
-  //     if (status === true) {
-  //       newList.push(element);
-  //     }
-  //   });
-  //   console.log(newList);
-  
-  //   //return newList;
-  // };
+
 
   const searchByPrice1 = value => {
     let newList = {}
@@ -129,13 +88,13 @@ const Products = ({gender}) => {
       } else {
         newList = {
           ...listKeySort,
-          type: type
+          brand: type
         }
       }
     } else {
       newList = {
         ...listKeySort,
-        type: type
+        brand: type
       }
     }
     setListKeySort(newList)
