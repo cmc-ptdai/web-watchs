@@ -130,114 +130,6 @@ const useReducer  = (state = initialState, action) => {
       }
     }
 
-    case INCREMENT_PROJECT:{
-      const index = cart.findIndex(item => item.id === action.payload.id)
-        if (index !== -1) {
-          const number = cart[index].count + 1;
-          if (number >= action.payload.max) {
-            if (action.payload.max === 0) {
-              cart[index].count = 1
-            } else {
-              cart[index].count = action.payload.max
-            }
-          } else {
-            cart[index].count = number
-          }
-        }
-        userApi.addCart(user.id, user)
-        return {
-          ...state,
-          user: user
-        }
-    }
-
-    case DECREMENT_PROJECT:{
-      const index = cart.findIndex(item => item.id === action.payload)
-        if (index !== -1) {
-          if (cart[index].count  - 1 === 0 ) {
-            cart[index].count = 1
-          }
-          else {
-            cart[index].count = cart[index].count  - 1
-          }
-
-        }
-
-      userApi.addCart(user.id, user)
-      return {
-        ...state,
-        user: user
-      }
-    }
-
-    case NUMBER_INPUT: {
-      const index = cart.findIndex(item => item.id === action.payload.id)
-      if(isNaN(action.payload.value) || action.payload.value <= 0) {
-          cart[index].count = 1
-          userApi.addCart(user.id, user)
-          return {
-            ...state,
-            user: user
-          }
-      } else {
-        if (Number(action.payload.value) > action.payload.max) {
-          cart[index].count = action.payload.max
-        } else {
-          cart[index].count = Number(action.payload.value)
-        }
-
-        userApi.addCart(user.id, user)
-        return {
-          ...state,
-          user: user
-        }
-      }
-    }
-
-    case DELETE_ITEM_CART: {
-      user.cart = user.cart.filter(item => item.id !== action.payload)
-      userApi.addCart(user.id, user)
-      return {
-        ...state,
-        user: user
-      }
-    }
-
-    case DELETE_LIST_ITEM_CART: {
-      action.payload.forEach(elem => {
-        user.cart = user.cart.filter(item => item.id !== elem)
-      });
-      userApi.addCart(user.id, user)
-      return {
-        ...state,
-        user: user
-      }
-    }
-
-    case PAY_CART: {
-      const listProduct = []
-      const newOder = {
-        id: uuidv4(),
-        idUser: idUser,
-        listProduct: listProduct,
-        money: action.payload.money,
-        status: "pending",
-        transportFee: action.payload.transport,
-        payments: action.payload.payments,
-        username: user.userName,
-        phone: user.phone,
-        address: user.address,
-        dateCreate: new Date(),
-        dateUpdate: new Date()
-      }
-      order.push(newOder.id)
-
-      orderApi.addOrder(newOder)
-
-      userApi.addCart(idUser, user)
-      return state
-    }
-
     case ADD_ORDER_NO_USER: {
       const newOder = {
         id: uuidv4(),
@@ -254,8 +146,28 @@ const useReducer  = (state = initialState, action) => {
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
-      console.log(newOder);
       orderApi.addOrder(newOder)
+      return state
+    }
+
+    case PAY_CART: {
+      const newOder = {
+        id: uuidv4(),
+        idUser: idUser,
+        listProduct: action.payload.data,
+        money: action.payload.money,
+        status: "pending",
+        transportFee: action.payload.transport,
+        payments: action.payload.payments,
+        username: user.userName,
+        phone: user.phone,
+        address: user.address,
+        dateCreate: new Date(),
+        dateUpdate: new Date()
+      }
+      order.push(newOder.id)
+      orderApi.addOrder(newOder)
+      userApi.addCart(idUser, user)
       return state
     }
 
@@ -359,6 +271,91 @@ const useReducer  = (state = initialState, action) => {
           ...state,
           user: newUser
         }
+    }
+
+    case INCREMENT_PROJECT:{
+      const index = cart.findIndex(item => item.id === action.payload.id)
+        if (index !== -1) {
+          const number = cart[index].count + 1;
+          if (number >= action.payload.max) {
+            if (action.payload.max === 0) {
+              cart[index].count = 1
+            } else {
+              cart[index].count = action.payload.max
+            }
+          } else {
+            cart[index].count = number
+          }
+        }
+        userApi.addCart(user.id, user)
+        return {
+          ...state,
+          user: user
+        }
+    }
+
+    case DECREMENT_PROJECT:{
+      const index = cart.findIndex(item => item.id === action.payload)
+        if (index !== -1) {
+          if (cart[index].count  - 1 === 0 ) {
+            cart[index].count = 1
+          }
+          else {
+            cart[index].count = cart[index].count  - 1
+          }
+
+        }
+
+      userApi.addCart(user.id, user)
+      return {
+        ...state,
+        user: user
+      }
+    }
+
+    case NUMBER_INPUT: {
+      const index = cart.findIndex(item => item.id === action.payload.id)
+      if(isNaN(action.payload.value) || action.payload.value <= 0) {
+          cart[index].count = 1
+          userApi.addCart(user.id, user)
+          return {
+            ...state,
+            user: user
+          }
+      } else {
+        if (Number(action.payload.value) > action.payload.max) {
+          cart[index].count = action.payload.max
+        } else {
+          cart[index].count = Number(action.payload.value)
+        }
+
+        userApi.addCart(user.id, user)
+        return {
+          ...state,
+          user: user
+        }
+      }
+    }
+
+    case DELETE_ITEM_CART: {
+      user.cart = user.cart.filter(item => item.id !== action.payload)
+      userApi.addCart(user.id, user)
+      return {
+        ...state,
+        user: user
+      }
+    }
+
+    case DELETE_LIST_ITEM_CART: {
+      console.log(123123);
+      action.payload.forEach(elem => {
+        user.cart = user.cart.filter(item => item.id !== elem)
+      });
+      userApi.addCart(user.id, user)
+      return {
+        ...state,
+        user: user
+      }
     }
 
     case INCREMENT_PROJECT_NO_USER: {

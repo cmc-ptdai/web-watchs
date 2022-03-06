@@ -21,9 +21,7 @@ import {
 import {
   deleteItemByPayCart as deleteItemByPayCartAction
 } from './../../redux/actions/products'
-import userApi from '../../api/userApi'
 import ProductApi from '../../api/productApi'
-//import WarehouseApi from '../../api/apiWarehouse';
 import Paypal from './Paypal'
 
 const { Option } = Select;
@@ -37,32 +35,23 @@ const openNotification = (text) => {
 
 const Cart = () => {
   const dispatch = useDispatch()
-
   const [form] = Form.useForm();
-
   const user = useSelector(store => store.userReducer.user)
   const dataProducts =  useSelector(store => store.userReducer.user.cart)
   const [products, setProducts] = useState(dataProducts)
-
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
   const [totalMoney, setTotalMoney] = useState(0)
   const [visibleAlert , setVisibleAlert] = useState(false)
   const [checkPaypal, setCheckPaypal] = useState(false)
-  //const [listWarehouse, setListWarehouse] = useState(null)
   const [transportFee, setTransportFee] = useState(null)
   const [moneyPayOl, setMoneyPayOl] = useState(0)
   const [listProduct, setListProduct] = useState(null)
-
   const [status, setStatus] = useState(true)
 
   useEffect(() => {
-    if(user.id) {
-      fetchApi()
-    } else {
-      setProducts(dataProducts)
-    }
+    setProducts(dataProducts)
     fetchApiProduct()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user, status])
@@ -207,17 +196,6 @@ const Cart = () => {
     onChange: onSelectChange,
   };
 
-  const fetchApi = async () => {
-    try {
-      const response = await userApi.getUserById(user.id)
-      //const Warehouses = await WarehouseApi.getWarehouse()
-      //setListWarehouse(Warehouses);
-      setProducts(response.cart)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   const fetchApiProduct = async () => {
     try {
       const listProductApi = await ProductApi.getAll()
@@ -310,8 +288,8 @@ const Cart = () => {
     setTimeout(() => {
       setSelectedRowKeys([])
       setLoading(false)
-      setStatus(!status)
-     }, 500);
+     }, 200);
+     setStatus(!status)
   };
 
   const handleCancel = () => {
@@ -350,6 +328,7 @@ const Cart = () => {
           dispatch(deleteItemByPayCartAction(listPayCart))
         }, 100);
       }
+      openNotification("Đơn hàng của bạn đã đươc đặt thành công")
       setTransportFee(null)
       onReset()
       onSelectChange([])
@@ -381,46 +360,33 @@ const Cart = () => {
         }
 
       })
+       //setTimeout(() => {
+
+      // }, 100)
+      dispatch(payCartAction({data:listPayCart, payments: 'off', transport: transportFee, money: totalMoney}))
+      openNotification("Đơn hàng của bạn đã đươc đặt thành công")
+      dispatch(deleteItemByPayCartAction(listPayCart))
+      dispatch(deleteListItemCartAction(newListKey))
       onSelectChange([])
       setTotalMoney(0)
-       setTimeout(() => {
-        dispatch(deleteItemByPayCartAction(listPayCart))
-        dispatch(deleteListItemCartAction(newListKey))
-        setSelectedRowKeys([])
-      }, 100)
-       setTransportFee(null)
-       dispatch(payCartAction({data:listPayCart, payments: 'off', transport: transportFee, money: totalMoney}))
-       //openNotification("Đơn hàng của bạn đã đươc đặt thành công")
+      setSelectedRowKeys([])
+      setTransportFee(null)
     } else {
       setVisible(true)
     }
     setStatus(!status)
   };
 
-  const onReset = () => {
-    form.resetFields();
-    setVisible(false)
-  };
-
   const PayCartOnline = async () => {
     setStatus(!status)
     if (user.id) {
-      //const listPayCart = []
       let money = 0
       selectedRowKeys.forEach(item => {
         products.forEach(elem => {
           if (item === elem.id) {
-            //const index = listProduct.findIndex(a => a.id === elem.id)
-            //if (listProduct[index].countPay > elem.count ) {
-              //listPayCart.push(elem);
-              //if (Number(elem.sale) > 0 ) {
-                money = money + ((elem.price * elem.count) - ((elem.price * elem.count)*elem.sale)/100)
-              // } else {
-              //   money = money + (Number(elem.price) * Number(elem.count))
-              // }
-            //}
+            money = money + ((elem.price * elem.count) - ((elem.price * elem.count)*elem.sale)/100)
           }
-        }); 
+        });
       })
       console.log(money, totalMoney);
       money = (money /22758).toFixed(2)
@@ -428,7 +394,6 @@ const Cart = () => {
     }
     setCheckPaypal(true)
   }
-  const hasSelected = selectedRowKeys.length > 0;
 
   const paySuccess = async (status1) => {
     setStatus(!status)
@@ -451,14 +416,15 @@ const Cart = () => {
       })
 
       dispatch(payCartAction({data:listPayCart, payments: 'online', transport: 'free', money: totalMoney}))
-      setTransportFee(null)
-      onSelectChange([])
-      setTotalMoney(0)
       setTimeout(() => {
         dispatch(deleteListItemCartAction(newListKey))
         dispatch(deleteItemByPayCartAction(listPayCart))
-        setSelectedRowKeys([])
-      }, 500)
+        openNotification("Đơn hàng của bạn đã đươc đặt thành công")
+      }, 200)
+      setSelectedRowKeys([])
+      setTransportFee(null)
+      onSelectChange([])
+      setTotalMoney(0)
     }
     //openNotification("Đơn hàng của bạn đã đươc đặt thành công")
     setCheckPaypal(false)
@@ -468,6 +434,14 @@ const Cart = () => {
     setTransportFee(e)
     sumOfMoney(e)
   }
+
+  const hasSelected = selectedRowKeys.length > 0;
+
+  const onReset = () => {
+    form.resetFields();
+    setVisible(false)
+  };
+
   return (
     <div className="cart">
       {
