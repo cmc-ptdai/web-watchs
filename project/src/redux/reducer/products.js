@@ -21,7 +21,10 @@ const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCT:
       return state = action.payload
-
+    case 'DAIPHUNG': {
+      console.log('product action');
+      return state
+    }
     case SET_EVALUATE: {
       EvaluateApi.editEvaluates(action.payload.id, action.payload)
       return state

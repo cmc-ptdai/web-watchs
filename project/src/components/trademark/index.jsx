@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import ApiTrademark from '../../api/tradermark';
+import ApiTrademark from '../../api/tradermark'
+import {Link} from 'react-router-dom'
 import "./style.scss"
 
 const Trademark = () => {
   const [trademarks, setTrademarks] = useState(null)
-  
+
   useEffect(() => {
     fetchApi()
   }, []);
@@ -17,19 +18,17 @@ const Trademark = () => {
     }
   }
   return (
-    <>
-      <div className=" row">
-        {
-          trademarks && trademarks.map((item) => {
-            return (
-              <>
-                <img src={item.img} />
-              </>
-            )
-          })
-        }
-      </div>
-    </>
+    <div className="trademark">
+      {
+        trademarks && trademarks.map((item) => {
+          return (
+            <Link to={`/products`} className="trademark__item">
+              <img src={item.img} />
+            </Link>
+          )
+        })
+      }
+    </div>
   )
 }
 

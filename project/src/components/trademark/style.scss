@@ -1,0 +1,15 @@
+.trademark {
+  display: flex;
+  .trademark__item {
+    width: 25%;
+    border: 1px solid #ccc;
+    padding: 5px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

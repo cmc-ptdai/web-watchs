@@ -1,9 +1,11 @@
 - json-server db.json --port 3004 (xoá --watch : json-server --watch db.json --port 3004)
+
 - user đang lỗi thanh toán thương lúc được lúc không
 - comment chậm
-- thêm số lượng sản phẩm bằng cách khác
+- khi click vào thương hiệu sẽ chuyển sang phần sản phẩm tương ứng thương hiệu đấy
+
+- css compoment addproduct
+- tìm kiếm sản phẩm để thêm sản phẩm ở admin
+- hiển thị trạng thái hàng con lại khi ở trang chủ
 - đảo ngược đơn hàng mới nhất lên trên cùng
-- thêm nút ở sản phẩm để thêm sản phảm
-- tìm kiếm sản phẩm đê thêm sản phẩm ở admin
 - khi sửa comment thì cũng sửa trong phần new comment
-- khi ko chọn bộ lọc nào sẽ reset về ko full sản phẩm

@@ -61,7 +61,13 @@ const OrderItem = ({dataOrder, status, changeOrder}) => {
           })
         }
         <div className="Order-footer">
-          <p><span><i className="fad fa-usd-circle" /></span> Số tiền phải trả: <span>{dataOrder.money} VND</span></p>
+          <p>
+            <i className="fad fa-usd-circle" />
+            Số tiền phải trả:
+            <span>
+              {dataOrder.payments === "online" ? 0 : dataOrder.money} VND
+            </span>
+          </p>
           {
             status === 'pending' && (
               <Popconfirm

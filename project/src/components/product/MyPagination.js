@@ -13,7 +13,7 @@ const MyPagination = ({ listSort }) => {
   return (
     <>
       {pageOfItems.map((item, index) => (
-        <div className="col-4 item" key={index}>
+        <div className="col-4 item" key={index} style={{marginBottom: "20px"}}>
           <CardItem item={item} />
         </div>
       ))}

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Input, Modal, Select, Form } from "antd";
 import { useDispatch } from "react-redux";
 import { editProduct, getProduct } from "../../../redux/action/productAction";
 import userProduct from "../../../api/apiProduct";
 import "./product.scss";
-import apiWarehouse from "../../../api/apiWarehouse";
 
 const { Option } = Select;
 
@@ -14,16 +13,6 @@ const FromEditProduct = (props) => {
   const dispatch = useDispatch();
   const [data, setData] = useState({ ...props.data });
   const [imgEdit, setImgEdit] = useState(data.img);
-  const [warehouse, setWarehouse] = useState(null);
-
-  useEffect(() => {
-    fetchWarehouse();
-  }, []);
-
-  const fetchWarehouse = async () => {
-    const warehouse = await apiWarehouse.getWarehouseById(data.id);
-    setWarehouse(warehouse);
-  };
 
   const onFinish = (values) => {
     const newData = {
@@ -33,14 +22,6 @@ const FromEditProduct = (props) => {
       dateAdd:data.dateAdd,
       dateUpdate:new Date(),
       type: data.type
-    }
-    if (props.data.countPay !== Number(values.countPay)) {
-      const newWarehouse = {
-        dateInput: new Date(),
-        numberProduct: Number(values.countPay) - props.data.countPay,
-      };
-      warehouse.listWarehouse.push(newWarehouse);
-      apiWarehouse.editWarehouse(warehouse.id, warehouse);
     }
     dispatch(editProduct(newData));
     setTimeout(async () => {
@@ -160,7 +141,7 @@ const FromEditProduct = (props) => {
               },
             ]}
           >
-            <Input type="number" />
+            <p>{data.countPay}</p>
           </Form.Item>
           <label>Nguồn gốc:</label>
           <Form.Item

@@ -9,16 +9,24 @@ import apiEvaluate from "../../../api/apiEvaluates";
 import apiWarehouse from "../../../api/apiWarehouse";
 import { Popconfirm } from 'antd'
 import {Link} from 'react-router-dom'
+import AddProduct from './AddProduct'
 
 const ProductItem = ({data}) => {
   const dispatch = useDispatch()
   const [statusFrom, setStatusFrom] = useState(false)
+  const [statusFromAdd, setStatusFromAdd] = useState(false)
 
   const editStatusFrom = (children) => {
     setStatusFrom(children)
   }
+  const editStatusFromAdd = (children) => {
+    setStatusFromAdd(children)
+  }
   const showFromEdit = () => {
     setStatusFrom(true)
+  }
+  const showFromAdd = () => {
+    setStatusFromAdd(true)
   }
   const deleteProduct = () => {
     apiComment.deleteComments(data.id);
@@ -44,6 +52,9 @@ const ProductItem = ({data}) => {
       <div className="productItem">
         <div className="productItem__countPay">
           {data.countPay <= 0 ? 'Hết Hàng' : data.countPay }
+        </div>
+        <div className="productItem__add" onClick={showFromAdd}>
+          Add
         </div>
         {
           data.sale > 0 &&
@@ -92,6 +103,9 @@ const ProductItem = ({data}) => {
       </div>
       {
         statusFrom && <FormEditProduct data={data} editStatusFrom={editStatusFrom} />
+      }
+      {
+        statusFromAdd && <AddProduct data={data} editStatusFromAdd={editStatusFromAdd} />
       }
     </>
   )

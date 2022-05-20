@@ -8,6 +8,14 @@
 .form__add {
   width: 70% !important;
 }
+.form__editAdd {
+  .group-button {
+    width: 40%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+}
 .form__edit {
   width: 70% !important;
   margin: auto;

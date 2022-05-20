@@ -24,7 +24,6 @@ const CardItem = ({item}) => {
       setTimeout(() => {
         openNotification(item)
       }, 100);
-
     } else {
       dispatch(addCartNoUserAction(item))
       setTimeout(() => {

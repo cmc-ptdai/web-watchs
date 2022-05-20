@@ -55,6 +55,7 @@ const Products = ({gender}) => {
     } else {
       setListSort(products)
     }
+    console.log(listKeySort);
   }
 
 
@@ -81,16 +82,9 @@ const Products = ({gender}) => {
 
   const searchByType= (type) => {
     let newList = {}
-    if (listKeySort?.type) {
-      if (listKeySort.type === type) {
-        delete listKeySort.type;
+    if (listKeySort?.brand === type) {
+        delete listKeySort.brand;
         newList = {...listKeySort}
-      } else {
-        newList = {
-          ...listKeySort,
-          brand: type
-        }
-      }
     } else {
       newList = {
         ...listKeySort,

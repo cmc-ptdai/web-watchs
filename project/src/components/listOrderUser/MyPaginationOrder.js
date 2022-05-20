@@ -15,7 +15,7 @@ const MyPaginationOrder = ({ listSort }) => {
         <OrderItem dataOrder={item} key={index}/>
       ))}
       <div className="col-12 product__pagination">
-        <JwPagination items={listSort} onChangePage={onChangePage} pageSize={6} maxPages={5} />
+        <JwPagination items={listSort} onChangePage={onChangePage} pageSize={5} maxPages={5} />
       </div>
     </>
   );

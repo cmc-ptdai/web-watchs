@@ -34,20 +34,6 @@ const MyMenu = () => {
           title: 'Đồng hồ đôi',
           path: '/doi',
         }
-        // {
-        //   title: 'Nấm',
-        //   path: '/mushroom',
-        //   children: [
-        //     {
-        //       title: 'Quả tươi',
-        //       path: '/mushroom/fresh'
-        //     },
-        //     {
-        //       title: 'Quả khô',
-        //       path: '/mushroom/dried'
-        //     }
-        //   ]
-        // },
       ]
     },
     {

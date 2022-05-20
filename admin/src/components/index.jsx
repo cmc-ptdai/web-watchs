@@ -75,7 +75,6 @@ function Body() {
   const deleteCookie = (name) => {
     let now = new Date()
     now.setTime(now.getTime() + 60 * 1000)
-
     document.cookie = `${name}=;expires= ${now.toUTCString()}`
   }
 
@@ -103,7 +102,6 @@ function Body() {
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed}>
             <div className="logo" />
-
             <Menu className="nav-item" theme="dark" mode="inline" defaultSelectedKeys={['dashboard']} onClick={handleClickMenu}>
               <Menu.Item key="dashboard" icon={<AppstoreFilled style={{ fontSize: '18px'}}/>}>
                 <Link  to='/body'>
