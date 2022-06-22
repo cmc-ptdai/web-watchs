@@ -1,20 +1,37 @@
 import apiComment from '../../api/apiComment'
 import apiProduct from '../../api/productApi'
+import NewCommentApi from '../../api/apiNewComment'
 
 import {
   GET_PRODUCT,
   SET_EVALUATE,
   DELETE_ITEM_BY_PAY_CART,
-  DELETE_NEW_COMMENT,
-  INCREMENT_PROJECT_DELETE_ORDER,
   GET_COMMENT
 } from '../actionType'
 
-export const getProduct = (payload) => async (dispatch) => {
-  return {
+export const getProduct = () => async (dispatch) => {
+  const data = await apiProduct.getAll()
+  console.log(data);
+  dispatch({
     type: GET_PRODUCT,
-    payload
-  }
+    payload: data
+  })
+}
+
+export const incrementProjectDeleteOrder = (payload) => async (dispatch) => {
+  payload.dataOrder.listProduct.forEach( async (item) => {
+    for (let i = 0; i < payload.product.length; i++) {
+      if (item.id === payload.product[i].id) {
+        const newProduct = {
+          ...payload.product[i],
+          countPay: payload.product[i].countPay + item.count,
+          quantityPurchased: payload.product[i].quantityPurchased - item.count
+        }
+        await apiProduct.updateProduct(newProduct.id, newProduct)
+        return
+      }
+    }
+  })
 }
 
 export const setEvaluate = (payload) => {
@@ -75,17 +92,6 @@ export const deleteCommentReply = (payload) => async (dispatch) => {
   })
 }
 
-export const deleteNewComment = (payload) => {
-  return {
-    type: DELETE_NEW_COMMENT,
-    payload
-  }
+export const deleteNewComment = (payload) => async (dispatch) => {
+  await NewCommentApi.deleteNewComment(payload.id)
 }
-
-export const incrementProjectDeleteOrder = (payload) => {
-  return {
-    type: INCREMENT_PROJECT_DELETE_ORDER,
-    payload
-  }
-}
-

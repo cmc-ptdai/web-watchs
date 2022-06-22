@@ -10,6 +10,7 @@ import ScrollToTop from '../../ScrollToTop';
 
 const Home = () => {
   const products = useSelector(store => store.productReducer)
+  console.log(products);
   const dispatch = useDispatch()
   const fetchUserById = async () => {
     const baseId =  localStorage.getItem('userID')

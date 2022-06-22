@@ -22,7 +22,7 @@ const Product = () => {
     if (inputSearch === "") {
       setListProducts(dataDf)
     } else {
-      const arrSearch = listProducts.filter(item => (item.name.toLowerCase().indexOf(inputSearch) !== -1 ))
+      const arrSearch = listProducts.filter(item => (item.name.toLowerCase().indexOf(inputSearch.toLowerCase()) !== -1 ))
       setListProducts(arrSearch)
     }
   }

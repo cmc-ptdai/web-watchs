@@ -67,9 +67,10 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
 
   const deleteReplyComment = (id) => {
     const data1 = {...data}
+    console.log(listNewComment, id);
     const commentNew = listNewComment.filter(item => item.idComment === id)
     if (commentNew.length > 0) {
-      dispatch(deleteNewComment(commentNew[0]))
+      dispatch(deleteNewComment(id))
     }
     const newReplyComment = dataLocal.children.filter(comment => comment.id !== id)
     for (let i = 0; i < data1.comments.length; i++) {

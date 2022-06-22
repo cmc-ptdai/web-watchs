@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Input, Modal } from "antd";
+import { Button, Modal } from "antd";
 import { editProduct, getProduct } from "../../../redux/action/productAction";
 import apiWarehouse from "../../../api/apiWarehouse";
 import userProduct from "../../../api/apiProduct";
@@ -12,6 +12,7 @@ const AddProduct = (props) => {
   const [numberInput, setNumberInput] = useState(null);
   useEffect(() => {
     fetchWarehouse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const fetchWarehouse = async () => {
     const warehouses = await apiWarehouse.getWarehouseById(props.data.id);

@@ -9,17 +9,15 @@ import {
   Route
 } from "react-router-dom"
 import router from './router'
-import { useDispatch } from 'react-redux';
-import ProductApi from './api/productApi'
+import { useDispatch } from 'react-redux'
 import UserApi from './api/userApi'
 import {getProduct as getProductAction} from './redux/actions/products'
-import {getUser as getUserAction} from './redux/actions/userAction';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import ScrollToTop from './ScrollToTop';
-//import ListBanner from './components/product/listBanner/index'
+import {getUser as getUserAction} from './redux/actions/userAction'
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import ScrollToTop from './ScrollToTop'
 import Footer from './components/footer/Footer'
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.css'
 
 const style = {
   height: 40,
@@ -41,8 +39,7 @@ const App = () => {
       localStorage.setItem('cart', JSON.stringify(newCartLocal))
     }
     try {
-      const listProduct = await ProductApi.getAll()
-      dispatch(getProductAction(listProduct))
+      dispatch(getProductAction())
       if(localStorage.getItem('userID')) {
         const id = atob(localStorage.getItem('userID'))
         const user = await UserApi.getUserById(id)

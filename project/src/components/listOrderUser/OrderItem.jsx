@@ -4,7 +4,7 @@ import { Button, Popconfirm } from 'antd'
 import { useDispatch } from 'react-redux';
 import orderApi from '../../api/order';
 import productsApi from '../../api/productApi'
-import { incrementProjectDeleteOrder } from '../../redux/actions/products'
+import { incrementProjectDeleteOrder, getProduct } from '../../redux/actions/products'
 
 const OrderItem = ({dataOrder, status, changeOrder}) => {
 
@@ -32,6 +32,7 @@ const OrderItem = ({dataOrder, status, changeOrder}) => {
     }
     changeOrder(dataOrder.id)
     dispatch(incrementProjectDeleteOrder({ dataOrder: dataOrder, product: listProducts}))
+    dispatch(getProduct())
   }
   const cancel = () => {}
   return (

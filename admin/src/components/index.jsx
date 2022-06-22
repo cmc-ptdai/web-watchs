@@ -93,6 +93,7 @@ function Body() {
   }
 
   if (getCookie('idUserName') === undefined || getCookie('idUserName') === '') {
+    console.log(1);
     return <Redirect to='/' />
   }
 
