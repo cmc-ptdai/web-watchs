@@ -7,7 +7,7 @@ import { Breadcrumb } from 'antd'
 import { Link } from 'react-router-dom'
 import MyPagination from '../../product/MyPagination'
 
-const SearchProductsByName = ({type}) => {
+const SearchProductsByName = () => {
   const newArr = useSelector(store => store.searchProduct)
 
   const [products, setProducts] = useState(newArr)

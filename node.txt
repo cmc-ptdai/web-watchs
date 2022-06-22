@@ -4,8 +4,10 @@
 - comment chậm
 - khi click vào thương hiệu sẽ chuyển sang phần sản phẩm tương ứng thương hiệu đấy
 
-- css compoment addproduct
 - tìm kiếm sản phẩm để thêm sản phẩm ở admin
 - hiển thị trạng thái hàng con lại khi ở trang chủ
-- đảo ngược đơn hàng mới nhất lên trên cùng
 - khi sửa comment thì cũng sửa trong phần new comment
+- sửa phần ảnh khi thêm sản phẩm ( sử dụng base64 )
+- khi nào thì bắt đầu trừ sản phẩm khi mua hàng
+- phân chia phần biểu đồ theo từng ngày tháng năm
+- thông báo khi đặt hàng xong

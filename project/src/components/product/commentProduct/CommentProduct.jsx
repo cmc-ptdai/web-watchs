@@ -6,7 +6,7 @@ import {
   deleteNewComment,
   replyCommentProduct,
   deleteComment as deleteCommentAction,
-  deleteCommentReply as deleteCommentReplyAction
+  deleteCommentReply as deleteCommentReplyAction,
 } from '../../../redux/actions/products'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';

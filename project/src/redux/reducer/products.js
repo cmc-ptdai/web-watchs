@@ -1,16 +1,11 @@
 import productApi from '../../api/productApi'
-import commentApi from '../../api/apiComment'
 import EvaluateApi from '../../api/apiEvaluates'
 import NewCommentApi from '../../api/apiNewComment'
 
 import {
   GET_PRODUCT,
-  COMMENT_PRODUCT,
-  REPLY_COMMENT_PRODUCT,
   SET_EVALUATE,
   DELETE_ITEM_BY_PAY_CART,
-  DELETE_COMMENT,
-  DELETE_COMMENT_REPLY,
   DELETE_NEW_COMMENT,
   INCREMENT_PROJECT_DELETE_ORDER
 } from '../actionType'
@@ -21,10 +16,7 @@ const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCT:
       return state = action.payload
-    case 'DAIPHUNG': {
-      console.log('product action');
-      return state
-    }
+
     case SET_EVALUATE: {
       EvaluateApi.editEvaluates(action.payload.id, action.payload)
       return state
@@ -33,7 +25,7 @@ const productReducer = (state = initialState, action) => {
     case DELETE_ITEM_BY_PAY_CART: {
       const newArr = [...state]
       newArr.forEach(item => {
-        action.payload.forEach( (elem) => {
+        action.payload.forEach( async (elem) => {
           if (item.id === elem.id) {
             const newCount = Number(item.countPay) - Number(elem.count)
             const newQuantityPurchased = Number(item.quantityPurchased) + Number(elem.count)
@@ -42,7 +34,7 @@ const productReducer = (state = initialState, action) => {
               countPay: newCount,
               quantityPurchased: newQuantityPurchased
             }
-            productApi.updateProduct(item.id, newElem)
+            await productApi.updateProduct(item.id, newElem)
           }
         })
       })
@@ -50,38 +42,19 @@ const productReducer = (state = initialState, action) => {
     }
 
     case INCREMENT_PROJECT_DELETE_ORDER: {
-      action.payload.dataOrder.listProduct.forEach(item => {
+      action.payload.dataOrder.listProduct.forEach( async (item) => {
         for (let i = 0; i < action.payload.product.length; i++) {
           if (item.id === action.payload.product[i].id) {
             const newProduct = {
               ...action.payload.product[i],
-              countPay: action.payload.product[i].countPay + item.count
+              countPay: action.payload.product[i].countPay + item.count,
+              quantityPurchased: action.payload.product[i].quantityPurchased - item.count
             }
-            productApi.updateProduct(newProduct.id, newProduct)
+            await productApi.updateProduct(newProduct.id, newProduct)
             return
           }
         }
       })
-      return state
-    }
-
-    case REPLY_COMMENT_PRODUCT: {
-      commentApi.editApiComments(action.payload.dataProduct, action.payload.newData)
-      return state
-    }
-
-    case COMMENT_PRODUCT: {
-      commentApi.editApiComments(action.payload.dataProduct, action.payload.newData)
-      return state
-    }
-
-    case DELETE_COMMENT: {
-      commentApi.editApiComments(action.payload.id, action.payload)
-      return state
-    }
-
-    case DELETE_COMMENT_REPLY: {
-      commentApi.editApiComments(action.payload.id, action.payload)
       return state
     }
 

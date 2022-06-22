@@ -12,6 +12,7 @@ import { Tabs, notification, Breadcrumb } from 'antd';
 import ShowComment from './commentProduct/index'
 import Evaluate from './evaluateProduct/Evaluate'
 import Specifications from './specifications/Specifications'
+import CompareProduct from './compareProduct/CompareProduct'
 import UserApi from '../../api/userApi'
 
 const { TabPane } = Tabs;
@@ -243,6 +244,9 @@ const ProfileProduct = () => {
             </TabPane>
             <TabPane tab="Bình luận" key="4">
               <ShowComment  data={product}/>
+            </TabPane>
+            <TabPane tab="So sánh" key="5">
+              <CompareProduct  data={product}/>
             </TabPane>
           </Tabs>
         </>

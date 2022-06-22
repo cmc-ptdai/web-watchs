@@ -2,16 +2,13 @@ import React from 'react'
 import './style.scss'
 
 export default function Specifications({data}) {
-  console.log(data);
   return (
     <>
       <div className='row'>
         <div className="col-xl-6">
           <p>Thương hiệu: {data.brand}</p>
           <p>Xuất xứ: {data.country}</p>
-          <p>Giới tính: {data.gender
-            // data.gender === 'nam' ? 'Nam' : data.gender === 'nu' ? 'Nữ' : "Đôi"
-            }</p>
+          <p>Giới tính: { data.gender === 'nam' ? 'Nam' : data.gender === 'nu' ? 'Nữ' : "Đôi"}</p>
           <p>Kiểu máy: {data.model}</p>
           <p>Chất liệu vỏ: {data.shellMaterial}</p>
           <p>Chất liệu dây: {data.ropeMaterial}</p>
@@ -27,7 +24,7 @@ export default function Specifications({data}) {
                 <p>kích thước nam (mm): {data.sizeNam}</p>
                 <p>kích thước nữ (mm): {data.sizeNu}</p>
               </>
-            )  
+            )
           }
           <p>Bảo hiểm: {data.Insurance} năm</p>
           <p>Bảo hành quốc tế: {data.internationalWarranty} năm</p>

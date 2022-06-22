@@ -56,6 +56,15 @@ const Cart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user, status])
 
+  const fetchApiProduct = async () => {
+    try {
+      const listProductApi = await ProductApi.getAll()
+      setListProduct(listProductApi)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const columns = [
     {
       title: 'Sản phẩm',
@@ -195,15 +204,6 @@ const Cart = () => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-
-  const fetchApiProduct = async () => {
-    try {
-      const listProductApi = await ProductApi.getAll()
-      setListProduct(listProductApi)
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const getNumberInput = (event) => {
     const { value, id } = event.target

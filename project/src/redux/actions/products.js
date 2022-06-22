@@ -1,16 +1,16 @@
+import apiComment from '../../api/apiComment'
+import apiProduct from '../../api/productApi'
+
 import {
   GET_PRODUCT,
   SET_EVALUATE,
   DELETE_ITEM_BY_PAY_CART,
-  COMMENT_PRODUCT,
-  REPLY_COMMENT_PRODUCT,
-  DELETE_COMMENT,
-  DELETE_COMMENT_REPLY,
   DELETE_NEW_COMMENT,
-  INCREMENT_PROJECT_DELETE_ORDER
+  INCREMENT_PROJECT_DELETE_ORDER,
+  GET_COMMENT
 } from '../actionType'
 
-export const getProduct = (payload) => {
+export const getProduct = (payload) => async (dispatch) => {
   return {
     type: GET_PRODUCT,
     payload
@@ -31,33 +31,48 @@ export const deleteItemByPayCart = (payload) => {
   }
 }
 
-
-export const commentProduct = (payload) => {
-  return {
-    type: COMMENT_PRODUCT,
-    payload
-  }
+export const getComment = () => async (dispatch) => {
+  const data = await apiComment.getAllApiComments()
+  dispatch({
+    type: GET_COMMENT,
+    payload: data
+  })
 }
 
-export const replyCommentProduct = (payload) => {
-  return {
-    type: REPLY_COMMENT_PRODUCT,
-    payload
-  }
+export const commentProduct = (payload) => async (dispatch) => {
+  await apiComment.editApiComments(payload.dataProduct, payload.newData)
+  const data = await apiComment.getAllApiComments()
+  dispatch({
+    type: GET_COMMENT,
+    payload: data
+  })
 }
 
-export const deleteComment = (payload) => {
-  return {
-    type: DELETE_COMMENT,
-    payload
-  }
+export const deleteComment = (payload) => async (dispatch) => {
+  await apiComment.editApiComments(payload.id, payload)
+  const data = await apiComment.getAllApiComments()
+  dispatch({
+    type: GET_COMMENT,
+    payload: data
+  })
 }
 
-export const deleteCommentReply = (payload) => {
-  return {
-    type: DELETE_COMMENT_REPLY,
-    payload
-  }
+export const replyCommentProduct = (payload) => async (dispatch) => {
+  await apiComment.editApiComments(payload.dataProduct, payload.newData)
+  const data = await apiComment.getAllApiComments()
+  dispatch({
+    type: GET_COMMENT,
+    payload: data
+  })
+}
+
+export const deleteCommentReply = (payload) => async (dispatch) => {
+  await apiComment.editApiComments(payload.id, payload)
+  const data = await apiComment.getAllApiComments()
+  dispatch({
+    type: GET_COMMENT,
+    payload: data
+  })
 }
 
 export const deleteNewComment = (payload) => {

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import CommentProduct from './CommentProduct';
 import { useDispatch, useSelector }  from 'react-redux'
 import { Button,  Comment,Avatar,Form, Input } from 'antd';
-import { commentProduct } from '../../../redux/actions/products'
+import { commentProduct, getComment } from '../../../redux/actions/products'
 import { v4 as createId } from 'uuid';
 import './styleComment.scss'
 import { Link } from 'react-router-dom'
-import apiComment from '../../../api/apiComment'
 import apiUser from '../../../api/userApi'
 import apiNewComment from '../../../api/apiNewComment'
 
@@ -14,6 +13,7 @@ const { TextArea } = Input;
 
 const ShowComment = ({data}) => {
   const user = useSelector(store => store.userReducer.user)
+  const listComments = useSelector(store => store.listComponent)
   const dispatch = useDispatch()
   const [valueComment, setValueComment] = useState('')
   const [dataComments, setDataComment] = useState(null)
@@ -21,14 +21,20 @@ const ShowComment = ({data}) => {
   const [status, setStatus] = useState(false)
 
   useEffect(() => {
+    dispatch(getComment())
+    fetchUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+  useEffect(() => {
     fetchComment()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[data,status])
-
-  const fetchComment = async () => {
-    const listComments = await apiComment.getAllApiComments()
+  },[data,status,listComments]) //data,status
+  const fetchUser = async () => {
     const listUsers = await apiUser.getUser()
     setListUsers(listUsers)
+  }
+  const fetchComment = () => {
     for (let i=0 ; i < listComments.length; i++) {
       if (listComments[i].id === data.id) {
         setDataComment(listComments[i])
@@ -76,7 +82,7 @@ const ShowComment = ({data}) => {
   return (
     <>
       {
-        dataComments !== null &&
+        dataComments !== null && listUsers !== null &&
         dataComments.comments.map((item, index) => {
           return (
           <CommentProduct

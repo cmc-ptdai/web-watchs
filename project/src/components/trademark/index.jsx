@@ -23,7 +23,7 @@ const Trademark = () => {
         trademarks && trademarks.map((item) => {
           return (
             <Link to={`/products`} className="trademark__item">
-              <img src={item.img} />
+              <img src={item.img}  alt=""/>
             </Link>
           )
         })
