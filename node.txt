@@ -9,9 +9,6 @@
 - xoá comment cũng xoá trong phần newcomment khi xoá comment cho cũng xoá những comment reply
 
 
-- sửa phần ảnh khi thêm sản phẩm ( sử dụng base64 )
-
-
 - phân chia phần biểu đồ theo từng ngày tháng năm
 
 
@@ -19,5 +16,6 @@
 
 
 - khi chuyển ở phần dashboard thì phần menu cũng hover theo
+
 
 - chuyển đổi phần DELETE_ITEM_BY_PAY_CART

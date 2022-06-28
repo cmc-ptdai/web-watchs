@@ -11,7 +11,6 @@ import {
 
 export const getProduct = () => async (dispatch) => {
   const data = await apiProduct.getAll()
-  console.log(data);
   dispatch({
     type: GET_PRODUCT,
     payload: data

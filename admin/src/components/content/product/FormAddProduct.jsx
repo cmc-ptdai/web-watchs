@@ -15,8 +15,8 @@ const FromAddProduct = (props) => {
   const dataProduct = useSelector((store) => store.productReducer);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const [imgEdit, setImgEdit] = useState("");
   const [typeWatch, setTypeWatch] = useState("single");
+  const [imgInput, setImgInput] = useState('')
 
   const changeType = (e) => {
     setTypeWatch(e);
@@ -26,6 +26,7 @@ const FromAddProduct = (props) => {
     const newValue = {
       ...value,
       id: uuidv4(),
+      img: imgInput,
       dateAdd: new Date(),
       dateUpdate: new Date(),
     };
@@ -71,10 +72,23 @@ const FromAddProduct = (props) => {
     form.resetFields();
   };
 
-  const imgChange = (e) => {
-    setImgEdit(e.target.value);
+  const inputFile = async (e) => {
+    const file = e.target.files[0]
+    const fileBase64 = await converterBase64(file)
+    setImgInput(fileBase64);
+  }
+  const converterBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      };
+      fileReader.onerror = (err) => {
+        reject(err);
+      };
+    });
   };
-
   return (
     <div>
       <Modal
@@ -326,7 +340,7 @@ const FromAddProduct = (props) => {
           >
             <Input />
           </Form.Item>
-          <label>Bảo hành:</label>
+          <label>Bảo hiểm:</label>
           <Form.Item
             name="Insurance"
             rules={[
@@ -338,7 +352,7 @@ const FromAddProduct = (props) => {
           >
             <Input />
           </Form.Item>
-          <label>Bảo hành toàn quốc:</label>
+          <label>Bảo hành quốc tế:</label>
           <Form.Item
             name="internationalWarranty"
             rules={[
@@ -357,14 +371,14 @@ const FromAddProduct = (props) => {
               { required: true, message: "Please input your link image!" },
             ]}
           >
-            <Input onChange={imgChange} />
+            <Input type="file" onChange={inputFile} accept=".jpg, .jpeg, .png" />
           </Form.Item>
 
-          {imgEdit && (
+          {imgInput && (
             <div className="form__edit__img">
               <img
-                src={imgEdit ? imgEdit : ""}
-                alt="link ảnh của bạn không đúng hoặc không tồn tại"
+                src={imgInput ? imgInput : ""}
+                alt=""
               />
             </div>
           )}

@@ -11,18 +11,19 @@ const FromEditProduct = (props) => {
   //const dataProduct = useSelector((store) => store.productReducer);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [data, setData] = useState({ ...props.data });
+  const [data, setData] = useState({ ...props.data});
   const [imgEdit, setImgEdit] = useState(data.img);
 
   const onFinish = (values) => {
     const newData = {
       ...values,
-      id:data.id,
-      quantityPurchased:data.quantityPurchased,
-      dateAdd:data.dateAdd,
-      dateUpdate:new Date(),
-      type: data.type
-    }
+      id: data.id,
+      img: imgEdit,
+      quantityPurchased: data.quantityPurchased,
+      dateAdd: data.dateAdd,
+      dateUpdate: new Date(),
+      type: data.type,
+    };
     dispatch(editProduct(newData));
     setTimeout(async () => {
       try {
@@ -38,11 +39,26 @@ const FromEditProduct = (props) => {
     props.editStatusFrom(false);
   };
 
-  const imgChange = (e) => {
-    setImgEdit(e.target.value);
+  const inputFile = async (e) => {
+    const file = e.target.files[0];
+    const fileBase64 = await converterBase64(file);
+    setImgEdit(fileBase64);
     setData({
       ...data,
-      img: e.target.value,
+      img: fileBase64,
+    });
+  };
+
+  const converterBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (err) => {
+        reject(err);
+      };
     });
   };
 
@@ -198,10 +214,8 @@ const FromEditProduct = (props) => {
             </Select>
           </Form.Item>
           <label>kiểu (đơn, đôi):</label>
-          <Form.Item
-            name="type"
-          >
-            <p>{data.type === 'single' ? 'Đồng hồ đơn' : 'Đồng hồ đôi'}</p>
+          <Form.Item name="type">
+            <p>{data.type === "single" ? "Đồng hồ đơn" : "Đồng hồ đôi"}</p>
           </Form.Item>
           {data.type === "single" ? (
             <>
@@ -332,14 +346,8 @@ const FromEditProduct = (props) => {
             <Input />
           </Form.Item>
           <label>Ảnh mô tả sản phẩm:</label>
-          <Form.Item
-            name="img"
-            rules={[
-              { required: true, message: "Please input your link image!" },
-            ]}
-          >
-            <Input onChange={imgChange} />
-          </Form.Item>
+
+          <input type="file" onChange={inputFile} accept=".jpg, .jpeg, .png"/>
 
           {imgEdit && (
             <div className="form__edit__img">
@@ -349,6 +357,7 @@ const FromEditProduct = (props) => {
               />
             </div>
           )}
+
           <label>Mô tả và giới thiệu sản phẩm:</label>
           <Form.Item
             name="content"
