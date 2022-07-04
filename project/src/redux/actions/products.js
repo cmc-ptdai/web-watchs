@@ -1,96 +1,118 @@
-import apiComment from '../../api/apiComment'
-import apiProduct from '../../api/productApi'
-import NewCommentApi from '../../api/apiNewComment'
+import apiComment from '../../api/apiComment';
+import apiProduct from '../../api/productApi';
+import NewCommentApi from '../../api/apiNewComment';
 
-import {
-  GET_PRODUCT,
-  SET_EVALUATE,
-  DELETE_ITEM_BY_PAY_CART,
-  GET_COMMENT
-} from '../actionType'
+import { GET_PRODUCT, SET_EVALUATE, DELETE_ITEM_BY_PAY_CART, GET_COMMENT } from '../actionType';
 
 export const getProduct = () => async (dispatch) => {
-  const data = await apiProduct.getAll()
+  const data = await apiProduct.getAll();
   dispatch({
     type: GET_PRODUCT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const incrementProjectDeleteOrder = (payload) => async (dispatch) => {
-  payload.dataOrder.listProduct.forEach( async (item) => {
+  payload.dataOrder.listProduct.forEach(async (item) => {
     for (let i = 0; i < payload.product.length; i++) {
       if (item.id === payload.product[i].id) {
         const newProduct = {
           ...payload.product[i],
           countPay: payload.product[i].countPay + item.count,
-          quantityPurchased: payload.product[i].quantityPurchased - item.count
-        }
-        await apiProduct.updateProduct(newProduct.id, newProduct)
-        return
+          quantityPurchased: payload.product[i].quantityPurchased - item.count,
+        };
+        await apiProduct.updateProduct(newProduct.id, newProduct);
+        return;
       }
     }
-  })
-}
+  });
+};
 
 export const setEvaluate = (payload) => {
   return {
     type: SET_EVALUATE,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const deleteItemByPayCart = (payload) => {
   return {
     type: DELETE_ITEM_BY_PAY_CART,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const getComment = () => async (dispatch) => {
-  const data = await apiComment.getAllApiComments()
+  const data = await apiComment.getAllApiComments();
   dispatch({
     type: GET_COMMENT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const commentProduct = (payload) => async (dispatch) => {
-  await apiComment.editApiComments(payload.dataProduct, payload.newData)
-  const data = await apiComment.getAllApiComments()
+  await apiComment.editApiComments(payload.dataProduct, payload.newData);
+  const data = await apiComment.getAllApiComments();
   dispatch({
     type: GET_COMMENT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const deleteComment = (payload) => async (dispatch) => {
-  await apiComment.editApiComments(payload.id, payload)
-  const data = await apiComment.getAllApiComments()
+  await apiComment.editApiComments(payload.id, payload);
+  const data = await apiComment.getAllApiComments();
   dispatch({
     type: GET_COMMENT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const replyCommentProduct = (payload) => async (dispatch) => {
-  await apiComment.editApiComments(payload.dataProduct, payload.newData)
-  const data = await apiComment.getAllApiComments()
+  await apiComment.editApiComments(payload.dataProduct, payload.newData);
+  const data = await apiComment.getAllApiComments();
   dispatch({
     type: GET_COMMENT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const deleteCommentReply = (payload) => async (dispatch) => {
-  await apiComment.editApiComments(payload.id, payload)
-  const data = await apiComment.getAllApiComments()
+  await apiComment.editApiComments(payload.id, payload);
+  const data = await apiComment.getAllApiComments();
   dispatch({
     type: GET_COMMENT,
-    payload: data
-  })
-}
+    payload: data,
+  });
+};
 
 export const deleteNewComment = (payload) => async (dispatch) => {
-  await NewCommentApi.deleteNewComment(payload.id)
+  const listNewComment = await NewCommentApi.getNewComment();
+  const commentNew1 = listNewComment.filter((item) => item.idComment === payload);
+  if (commentNew1.length > 0) {
+    await NewCommentApi.deleteNewComment(commentNew1[0].id);
+  }
+};
+
+export const deleteListNewComment = (payload) => async (dispatch) => {
+  const listNewComment = await NewCommentApi.getNewComment();
+  payload.forEach( async (item) => {
+    const c = listNewComment.filter(elem => elem.idComment === item.id)
+    if (c.length > 0) {
+      await NewCommentApi.deleteNewComment(c[0].id);
+    }
+  });
+
+};
+
+export const editNewComment = (payload) => async (dispatch) => {
+  const listNewComment = await NewCommentApi.getNewComment();
+  const commentNew1 = listNewComment.filter((item) => item.idComment === payload.id);
+  if (commentNew1.length > 0) {
+    const newData = {
+      ...commentNew1[0],
+      comment: payload.comment
+    }
+    await NewCommentApi.editNewComment(newData.id, newData);
+  }
 }

@@ -7,6 +7,7 @@ import {
   replyCommentProduct,
   deleteComment as deleteCommentAction,
   deleteCommentReply as deleteCommentReplyAction,
+  deleteListNewComment, editNewComment
 } from '../../../redux/actions/products'
 import { Link } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
@@ -53,31 +54,32 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
 
   const deleteComment = (id) => {
     const commentNew = listNewComment.filter(item => item.idComment === id)
-    if (commentNew.length > 0) {
-      dispatch(deleteNewComment(commentNew[0]))
-    }
+    const commentNew2 = data.comments.filter(item => item.id === id)
     const newListComment = data.comments.filter(comment => comment.id !== id)
     const newComment = {
       ...data,
       comments: newListComment
     }
     dispatch(deleteCommentAction(newComment))
+    if (commentNew2[0].children.length > 0) {
+      dispatch(deleteListNewComment(commentNew2[0].children))
+    }
+    if (commentNew.length > 0) {
+      dispatch(deleteNewComment(commentNew[0].idComment))
+    }
     changeStatus(!statusChange)
   }
 
-  const deleteReplyComment = (id) => {
+  const deleteReplyComment = (item) => {
     const data1 = {...data}
-    const commentNew1 = listNewComment.filter(item => item.idComment === id)
-    if (commentNew1.length > 0) {
-      dispatch(deleteNewComment(commentNew1[0]))
-    }
-    const newReplyComment = dataLocal.children.filter(comment => comment.id !== id)
+    const newReplyComment = dataLocal.children.filter(comment => comment.id !== item.id)
     for (let i = 0; i < data1.comments.length; i++) {
       if (data1.comments[i].id === dataLocal.id) {
         data1.comments[i].children = newReplyComment
       }
     }
     dispatch(deleteCommentReplyAction(data1))
+    dispatch(deleteNewComment(item.id))
     changeStatus(uuidv4())
   }
 
@@ -120,7 +122,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
     setShowInputComment(!showInputComment);
   }
 
-  const  handleCancel =  () => {
+  const handleCancel =  () => {
     setShowInputComment(false);
   }
 
@@ -142,6 +144,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
             ...newData.comments[index],
             comment: value.comment,
           }
+          dispatch(editNewComment(newData.comments[index]))
           break
         }
       }
@@ -155,6 +158,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
             ...dataLocal.children[i],
             comment: value.comment,
           }
+          dispatch(editNewComment(dataLocal.children[i]))
           break
         }
       }
@@ -226,7 +230,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
                   </span>,
                   <Popconfirm
                     title="Bạn muốn xoá bình luận này chứ?"
-                    onConfirm={() => deleteReplyComment(item.id)}
+                    onConfirm={() => deleteReplyComment(item)}
                     onCancel={cancel}
                     okText="Yes"
                     cancelText="No"

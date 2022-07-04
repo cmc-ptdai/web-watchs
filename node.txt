@@ -3,15 +3,6 @@
 - khi click vào thương hiệu sẽ chuyển sang phần sản phẩm tương ứng thương hiệu đấy
 
 
-- khi sửa comment thì cũng sửa trong phần new comment
-
-
-- xoá comment cũng xoá trong phần newcomment khi xoá comment cho cũng xoá những comment reply
-
-
-- phân chia phần biểu đồ theo từng ngày tháng năm
-
-
 - thông báo đặt hàng xong khi không có user sẽ hiện ra id của hoá đơn
 
 

@@ -1,128 +1,151 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
-import { Button } from 'antd'
-import apiNewComment from '../../../api/apiNewComment'
-import apiOrders from '../../../api/apiOrders'
-import './style.scss'
+import React, { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { Button, Select } from "antd";
+import apiNewComment from "../../../api/apiNewComment";
+import apiOrders from "../../../api/apiOrders";
+import "./style.scss";
+
+const { Option } = Select;
 
 const Dashboard = () => {
-
-  const history = useHistory()
-  const store = useSelector(store => store)
-  const [listNewComment, setNewListComment] = useState(null)
-  const [status, setStatus] = useState(false)
-  const [data , setData] = useState(
-    {
-      labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ],
-      datasets: [
-        {
-          label: 'Tổng doanh thu',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          // data: [500, 600, 850, 460, 280, 223, 268,330, 450, 570, 610, 240],
-          fill: true,
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          tension: 0.3,
-        },
-        {
-          label: 'tổng số đơn hang',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          //data: [200, 300, 250, 160, 180, 123, 168,230, 250, 270, 210, 140],
-          fill: true,
-          borderColor: 'rgb(75, 192, 192)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          tension: 0.3,
-        },
-      ]
-
-    }
-  )
+  const history = useHistory();
+  const store = useSelector((store) => store);
+  const [listNewComment, setNewListComment] = useState(null);
+  const [status, setStatus] = useState(false);
+  const [data, setData] = useState({
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Tổng doanh thu",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        // data: [500, 600, 850, 460, 280, 223, 268,330, 450, 570, 610, 240],
+        fill: true,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        tension: 0.3,
+      },
+      {
+        label: "tổng số đơn hang",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        //data: [200, 300, 250, 160, 180, 123, 168,230, 250, 270, 210, 140],
+        fill: true,
+        borderColor: "rgb(75, 192, 192)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        tension: 0.3,
+      },
+    ],
+  });
 
   useEffect(() => {
-    fetchNewComment()
+    fetchNewComment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status])
+  }, [status]);
 
   const fetchNewComment = async () => {
-    const newData = {...data}
-    newData.datasets[0].data= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    newData.datasets[1].data= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    const date = new Date()
-    const year1 = date.getFullYear()
-    const newList = await apiNewComment.getNewComment()
-    const newListOrders = await apiOrders.getAllOrders()
-    newListOrders.forEach(item => {
-      const yearProduct = item.dateCreate.slice(0, 4)
+    const newData = { ...data };
+    newData.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    newData.datasets[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const date = new Date();
+    const year1 = date.getFullYear();
+    const newList = await apiNewComment.getNewComment();
+    const newListOrders = await apiOrders.getAllOrders();
+    newListOrders.forEach((item) => {
+      const yearProduct = item.dateCreate.slice(0, 4);
       if (year1.toString() === yearProduct) {
-        const monthProduct = item.dateCreate.slice(5, 7)
-        newData.datasets[0].data[monthProduct - 1] = newData.datasets[0].data[monthProduct - 1] +  (item.money/230000)
-        newData.datasets[1].data[monthProduct - 1] = newData.datasets[1].data[monthProduct - 1] +  1
+        const monthProduct = item.dateCreate.slice(5, 7);
+        newData.datasets[0].data[monthProduct - 1] =
+          newData.datasets[0].data[monthProduct - 1] + item.money / 230000;
+
+        newData.datasets[1].data[monthProduct - 1] =
+          newData.datasets[1].data[monthProduct - 1] + 1;
       }
-    })
+    });
+    console.log(newData);
     setData(newData);
-    setNewListComment(newList)
-  }
+
+    setNewListComment(newList);
+  };
 
   const money = () => {
-    let a = 0
-    store.orderReducer.forEach(item => {
-      a = a + Number(item.money)
-    })
-    return a
-  }
+    let a = 0;
+    store.orderReducer.forEach((item) => {
+      a = a + Number(item.money);
+    });
+    return a;
+  };
+
   const options = {
     maintainAspectRatio: true,
-  }
+  };
 
   const skipNewComment = (comment) => {
-    apiNewComment.deleteNewComment(comment.id)
-    setStatus(!status)
-  }
+    apiNewComment.deleteNewComment(comment.id);
+    setStatus(!status);
+  };
   const replyNewComment = (comment) => {
-    skipNewComment(comment)
-    return history.push({ pathname: `/body/comments/${comment.idProduct}/${comment.idComment}`})
-  }
+    skipNewComment(comment);
+    return history.push({
+      pathname: `/body/comments/${comment.idProduct}/${comment.idComment}`,
+    });
+  };
+
+  const onChangeYear = async (value) => {
+    const newData = { ...data };
+    newData.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    newData.datasets[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const newListOrders = await apiOrders.getAllOrders();
+    newListOrders.forEach((item) => {
+      const yearProduct = item.dateCreate.slice(0, 4);
+      console.log(value.toString(), yearProduct);
+      if (value.toString() === yearProduct) {
+        console.log(1);
+        const monthProduct = item.dateCreate.slice(5, 7);
+        newData.datasets[0].data[monthProduct - 1] =
+          newData.datasets[0].data[monthProduct - 1] + item.money / 230000;
+
+        newData.datasets[1].data[monthProduct - 1] =
+          newData.datasets[1].data[monthProduct - 1] + 1;
+      }
+    });
+    setData(newData);
+  };
 
   return (
     <div className="dashboard">
       <div className="dashboard-status">
         <div className="dashboard-status-item">
           <div className="dashboard-status-item-icon">
-          <i className="far fa-usd-circle"></i>
+            <i className="far fa-usd-circle"></i>
           </div>
           <div className="dashboard-status-item-info">
             <h3>Total money</h3>
             <p>
-              {
-                money().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              &nbsp;
-              VND
+              {money()
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              &nbsp; VND
             </p>
           </div>
         </div>
 
-        <Link
-          to='/body/orders'
-          className="dashboard-status-item"
-        >
+        <Link to="/body/orders" className="dashboard-status-item">
           <div className="dashboard-status-item-icon">
-          <i className="fad fa-shopping-cart"></i>
+            <i className="fad fa-shopping-cart"></i>
           </div>
           <div className="dashboard-status-item-info">
             <h3>Order</h3>
@@ -130,12 +153,9 @@ const Dashboard = () => {
           </div>
         </Link>
 
-        <Link
-          to='/body/users'
-          className="dashboard-status-item"
-        >
+        <Link to="/body/users" className="dashboard-status-item">
           <div className="dashboard-status-item-icon">
-          <i className="fad fa-users"></i>
+            <i className="fad fa-users"></i>
           </div>
           <div className="dashboard-status-item-info">
             <h3>user</h3>
@@ -143,12 +163,9 @@ const Dashboard = () => {
           </div>
         </Link>
 
-        <Link
-          to='/body/product'
-          className="dashboard-status-item"
-        >
+        <Link to="/body/product" className="dashboard-status-item">
           <div className="dashboard-status-item-icon">
-          <i className="fad fa-boxes"></i>
+            <i className="fad fa-boxes"></i>
           </div>
           <div className="dashboard-status-item-info">
             <h3>Product</h3>
@@ -158,72 +175,69 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-chart">
         <div className="dashboard-chart-line">
-          <Line
-            data={data}
-            options= {options}
-          />
+          <div style={{ display: "flex", padding: "0 100px 20px 100px" }}>
+            <Select
+              placeholder="Select year"
+              style={{ width: 150 }}
+              onChange={onChangeYear}
+            >
+              <Option value="2021">2021</Option>
+              <Option value="2022">2022</Option>
+            </Select>
+            {/* <div
+              className="search-order-date-button"
+              style={{ marginLeft: "100px" }}
+            >
+              <Button onClick={resetSearch} danger>
+                Reset
+              </Button>
+            </div> */}
+          </div>
+          <Line data={data} options={options} />
         </div>
         <div className="dashboard-chart-comment">
-          <Link
-            to='/body'
-            className="dashboard-chart-comment-item"
-          >
+          <Link to="/body" className="dashboard-chart-comment-item">
             <div className="dashboard-chart-comment-item-icon">
-            <i className="fad fa-users"></i>
+              <i className="fad fa-users"></i>
             </div>
             <div className="dashboard-chart-comment-item-info">
               <h3>New comment</h3>
-              {
-                listNewComment && (
-                  <p>{listNewComment.length}</p>
-                )
-              }
-
+              {listNewComment && <p>{listNewComment.length}</p>}
             </div>
           </Link>
-          {
-            (listNewComment !== null && listNewComment.length > 0 ) && (
-              <div className="dashboard-chart-comment-list">
-                {
-                  listNewComment && (
-                    listNewComment.map((item, index) => {
-                      return (
-                        <div
-                          className="dashboard-chart-comment-list-item"
-                          key={index}
+          {listNewComment !== null && listNewComment.length > 0 && (
+            <div className="dashboard-chart-comment-list">
+              {listNewComment &&
+                listNewComment.map((item, index) => {
+                  return (
+                    <div
+                      className="dashboard-chart-comment-list-item"
+                      key={index}
+                    >
+                      <p className="dashboard-chart-comment-list-item-name">
+                        {item.name}
+                      </p>
+                      <p>{item.comment}</p>
+                      <div className="dashboard-chart-comment-list-item-button">
+                        <Button danger onClick={() => skipNewComment(item)}>
+                          skip
+                        </Button>
+                        <Button
+                          type="primary"
+                          onClick={() => replyNewComment(item)}
                         >
-                          <p
-                            className="dashboard-chart-comment-list-item-name"
-                          >
-                            {item.name}
-                          </p>
-                          <p>{item.comment}</p>
-                          <div className='dashboard-chart-comment-list-item-button'>
-                            <Button
-                              danger
-                              onClick={() => skipNewComment(item)}
-                            >
-                              skip
-                            </Button>
-                            <Button
-                              type="primary"
-                              onClick={() => replyNewComment(item)}
-                            >
-                              reply
-                            </Button>
-                          </div>
-                        </div>
-                      )
-                    })
-                  )
-                }
-              </div>
-            )
-          }
+                          reply
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

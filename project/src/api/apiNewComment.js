@@ -13,6 +13,10 @@ const Slides = {
     const url = '/newComment'
     return axiosClient.post(url, data)
   },
+  editNewComment: (id, data) => {
+    const url = `/newComment/${id}`
+    return axiosClient.put(url,data)
+  }
 }
 
 export default Slides

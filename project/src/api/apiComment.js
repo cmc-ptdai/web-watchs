@@ -13,7 +13,7 @@ const ApiComments = {
     const url = `/comments`
     return axiosClient.post(url,data)
   },
-  editApiComments: (id,data) => {
+  editApiComments: (id, data) => {
     const url = `/comments/${id}`
     return axiosClient.put(url,data)
   }
