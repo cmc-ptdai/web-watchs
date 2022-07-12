@@ -12,6 +12,7 @@ import ProfileAdmin from './content/profileAdmin/ProfileAdmin'
 import AddPosts from './content/posts/Posts'
 import EditPosts from './content/posts/EditPost'
 import ListPosts from './content/posts/ListPosts'
+import ListTrademarks from './content/trademark/ListTrademark.jsx'
 
 const router = [
   {path: '/body', exact: true, Component: Dashboard},
@@ -21,6 +22,7 @@ const router = [
   {path: '/body/EditPosts/:id', exact: true, Component: EditPosts},
   {path: '/body/profileAdmin', exact: true, Component: ProfileAdmin},
   {path: '/body/slides', exact: true, Component: Slides},
+  {path: '/body/trademark', exact: true, Component: ListTrademarks},
   {path: '/body/product', exact: true, Component: Products},
   {path: '/body/orders', exact: true, Component: Orders},
   {path: '/body/warehouse', exact: true, Component: Warehouse},

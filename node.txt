@@ -2,6 +2,7 @@
 
 - khi click vào thương hiệu sẽ chuyển sang phần sản phẩm tương ứng thương hiệu đấy
 
+- quản lý thương hiệu ( thêm, sửa, xoá )
 
 - thông báo đặt hàng xong khi không có user sẽ hiện ra id của hoá đơn
 
