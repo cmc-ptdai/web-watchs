@@ -75,7 +75,6 @@ const Dashboard = () => {
           newData.datasets[1].data[monthProduct - 1] + 1;
       }
     });
-    console.log(newData);
     setData(newData);
 
     setNewListComment(newList);
@@ -111,9 +110,7 @@ const Dashboard = () => {
     const newListOrders = await apiOrders.getAllOrders();
     newListOrders.forEach((item) => {
       const yearProduct = item.dateCreate.slice(0, 4);
-      console.log(value.toString(), yearProduct);
       if (value.toString() === yearProduct) {
-        console.log(1);
         const monthProduct = item.dateCreate.slice(5, 7);
         newData.datasets[0].data[monthProduct - 1] =
           newData.datasets[0].data[monthProduct - 1] + item.money / 230000;

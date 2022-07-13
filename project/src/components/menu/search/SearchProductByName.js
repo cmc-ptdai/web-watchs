@@ -12,23 +12,89 @@ const SearchProductsByName = () => {
 
   const [products, setProducts] = useState(newArr)
   const [listSort, setListSort] = useState(newArr)
+  const [listKeySort, setListKeySort] = useState({})
 
   useEffect(() => {
     setListSort(newArr)
     setProducts(newArr)
   },[newArr])
 
-  const searchByPrice1 = value => {
-    if (value.item.price1 === "") {
-      const newArr = products.filter(item => item.price < value.item.price2)
-      setListSort(newArr)
-    } else if (value.item.price2 === "") {
-      const newArr = products.filter(item => item.price > value.item.price1)
-      setListSort(newArr)
+  useEffect(() => {
+    sortListKey()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listKeySort])
+
+  const sortListKey = () => {
+    const lengthKey = Object.keys(listKeySort)
+    let newArr = [...products]
+    if (lengthKey.length > 0) {
+      for (const key in listKeySort) {
+        if (key === 'price') {
+          newArr = newArr.filter((element) => Number(element[key]) >= listKeySort.price.price1 && Number(element[key]) < listKeySort.price.price2)
+        } else {
+          newArr = newArr.filter((element) => element[key] === listKeySort[key] )
+        }
+      }
+      setListSort(newArr);
     } else {
-      const newArr = products.filter(item => (item.price > value.item.price1) && (item.price < value.item.price2) )
-      setListSort(newArr)
+      setListSort(products)
     }
+  }
+
+  const searchByPrice1 = value => {
+    let newList = {}
+    if (listKeySort?.price) {
+      if (listKeySort.price.price1 === value.price1 && listKeySort.price.price2 === value.price2) {
+        delete listKeySort.price;
+        newList = {...listKeySort}
+      } else {
+        newList = {
+          ...listKeySort,
+          price: value
+        }
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        price: value
+      }
+    }
+    setListKeySort(newList)
+  }
+
+  const searchByType= (id) => {
+    let newList = {}
+    if (listKeySort?.brand === id) {
+        delete listKeySort.brand;
+        newList = {...listKeySort}
+    } else {
+      newList = {
+        ...listKeySort,
+        brand: id
+      }
+    }
+    setListKeySort(newList)
+  }
+
+  const searchByCountry= (country) => {
+    let newList = {}
+    if (listKeySort?.country) {
+      if (listKeySort.country === country) {
+        delete listKeySort.country;
+        newList = {...listKeySort}
+      } else {
+        newList = {
+          ...listKeySort,
+          country: country
+        }
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        country: country
+      }
+    }
+    setListKeySort(newList)
   }
 
   const sortProduct1 = key => {
@@ -108,6 +174,8 @@ const SearchProductsByName = () => {
         <div className="col-lg-3">
           <SearchProduct
             searchByPrice={searchByPrice1}
+            searchByType={searchByType}
+            searchByCountry={searchByCountry}
           />
         </div>
 

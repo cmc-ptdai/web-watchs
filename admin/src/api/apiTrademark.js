@@ -9,10 +9,6 @@ const ApiTrademark = {
     const url = `/trademark/${id}`
     return axiosClient.delete(url)
   },
-  getTrademarkById: (id) => {
-    const url = `/trademark/${id}`
-    return axiosClient.get(url)
-  },
   addTrademark: (data) => {
     const url = `/trademark`
     return axiosClient.post(url,data)

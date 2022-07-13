@@ -9,7 +9,12 @@ import {
   Input,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getTradeMark } from "../../../redux/action/trademarkAction";
+import {
+  getTradeMark,
+  addTradeMark,
+  deleteTradeMark,
+} from "../../../redux/action/trademarkAction";
+import ModalEdit from "./EditTrademark";
 import "./style.scss";
 
 const openNotification = (item) => {
@@ -30,10 +35,13 @@ const ListPosts = () => {
   const dispatch = useDispatch();
   const listTrademarks = useSelector((store) => store.trademarkReducer);
   const [statusEdit, setStatusEdit] = useState(false);
-  const [dataEdit, setDataEdit] = useState(null);
+  const [statusAdd, setStatusAdd] = useState(false);
+  const [dataEdit, setDataEdit] = useState({});
+  const [imgChange, setImgChange] = useState(null);
 
   useEffect(() => {
     dispatch(getTradeMark());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
@@ -65,10 +73,7 @@ const ListPosts = () => {
       width: 100,
       render: (text, record) => (
         <div className="tableUser__button">
-          <Button
-            type="primary"
-            onClick={() => ShowFromEdit(record)}
-          >
+          <Button type="primary" onClick={() => ShowFromEdit(record)}>
             Edit
           </Button>
           <Popconfirm
@@ -83,35 +88,50 @@ const ListPosts = () => {
     },
   ];
 
-  const addTrademark = () => {};
+  const addTrademark = () => {
+    setStatusAdd(true);
+  };
 
   const deleteTrademark = (id) => {
-    console.log(id);
+    dispatch(deleteTradeMark(id))
     openNotification("Bạn đã xoá thương hiệu thành công");
   };
 
   const handleCancelButton = () => {};
-
-  const handleCancelModal = () => {
-    setStatusEdit(false);
-    form.resetFields();
-    setDataEdit(null);
-  };
 
   const ShowFromEdit = (value) => {
     setDataEdit(value);
     setStatusEdit(true);
   };
 
+  const setStatusEditByModal = (a) => {
+    setStatusEdit(a);
+  };
+
+  const changeEditImgAdd = (e) => {
+    setImgChange(e.target.value);
+  };
+
   const onFinish = (value) => {
-    console.log(value);
+    const newValue = {
+      type: value.name.toLowerCase().replace(/\s/g, ""),
+      img: value.img,
+      name: value.name,
+    };
+    dispatch(addTradeMark(newValue));
+    handleCancelModalAdd();
+  };
+
+  const handleCancelModalAdd = () => {
+    handleCancelForm();
   };
 
   const handleCancelForm = () => {
-    setStatusEdit(false);
+    setImgChange(null);
+    setStatusAdd(false);
     form.resetFields();
-    setDataEdit(null);
   };
+
   return (
     <>
       <div>
@@ -129,22 +149,21 @@ const ListPosts = () => {
       {listTrademarks && (
         <Table dataSource={listTrademarks} columns={columns} rowKey="id" />
       )}
-      <Modal
-        className="form__add"
-        visible={statusEdit}
-        title="Chỉnh sửa sản phẩm"
-        onCancel={handleCancelModal}
-      >
-        {dataEdit && (
-          <Form
-            name="basic"
-            form={form}
-            initialValues={{
-              name: dataEdit.name,
-              img: dataEdit.img,
-            }}
-            onFinish={onFinish}
-          >
+      {statusEdit && (
+        <ModalEdit
+          dataEdit={dataEdit}
+          setStatusEditByModal={setStatusEditByModal}
+        ></ModalEdit>
+      )}
+      {
+        <Modal
+          className="form__add"
+          visible={statusAdd}
+          title="Chỉnh sửa sản phẩm"
+          onCancel={handleCancelModalAdd}
+        >
+          <Form name="basic" form={form} onFinish={onFinish}>
+            <label>Tên thương hiệu:</label>
             <Form.Item
               name="name"
               rules={[
@@ -157,21 +176,21 @@ const ListPosts = () => {
               <Input />
             </Form.Item>
 
-            <label>Slide:</label>
+            <label>Ảnh thương hiệu:</label>
             <Form.Item
               name="img"
               rules={[
                 { required: true, message: "Please input your link image!" },
               ]}
             >
-              <Input />
+              <Input onChange={changeEditImgAdd} />
             </Form.Item>
 
-            {dataEdit.img && (
+            {imgChange && (
               <div className="form__edit__img">
                 <img
-                  style={{ width: '200px', height: '100px' }}
-                  src={dataEdit.img ? dataEdit.img : ""}
+                  style={{ width: "200px", height: "100px" }}
+                  src={imgChange ? imgChange : " "}
                   alt="link ảnh của bạn không đúng hoặc không tồn tại"
                 />
               </div>
@@ -190,8 +209,8 @@ const ListPosts = () => {
               </Button>
             </Form.Item>
           </Form>
-        )}
-      </Modal>
+        </Modal>
+      }
     </>
   );
 };

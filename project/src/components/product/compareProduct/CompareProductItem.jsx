@@ -3,6 +3,7 @@ import './style.scss';
 import { PlusCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Modal, Input } from 'antd';
 import productApi from '../../../api/productApi';
+import apiTrademarks from '../../../api/tradermark';
 
 export default function CompareProductItem() {
   const [data, setData] = useState(null);
@@ -10,12 +11,16 @@ export default function CompareProductItem() {
   const [dataProduct, setDataProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [value, setValue] = useState('');
+  const [listTrademark, setListTrademark] = useState(null);
+
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
     const listData = await productApi.getAll();
+    const listTrademark = await apiTrademarks.gettTademark();
     setDataProduct(listData);
+    setListTrademark(listTrademark)
   };
   const SearchProduct = (e) => {
     setValue(e.target.value);
@@ -39,6 +44,14 @@ export default function CompareProductItem() {
   const deleteDataSearch = () => {
     setData(null)
   }
+
+  const searchBrand = (id) => {
+    for (let i = 0; i < listTrademark.length; i++) {
+      if (listTrademark[i].id === data.brand) {
+        return(listTrademark[i].name);
+      }
+    }
+  }
   return (
     <div className="compareProductItem">
       {data != null ? (
@@ -48,7 +61,7 @@ export default function CompareProductItem() {
               <CloseCircleOutlined style={{ fontSize: '28px'}} />
             </div>
             <img src={data.img} alt="" />
-            <p>Thương hiệu: {data.brand}</p>
+            <p>Thương hiệu: {searchBrand(data.brand)}</p>
             <p>Xuất xứ: {data.country}</p>
             <p>Giới tính: {data.gender === 'nam' ? 'Nam' : data.gender === 'nu' ? 'Nữ' : 'Đôi'}</p>
             <p>Kiểu máy: {data.model}</p>

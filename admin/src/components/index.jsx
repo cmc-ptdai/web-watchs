@@ -30,6 +30,7 @@ function Body() {
   const dispatch = useDispatch();
   const [collapsed, setCollapse] = useState(false);
   const accountUser = useSelector((store) => store.accLoginReducer);
+  const [keyDf, setKeyDf] = useState(["orders"]);
 
   useEffect(() => {
     fetchData();
@@ -96,7 +97,7 @@ function Body() {
             className="nav-item"
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["dashboard"]}
+            defaultSelectedKeys={keyDf}
             onClick={handleClickMenu}
           >
             <Menu.Item
