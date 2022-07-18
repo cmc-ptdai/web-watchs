@@ -2,7 +2,11 @@ import apiComment from '../../api/apiComment';
 import apiProduct from '../../api/productApi';
 import NewCommentApi from '../../api/apiNewComment';
 
-import { GET_PRODUCT, SET_EVALUATE, DELETE_ITEM_BY_PAY_CART, GET_COMMENT } from '../actionType';
+import {
+  GET_PRODUCT,
+  SET_EVALUATE,
+  GET_COMMENT
+} from '../actionType';
 
 export const getProduct = () => async (dispatch) => {
   const data = await apiProduct.getAll();
@@ -35,11 +39,27 @@ export const setEvaluate = (payload) => {
   };
 };
 
-export const deleteItemByPayCart = (payload) => {
-  return {
-    type: DELETE_ITEM_BY_PAY_CART,
-    payload,
-  };
+export const deleteItemByPayCart = (payload) => async (dispatch) =>{
+  const newArr = await apiProduct.getAll();
+  newArr.forEach(item => {
+    payload.forEach( async (elem) => {
+      if (item.id === elem.id) {
+        const newCount = Number(item.countPay) - Number(elem.count)
+        const newQuantityPurchased = Number(item.quantityPurchased) + Number(elem.count)
+        const newElem = {
+          ...item,
+          countPay: newCount,
+          quantityPurchased: newQuantityPurchased
+        }
+        await apiProduct.updateProduct(item.id, newElem)
+      }
+    })
+  })
+  const data = await apiProduct.getAll();
+  dispatch({
+    type: GET_PRODUCT,
+    payload: data,
+  });
 };
 
 export const getComment = () => async (dispatch) => {
@@ -96,13 +116,12 @@ export const deleteNewComment = (payload) => async (dispatch) => {
 
 export const deleteListNewComment = (payload) => async (dispatch) => {
   const listNewComment = await NewCommentApi.getNewComment();
-  payload.forEach( async (item) => {
-    const c = listNewComment.filter(elem => elem.idComment === item.id)
+  payload.forEach(async (item) => {
+    const c = listNewComment.filter((elem) => elem.idComment === item.id);
     if (c.length > 0) {
       await NewCommentApi.deleteNewComment(c[0].id);
     }
   });
-
 };
 
 export const editNewComment = (payload) => async (dispatch) => {
@@ -111,8 +130,8 @@ export const editNewComment = (payload) => async (dispatch) => {
   if (commentNew1.length > 0) {
     const newData = {
       ...commentNew1[0],
-      comment: payload.comment
-    }
+      comment: payload.comment,
+    };
     await NewCommentApi.editNewComment(newData.id, newData);
   }
-}
+};

@@ -13,6 +13,7 @@ import Orders from './components/listOrderUser/index'
 import Posts from './components/Posts/Posts'
 import DetailedPosts from './components/Posts/DetailedPosts'
 import Trademark from './components/trademark/index'
+import TrademarkType from './components/trademark/trademarkType'
 
 const router = [
   {path: '/', exact: true, Component: Home},
@@ -24,6 +25,7 @@ const router = [
   {path: '/products/:id', exact: true, Component: Product},
   {path: '/searchProducts', exact: true, Component: searchProduct},
   {path: '/trademark', exact: true, Component: Trademark},
+  {path: '/trademark/:id', exact: true, Component: TrademarkType},
   {path: '/login', exact: true, Component: Login},
   {path: '/signup', exact: true, Component: SignUp},
   {path: '/concat', exact: true, Component: Concat},

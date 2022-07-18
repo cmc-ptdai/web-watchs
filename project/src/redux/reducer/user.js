@@ -132,7 +132,7 @@ const useReducer  = (state = initialState, action) => {
 
     case ADD_ORDER_NO_USER: {
       const newOder = {
-        id: uuidv4(),
+        id: action.payload.id,
         idUser: "",
         listProduct: action.payload.listId,
         address: action.payload.profile.address,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Layout, Menu, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,12 +30,12 @@ function Body() {
   const dispatch = useDispatch();
   const [collapsed, setCollapse] = useState(false);
   const accountUser = useSelector((store) => store.accLoginReducer);
-  const [keyDf, setKeyDf] = useState(["orders"]);
+  const [keyDf, setKeyDf] = useState(["dashboard"]);
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [keyDf]);
   const fetchData = async () => {
     try {
       const idUser = getCookie("idUserName");
@@ -73,7 +73,9 @@ function Body() {
   const toggle = () => {
     setCollapse(!collapsed);
   };
-  const handleClickMenu = (e) => {};
+  const handleClickMenu = (e) => {
+    sessionStorage.setItem('keyDf', e.key);
+  };
 
   const logout = () => {
     deleteCookie("idUserName");
@@ -84,8 +86,14 @@ function Body() {
   };
 
   if (getCookie("idUserName") === undefined || getCookie("idUserName") === "") {
-    console.log(1);
     return <Redirect to="/" />;
+  }
+  if (sessionStorage.getItem('keyDf')) {
+    const newData = [...keyDf]
+    if (sessionStorage.getItem('keyDf') !== newData[0]) {
+      newData[0] = sessionStorage.getItem('keyDf')
+      setKeyDf(newData)
+    }
   }
 
   return (

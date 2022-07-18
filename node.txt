@@ -1,11 +1,3 @@
 - json-server db.json --port 3004 (xoá --watch : json-server --watch db.json --port 3004)
 
-- khi click vào thương hiệu sẽ chuyển sang phần sản phẩm tương ứng thương hiệu đấy
-
-- thông báo đặt hàng xong khi không có user sẽ hiện ra id của hoá đơn
-
-- khi chuyển ở phần dashboard thì phần menu cũng hover theo, lưu vào cookie khi vào trang sẽ kiểm tra xem có cookie không nếu ko thì là mặc định còn có thì sẽ chuển đến số tương ứng
-
-- chuyển đổi phần DELETE_ITEM_BY_PAY_CART
-
 - thêm, sửa, xoá, nguồn gốc từ nước nào

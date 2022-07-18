@@ -17,6 +17,13 @@ const MyPagination = ({ listSort }) => {
           <CardItem item={item} />
         </div>
       ))}
+      {
+        pageOfItems.length === 0 && (
+          <div>
+            <img src='https://store.vtctelecom.com.vn/Content/images/no-data.png' alt='No data'/>
+          </div>
+        )
+      }
       <div className="col-12 product__pagination">
         <JwPagination items={listSort} onChangePage={onChangePage} pageSize={6} maxPages={5} />
       </div>
