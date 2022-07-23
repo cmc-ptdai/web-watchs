@@ -32,9 +32,10 @@ const Home = () => {
           <Slide />
         </div>
         {/* <ListBannerHeader /> */}
-        <GroupProduct title="Đồng hồ nam" loai="nam" products={products}/>
-        <GroupProduct title="Đồng hồ nữ" loai="nu" products={products}/>
-        <GroupProduct title="Đồng hồ đôi" loai="doi" products={products}/>
+        <GroupProduct title="Sản phẩm nổi bật" type="productHot" products={products}/>
+        <GroupProduct title="Đồng hồ nam" type="nam" products={products}/>
+        <GroupProduct title="Đồng hồ nữ" type="nu" products={products}/>
+        <GroupProduct title="Đồng hồ đôi" type="doi" products={products}/>
       </div>
     </div>
   )

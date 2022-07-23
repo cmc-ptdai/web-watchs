@@ -405,11 +405,15 @@ const Cart = () => {
           }
         });
       });
-      console.log(money, totalMoney);
       money = (money / 22758).toFixed(2);
       setMoneyPayOl(money);
     }
     setCheckPaypal(true);
+
+    setTimeout(() => {
+      const a = document.querySelector('.paypal')
+      console.log(a);
+    },100)
   };
 
   const paySuccess = async (status1) => {
@@ -512,6 +516,7 @@ const Cart = () => {
           onClick={PayCart}
           disabled={!hasSelected}
           loading={loading}
+          style={{marginLeft: '10px'}}
         >
           Thanh toán trực tiếp
         </Button>

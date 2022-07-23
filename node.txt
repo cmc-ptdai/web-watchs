@@ -1,3 +1,0 @@
-- json-server db.json --port 3004 (xoá --watch : json-server --watch db.json --port 3004)
-
-- thêm, sửa, xoá, nguồn gốc từ nước nào

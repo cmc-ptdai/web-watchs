@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Menu, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -146,6 +146,12 @@ function Body() {
               icon={<TeamOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/trademark">Trademark</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="voucher"
+              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+            >
+              <Link to="/body/voucher">Voucher</Link>
             </Menu.Item>
             <Menu.Item
               key="slides"

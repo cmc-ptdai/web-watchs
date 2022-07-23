@@ -46,6 +46,11 @@ const Login = () => {
       } else {
         const passwordBase = btoa(user[0].id)
         localStorage.setItem('userID', passwordBase);
+        // if (history.location.pathname === '/login') {
+        //   history.push('/')
+        // } else {
+        //   history.goBack()
+        // }
         setTimeout(() => {
           history.goBack()
         }, 400);

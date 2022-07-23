@@ -4,7 +4,6 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-
     &-item {
       display: flex;
       align-items: center;
@@ -69,6 +68,17 @@
     justify-content: space-between;
     &-line {
       width: 75%;
+      &__groupSelect {
+        display: flex;
+        width: 50%;
+        margin: auto;
+        justify-content: space-between;
+        &--item {
+          border: 1px solid #ccc;
+          padding: 5px 20px;
+          cursor: pointer;
+        }
+      }
     }
     &-comment {
       width: 24%;

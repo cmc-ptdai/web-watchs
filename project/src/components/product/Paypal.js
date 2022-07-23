@@ -5,7 +5,7 @@ export default function Paypal(props) {
   const  paypal = useRef()
 
   const product = {
-    price: 100.77,
+    price: 1000.77,
     name: 'comfy chair',
     description: 'fancy chair, like new'
   };

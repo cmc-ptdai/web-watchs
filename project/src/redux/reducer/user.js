@@ -468,6 +468,7 @@ const useReducer  = (state = initialState, action) => {
         role: 'user',
         cart: [],
         order: [],
+        vouchers: [],
         dateCreate: new Date(),
         dateUpdate: new Date(),
       }

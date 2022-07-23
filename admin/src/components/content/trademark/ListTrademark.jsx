@@ -69,7 +69,6 @@ const ListPosts = () => {
     {
       title: "Action",
       key: "action",
-      fixed: "right",
       width: 100,
       render: (text, record) => (
         <div className="tableUser__button">
