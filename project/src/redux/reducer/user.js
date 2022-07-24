@@ -347,7 +347,6 @@ const useReducer  = (state = initialState, action) => {
     }
 
     case DELETE_LIST_ITEM_CART: {
-      console.log(123123);
       action.payload.forEach(elem => {
         user.cart = user.cart.filter(item => item.id !== elem)
       });
@@ -485,7 +484,6 @@ const useReducer  = (state = initialState, action) => {
         dateUpdate: new Date()
       }
       userApi.addCart(newUser.id, newUser)
-
       return state
     }
 

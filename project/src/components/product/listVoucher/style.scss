@@ -1,0 +1,12 @@
+.listVoucher {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  overflow-x: auto;
+  &__item {
+    margin-right: 10px;
+  }
+}

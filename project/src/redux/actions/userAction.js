@@ -1,4 +1,7 @@
-import { GET_USERS,
+import ApiUser from '../../api/userApi';
+import ApiVoucher from '../../api/apiVoucher';
+import {
+  GET_USERS,
   ADD_CART,
   INCREMENT_PROJECT,
   DECREMENT_PROJECT,
@@ -21,173 +24,198 @@ import { GET_USERS,
   ADD_USER,
   EDIT_USER,
   EDIT_USER_IMG,
-  EDIT_USER_PW
+  EDIT_USER_PW,
 } from '../actionType';
 
 export const getUser = (payload) => {
   return {
     type: GET_USERS,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const addCart = (payload) => {
   return {
     type: ADD_CART,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const incrementProject = (payload) => {
   return {
     type: INCREMENT_PROJECT,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const decrementProject = (payload) => {
- return {
+  return {
     type: DECREMENT_PROJECT,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const numberInputProject = (payload) => {
   return {
-     type: NUMBER_INPUT,
-     payload
-   }
- }
+    type: NUMBER_INPUT,
+    payload,
+  };
+};
 
 export const deleteItemCart = (payload) => {
   return {
-     type: DELETE_ITEM_CART,
-     payload
-   }
- }
+    type: DELETE_ITEM_CART,
+    payload,
+  };
+};
 
 export const deleteListItemCart = (payload) => {
   return {
     type: DELETE_LIST_ITEM_CART,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const payCart = (payload) => {
   return {
     type: PAY_CART,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const addCartByProfile = (payload) => {
   return {
     type: ADD_CART_BY_PROFILE,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const payCartNoUser = (payload) => {
   return {
     type: PAY_CART_NO_USER,
-    payload
-  }
-}
+    payload,
+  };
+};
 
 export const addCartNoUser = (payload) => {
   return {
-    type : ADD_CART_NO_USER,
-    payload
-  }
-}
+    type: ADD_CART_NO_USER,
+    payload,
+  };
+};
 
 export const addCartByProfileNoUser = (payload) => {
   return {
-    type : ADD_CART_BY_PROFILE_NO_USER,
-    payload
-  }
-}
+    type: ADD_CART_BY_PROFILE_NO_USER,
+    payload,
+  };
+};
 
 export const addOrder = (payload) => {
   return {
-    type : ADD_ORDER,
-    payload
-  }
-}
+    type: ADD_ORDER,
+    payload,
+  };
+};
 
 export const addOrderNoUser = (payload) => {
   return {
-    type : ADD_ORDER_NO_USER,
-    payload
-  }
-}
+    type: ADD_ORDER_NO_USER,
+    payload,
+  };
+};
 
 export const incrementProjectNoUser = (payload) => {
   return {
-    type : INCREMENT_PROJECT_NO_USER,
-    payload
-  }
-}
+    type: INCREMENT_PROJECT_NO_USER,
+    payload,
+  };
+};
 
 export const decrementProjectNoUser = (payload) => {
   return {
-    type : DECREMENT_PROJECT_NO_USER,
-    payload
-  }
-}
+    type: DECREMENT_PROJECT_NO_USER,
+    payload,
+  };
+};
 
 export const deleteItemCartNoUser = (payload) => {
   return {
-    type : DELETE_ITEM_CART_NO_USER,
-    payload
-  }
-}
+    type: DELETE_ITEM_CART_NO_USER,
+    payload,
+  };
+};
 
 export const deleteListItemCartNoUser = (payload) => {
   return {
-    type : DELETE_LIST_ITEM_CART_NO_USER,
-    payload
-  }
-}
+    type: DELETE_LIST_ITEM_CART_NO_USER,
+    payload,
+  };
+};
 
 export const numberInputProjectNoUser = (payload) => {
   return {
-    type : NUMBER_INPUT_NO_USER,
-    payload
-  }
-}
+    type: NUMBER_INPUT_NO_USER,
+    payload,
+  };
+};
 
 export const pushCartLocalInCartUser = (payload) => {
   return {
-    type : PUSH_CART_LOCAL_IN_CART_USER,
-    payload
-  }
-}
+    type: PUSH_CART_LOCAL_IN_CART_USER,
+    payload,
+  };
+};
 
 export const addUser = (payload) => {
   return {
-    type : ADD_USER,
-    payload
-  }
-}
+    type: ADD_USER,
+    payload,
+  };
+};
 
 export const editUser = (payload) => {
   return {
-    type : EDIT_USER,
-    payload
-  }
-}
+    type: EDIT_USER,
+    payload,
+  };
+};
 
 export const editUserImg = (payload) => {
   return {
-    type : EDIT_USER_IMG,
-    payload
-  }
-}
+    type: EDIT_USER_IMG,
+    payload,
+  };
+};
 
 export const editUserPW = (payload) => {
   return {
-    type : EDIT_USER_PW,
-    payload
-  }
-}
+    type: EDIT_USER_PW,
+    payload,
+  };
+};
+
+export const addVoucherUser = (payload) => async (dispatch) => {
+  const data = await ApiUser.getUserById(payload.idUser);
+  data.vouchers.push(payload.idVoucher);
+  await ApiUser.addCart(data.id, data);
+  dispatch({
+    type: GET_USERS,
+    payload: data,
+  });
+};
+
+export const deleteVoucherUser = (payload) => async (dispatch) => {
+  const data = await ApiUser.getUserById(payload.user.id);
+  const newListVoucherUser = data.vouchers.filter((elem) => elem !== payload.voucher.id);
+  data.vouchers = newListVoucherUser;
+  await ApiUser.addCart(data.id, data);
+};
+
+export const deleteVoucherAdmin = (payload) => async (dispatch) => {
+  await ApiVoucher.deleteVoucher(payload.id)
+};
+
+export const editVoucherAdmin = (payload) => async (dispatch) => {
+  await ApiVoucher.editVoucher(payload.id, payload);
+};

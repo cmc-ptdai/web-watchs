@@ -94,7 +94,6 @@ const App = () => {
             </Col>
           </div>
         </Row>
-        {/* <ListBanner /> */}
         <Footer />
       </Router>
       <BackTop >

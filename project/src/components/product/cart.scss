@@ -56,6 +56,11 @@
     display: flex;
     justify-content: center;
   }
+  &__voucher {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
 }
 .ship {
   display: flex;

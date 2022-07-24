@@ -16,11 +16,15 @@ import {
   numberInputProjectNoUser as numberInputProjectNoUserAction,
   deleteItemCartNoUser as deleteItemCartNoUserAction,
   deleteListItemCartNoUser as deleteListItemCartNoUserAction,
+  deleteVoucherUser as deleteVoucherUserAction,
+  deleteVoucherAdmin as deleteVoucherAdminAction,
+  editVoucherAdmin as editVoucherAdminAction
 } from '../../redux/actions/userAction';
 import { deleteItemByPayCart as deleteItemByPayCartAction } from './../../redux/actions/products';
 import ProductApi from '../../api/productApi';
 import Paypal from './Paypal';
 import { v4 as uuidv4 } from 'uuid';
+import ApiVoucher from '../../api/apiVoucher';
 
 const { Option } = Select;
 const openNotification = (text) => {
@@ -49,12 +53,40 @@ const Cart = () => {
   const [status, setStatus] = useState(true);
   const [visibleAlertPay, setVisibleAlertPay] = useState(false);
   const [idOrder, setIdOrder] = useState(null);
+  const [listVoucher, setListVoucher] = useState(null);
+  const [listVouchers, setListVouchers] = useState(null);
+  const [statusListVoucher, setShowListVoucher] = useState(false);
+  const [voucher, setVoucher] = useState(null);
+  const [valueSearchVoucher, setValueSearchVoucher] = useState('');
 
   useEffect(() => {
     setProducts(dataProducts);
     fetchApiProduct();
+    fetchApiVoucher();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, status]);
+
+  const fetchApiVoucher = async () => {
+    const newList = await ApiVoucher.getAllVoucher();
+    sortVoucher(newList);
+    setListVouchers(newList);
+  };
+
+  const sortVoucher = (newList) => {
+    const newListVouchers = [];
+    console.log(user.vouchers, newList);
+    if (user.vouchers && newList) {
+      user.vouchers.forEach((item) => {
+        for (let i = 0; i < newList.length; i++) {
+          if (item === newList[i].id) {
+            newListVouchers.push(newList[i]);
+            break;
+          }
+        }
+      });
+    }
+    setListVoucher(newListVouchers);
+  };
 
   const fetchApiProduct = async () => {
     try {
@@ -248,11 +280,40 @@ const Cart = () => {
         (dataProducts[index].count * dataProducts[index].price -
           (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
     });
-    if (transportFee1 === 'fastShipping') {
-      price = price + 30000;
-    }
-    if (transportFee1 === 'normalShipping') {
-      price = price + 15000;
+    if (transportFee1) {
+      if (transportFee1 === 'fastShipping') {
+        if (voucher) {
+          price = price - (price * Number(voucher.sale)) / 100;
+        }
+        price = price + 30000;
+        console.log('fastShipping', price);
+      }
+      if (transportFee1 === 'normalShipping') {
+        if (voucher) {
+          price = price - (price * Number(voucher.sale)) / 100;
+        }
+        price = price + 15000;
+        console.log('fastShipping', price);
+      }
+      if (transportFee1?.sale) {
+        price = price - (price * Number(transportFee1.sale)) / 100;
+        if (transportFee === 'fastShipping') {
+          price = price + 30000;
+        }
+        if (transportFee === 'normalShipping') {
+          price = price + 15000;
+        }
+      }
+    } else {
+      if (voucher) {
+        price = price - (price * Number(voucher.sale)) / 100;
+      }
+      if (transportFee === 'fastShipping') {
+        price = price + 30000;
+      }
+      if (transportFee === 'normalShipping') {
+        price = price + 15000;
+      }
     }
     setTotalMoney(price);
   };
@@ -340,14 +401,14 @@ const Cart = () => {
           dispatch(deleteItemByPayCartAction(listPayCart));
         }, 100);
       }
-      setIdOrder(ojb.id)
+      setIdOrder(ojb.id);
       openNotification('Đơn hàng của bạn đã đươc đặt thành công');
       setTransportFee(null);
       onReset();
       onSelectChange([]);
       setSelectedRowKeys([]);
       setStatus(!status);
-      setVisibleAlertPay(true)
+      setVisibleAlertPay(true);
     }
   };
 
@@ -388,6 +449,18 @@ const Cart = () => {
       setTotalMoney(0);
       setSelectedRowKeys([]);
       setTransportFee(null);
+      if (voucher) {
+        if (voucher.proviso === 'single') {
+          setTimeout(() => {
+            dispatch(deleteVoucherAdminAction(voucher))
+          }, 500);
+        } else {
+          setTimeout(() => {
+            editVoucherAdmin(voucher)
+          }, 500);
+        }
+      }
+      setVoucher(null)
     } else {
       setVisible(true);
     }
@@ -411,9 +484,9 @@ const Cart = () => {
     setCheckPaypal(true);
 
     setTimeout(() => {
-      const a = document.querySelector('.paypal')
+      const a = document.querySelector('.paypal');
       console.log(a);
-    },100)
+    }, 100);
   };
 
   const paySuccess = async (status1) => {
@@ -470,9 +543,65 @@ const Cart = () => {
   };
 
   const handleCancelAlertOrder = () => {
-    setIdOrder(null)
+    setIdOrder(null);
     setVisibleAlertPay(false);
-  }
+  };
+
+  const showListVoucher = () => {
+    setShowListVoucher(true);
+  };
+
+  const handleCancelListVoucher = () => {
+    setShowListVoucher(false);
+    setValueSearchVoucher('');
+  };
+
+  const addVoucher = (item) => {
+    setVoucher(item);
+    setShowListVoucher(false);
+    sumOfMoney(item);
+  };
+
+  const deleteVoucher = (item) => {
+    if (item.proviso === 'single') {
+
+    } else {
+      dispatch(deleteVoucherUserAction({voucher: item, user: user}));
+    }
+  };
+
+  const editVoucherAdmin = (item) => {
+    const newData = { ...item };
+    newData.listUserAddCode.push(user.id);
+    dispatch(editVoucherAdminAction(newData))
+  };
+
+  const checkDate = (value) => {
+    const date = new Date();
+    const dateVoucher = new Date(value.dateEnd);
+    if (date.getTime() > dateVoucher.getTime()) {
+      return true;
+    }
+  };
+  const changeInputVoucher = (e) => {
+    setValueSearchVoucher(e.target.value);
+  };
+
+  const searchVoucher = () => {
+    const newList = [];
+    for (let i = 0; i < listVouchers.length; i++) {
+      if (listVouchers[i].code === valueSearchVoucher) {
+        newList.push(listVouchers[i]);
+        break;
+      }
+    }
+    setListVoucher(newList);
+  };
+
+  const deleteSearchVoucher = () => {
+    sortVoucher();
+    setValueSearchVoucher('');
+  };
 
   return (
     <div className="cart">
@@ -494,10 +623,37 @@ const Cart = () => {
         Tổng tiền: <span>{totalMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> VND
       </h2>
       {user.id && (
-        <p style={{ textAlign: 'right', color: '#fe9705' }}>
-          {' '}
-          ( Free ship khi thanh toán online ){' '}
-        </p>
+        <>
+          <div className="cart__voucher">
+            {voucher && selectedRowKeys.length > 0 && (
+              <div
+                style={{
+                  background: '#ee4d2d',
+                  height: '32px',
+                  lineHeight: '32px',
+                  textAlign: 'center',
+                  color: '#fff',
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  marginRight: '10px',
+                  padding: '0px 10px',
+                }}
+              >
+                <p>
+                  {voucher.content} sale {voucher.sale} %{' '}
+                </p>
+              </div>
+            )}
+            {selectedRowKeys.length > 0 && (
+              <Button type="primary" onClick={showListVoucher}>
+                Chọn mã
+              </Button>
+            )}
+            <span style={{ marginLeft: '10px', color: '#fe9705' }}>
+              ( Free ship khi thanh toán online )
+            </span>
+          </div>
+        </>
       )}
       <div className="cart__button">
         <Button
@@ -516,7 +672,7 @@ const Cart = () => {
           onClick={PayCart}
           disabled={!hasSelected}
           loading={loading}
-          style={{marginLeft: '10px'}}
+          style={{ marginLeft: '10px' }}
         >
           Thanh toán trực tiếp
         </Button>
@@ -592,7 +748,8 @@ const Cart = () => {
                   ({ getFieldValue }) => ({
                     validator(rule, value = '') {
                       //eslint-disable-next-line
-                      const re =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                      const re =
+                        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                       if (value.length > 0 && !re.test(value)) {
                         return Promise.reject('email chưa đúng đinh dạng');
                       } else {
@@ -651,6 +808,70 @@ const Cart = () => {
                     Đồng ý
                   </Button>
                 </div>
+              </Modal>
+            </>
+          )}
+        </div>
+      </div>
+      <div className="cart__mymodel">
+        <div className="cart__mymodel__alert">
+          {listVoucher && listVouchers && (
+            <>
+              <Modal
+                title="Danh sách voucher của bạn"
+                visible={statusListVoucher}
+                onCancel={handleCancelListVoucher}
+              >
+                <div>
+                  <label>Nhập mã của bạn: </label>
+                  <input
+                    value={valueSearchVoucher}
+                    onChange={changeInputVoucher}
+                    style={{ margin: '0px 10px', height: '30px' }}
+                  />
+                  <Button type="primary" onClick={searchVoucher}>
+                    Tìm
+                  </Button>
+                  <Button
+                    type="primary"
+                    danger
+                    style={{ marginLeft: '10px' }}
+                    onClick={deleteSearchVoucher}
+                  >
+                    Huỷ
+                  </Button>
+                </div>
+                {listVoucher.length > 0 &&
+                  listVoucher.map((item) => {
+                    return (
+                      <div className="voucherItem" key={item.id} style={{ marginBottom: '10px' }}>
+                        {checkDate(item) && (
+                          <div className="voucherItem__hidden">
+                            <p>Đã hết hạn</p>
+                          </div>
+                        )}
+                        <div className="voucherItem__number" style={{ textAlign: 'center' }}>
+                          {item.sale}%
+                        </div>
+                        <div className="voucherItem__content">
+                          <span>{item.content}</span>
+                          <div className="voucherItem__content__date">
+                            <span>{item.dateStart.slice(0, 10)}</span> đến
+                            <span>{item.dateEnd.slice(0, 10)}</span>
+                          </div>
+                        </div>
+                        <div className="voucherItem__button">
+                          <Button
+                            onClick={() => deleteVoucher(item)}
+                            style={{ bottom: '50px', zIndex: '10' }}
+                          >
+                            Xoá
+                          </Button>
+                          <Button onClick={() => addVoucher(item)}>Dùng</Button>
+                        </div>
+                      </div>
+                    );
+                  })}
               </Modal>
             </>
           )}

@@ -19,6 +19,7 @@ const dateFormat = 'YYYY-MM-DD';
 
 const Slide = () => {
   const [form] = Form.useForm();
+  const [form2] = Form.useForm();
   const [listVoucher, setListVoucher] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus] = useState(false);
@@ -26,10 +27,10 @@ const Slide = () => {
   const [dataEdit, setDataEdit] = useState(null);
 
   useEffect(() => {
-    fetchSlide();
+    fetchVoucher();
   }, [status]);
 
-  const fetchSlide = async () => {
+  const fetchVoucher = async () => {
     const newData2 = await ApiVoucher.getAllVoucher();
     setListVoucher(newData2);
   };
@@ -53,6 +54,11 @@ const Slide = () => {
       title: "Tên Voucher",
       dataIndex: "name",
       key: "name",
+    },
+    {
+      title: "Tiêu đề",
+      dataIndex: "content",
+      key: "content",
     },
     {
       title: "Sale",
@@ -100,13 +106,19 @@ const Slide = () => {
 
   const handleCancel = () => {
     setShowModal(false);
-    setShowModalEdit(false);
     form.resetFields();
   };
+
+  const handleCancel2 = () => {
+    setDataEdit(null)
+    setShowModalEdit(false);
+    form2.resetFields();
+  }
 
   const deleteVoucher = (id) => {
     ApiVoucher.deleteVoucher(id);
     setStatus(!status);
+    fetchVoucher()
   };
 
   const addSlide = () => {
@@ -124,10 +136,13 @@ const Slide = () => {
     ApiVoucher.addVoucher(newValue);
     setStatus(!status);
     handleCancel();
+    fetchVoucher()
   };
 
   const ShowFromEdit = (value) => {
-    setDataEdit(value);
+    form.resetFields();
+    form2.resetFields();
+    setDataEdit(() => value);
     setShowModalEdit(true);
   };
 
@@ -140,11 +155,11 @@ const Slide = () => {
       dateStart: value.dateStart[0]._d,
       dateEnd: value.dateStart[1]._d,
     };
-    console.log(newValue);
-    ApiVoucher.editVoucher(newValue.id, newValue)
-    setStatus(!status);
     setDataEdit(null);
-    handleCancel();
+    ApiVoucher.editVoucher(newValue.id, newValue)
+    handleCancel2();
+    setStatus(!status);
+    fetchVoucher()
   }
 
   return (
@@ -160,13 +175,13 @@ const Slide = () => {
         <Table dataSource={listVoucher} columns={columns} rowKey="id" />
       )}
       <Modal
-        className="form__add"
+        className="form__add2"
         visible={showModal}
         title="Chỉnh sửa sản phẩm"
         onCancel={handleCancel}
       >
         <Form
-          name="basic"
+          name="addVoucher"
           form={form}
           initialValues={{
             remember: true,
@@ -176,6 +191,18 @@ const Slide = () => {
           <label>Tên voucher:</label>
           <Form.Item
             name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number sale of product!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <label>Tiêu đề:</label>
+          <Form.Item
+            name="content"
             rules={[
               {
                 required: true,
@@ -234,18 +261,19 @@ const Slide = () => {
       </Modal>
 
       <Modal
-        className="form__add"
+        className="form__Edit"
         visible={showModalEdit}
         title="Chỉnh sửa sản phẩm"
-        onCancel={handleCancel}
+        onCancel={handleCancel2}
       >
         {dataEdit && (
           <Form
-            name="basic"
-            form={form}
+            name="editVoucher"
+            form={form2}
             initialValues={{
               name: dataEdit.name,
               sale: dataEdit.sale,
+              content: dataEdit.content,
               proviso: dataEdit.proviso,
               dateStart: [moment(dataEdit.dateStart, dateFormat), moment(dataEdit.dateEnd, dateFormat)]
             }}
@@ -263,6 +291,18 @@ const Slide = () => {
             >
               <Input />
             </Form.Item>
+            <label>Tiêu đề:</label>
+          <Form.Item
+            name="content"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number sale of product!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
             <label>Sale:</label>
             <Form.Item
               name="sale"
@@ -301,12 +341,12 @@ const Slide = () => {
                 className="btnSubmit"
                 type="primary"
                 danger
-                onClick={handleCancel}
+                onClick={handleCancel2}
               >
                 Huỷ
               </Button>
               <Button className="btnSubmit" type="primary" htmlType="submit">
-                Thêm
+                Sửa
               </Button>
             </Form.Item>
           </Form>

@@ -7,6 +7,7 @@ import UserApi from '../../api/userApi'
 import {getUser as getUserAction} from '../../redux/actions/userAction'
 //import ListBannerHeader from './listBannerheader/index'
 import ScrollToTop from '../../ScrollToTop';
+import ListVoucher from './listVoucher/index'
 
 const Home = () => {
   const products = useSelector(store => store.productReducer)
@@ -31,7 +32,7 @@ const Home = () => {
         <div className="col-12">
           <Slide />
         </div>
-        {/* <ListBannerHeader /> */}
+        <ListVoucher/>
         <GroupProduct title="Sản phẩm nổi bật" type="productHot" products={products}/>
         <GroupProduct title="Đồng hồ nam" type="nam" products={products}/>
         <GroupProduct title="Đồng hồ nữ" type="nu" products={products}/>
