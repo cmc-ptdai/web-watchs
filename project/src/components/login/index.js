@@ -7,7 +7,7 @@ import './style.scss';
 import {
   pushCartLocalInCartUser as pushCartLocalInCartUserAction
 } from '../../redux/actions/userAction'
-
+import Facebook from './Facebook'
 
 const tailLayout = {
   wrapperCol: { offset: 6, span: 18 },
@@ -139,6 +139,9 @@ const Login = () => {
                   Đăng ký
                 </Button>
               </Link>
+
+              <Facebook />
+
             </Form.Item>
           </Form>
         </div>
