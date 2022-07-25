@@ -52,7 +52,7 @@ const Login = () => {
         //   history.goBack()
         // }
         setTimeout(() => {
-          history.goBack()
+          history.push('/')
         }, 400);
       }
     } else {

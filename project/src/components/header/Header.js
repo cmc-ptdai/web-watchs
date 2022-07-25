@@ -17,7 +17,6 @@ const Header = () => {
 
   const logout = () => {
     const newCart = JSON.parse(localStorage.getItem('cart'))
-    console.log(newCart);
     const user = {
       cart: newCart,
     }

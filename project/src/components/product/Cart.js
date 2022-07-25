@@ -74,7 +74,6 @@ const Cart = () => {
 
   const sortVoucher = (newList) => {
     const newListVouchers = [];
-    console.log(user.vouchers, newList);
     if (user.vouchers && newList) {
       user.vouchers.forEach((item) => {
         for (let i = 0; i < newList.length; i++) {
@@ -286,14 +285,12 @@ const Cart = () => {
           price = price - (price * Number(voucher.sale)) / 100;
         }
         price = price + 30000;
-        console.log('fastShipping', price);
       }
       if (transportFee1 === 'normalShipping') {
         if (voucher) {
           price = price - (price * Number(voucher.sale)) / 100;
         }
         price = price + 15000;
-        console.log('fastShipping', price);
       }
       if (transportFee1?.sale) {
         price = price - (price * Number(transportFee1.sale)) / 100;
@@ -456,6 +453,7 @@ const Cart = () => {
           }, 500);
         } else {
           setTimeout(() => {
+            deleteVoucher(voucher)
             editVoucherAdmin(voucher)
           }, 500);
         }
@@ -482,11 +480,6 @@ const Cart = () => {
       setMoneyPayOl(money);
     }
     setCheckPaypal(true);
-
-    setTimeout(() => {
-      const a = document.querySelector('.paypal');
-      console.log(a);
-    }, 100);
   };
 
   const paySuccess = async (status1) => {
@@ -525,8 +518,21 @@ const Cart = () => {
       setTransportFee(null);
       onSelectChange([]);
       setTotalMoney(0);
+      if (voucher) {
+        if (voucher.proviso === 'single') {
+          setTimeout(() => {
+            dispatch(deleteVoucherAdminAction(voucher))
+          }, 500);
+        } else {
+          setTimeout(() => {
+            deleteVoucher(voucher)
+            editVoucherAdmin(voucher)
+          }, 500);
+        }
+      }
+      setVoucher(null)
     }
-    //openNotification("Đơn hàng của bạn đã đươc đặt thành công")
+    openNotification("Đơn hàng của bạn đã đươc đặt thành công")
     setCheckPaypal(false);
   };
 
@@ -601,6 +607,14 @@ const Cart = () => {
   const deleteSearchVoucher = () => {
     sortVoucher();
     setValueSearchVoucher('');
+  };
+
+  const checkUseNumber = (item) => {
+    if (Number(item.useNumber) === Number(item.listUserAddCode.length)) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -748,8 +762,7 @@ const Cart = () => {
                   ({ getFieldValue }) => ({
                     validator(rule, value = '') {
                       //eslint-disable-next-line
-                      const re =
-                        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                      const re =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                       if (value.length > 0 && !re.test(value)) {
                         return Promise.reject('email chưa đúng đinh dạng');
                       } else {
@@ -845,11 +858,16 @@ const Cart = () => {
                   listVoucher.map((item) => {
                     return (
                       <div className="voucherItem" key={item.id} style={{ marginBottom: '10px' }}>
-                        {checkDate(item) && (
+                        {checkDate(item) ? (
                           <div className="voucherItem__hidden">
                             <p>Đã hết hạn</p>
                           </div>
-                        )}
+                        ) : checkUseNumber(item) ? (
+                          <div className="voucherItem__hidden">
+                            <p>Đã lượt sử dụng</p>
+                          </div>
+                        ) : (<></>)
+                      }
                         <div className="voucherItem__number" style={{ textAlign: 'center' }}>
                           {item.sale}%
                         </div>

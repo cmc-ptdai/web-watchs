@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select, DatePicker } from 'antd';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import userApi from '../../../api/apiUser'
 import { addUser, getUser  } from '../../../redux/action/userAction';
@@ -27,6 +28,10 @@ const FromEdit = (props) => {
     props.editStatusFromAdd(false)
     form.resetFields();
   }
+
+  const disabledDate = (current) => {
+    return current && current > moment().endOf('day');
+  };
 
   return (
     <div>
@@ -111,14 +116,6 @@ const FromEdit = (props) => {
               <Option value="admin">Admin</Option>
             </Select>
           </Form.Item>
-
-          <label>Ảnh:</label>
-          <Form.Item
-            name="img"
-          >
-            <Input />
-          </Form.Item>
-
           <label>Giới tính:</label>
           <Form.Item
             name="gender"
@@ -150,6 +147,13 @@ const FromEdit = (props) => {
           >
             <Input />
           </Form.Item>
+          <label>Ngày sinh:</label>
+          <Form.Item
+          name="birthday"
+          rules={[{ required: true, message: 'Please input your gender!' }]}
+        >
+          <DatePicker disabledDate={disabledDate} />
+        </Form.Item>
           <label>Email:</label>
           <Form.Item
             name="email"

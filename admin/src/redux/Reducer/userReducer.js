@@ -19,8 +19,10 @@ const userReducer = (state = initialState, action) => {
     case ADD_USER: {
       const newData = {
         ...action.payload,
+        img: '',
         cart: [],
         order: [],
+        vouchers: [],
         dateCreate: new Date(),
         dateUpdate: new Date(),
       }

@@ -58,6 +58,24 @@ const VoucherItem = ({ item, userReducer, totalMoney }) => {
       return true;
     }
   };
+
+  const checkUsed = () => {
+    if (item) {
+      for (let i = 0; i < item.listUserAddCode.length; i++) {
+        if (item.listUserAddCode[i] === userReducer.user.id) {
+          return true;
+        }
+      }
+    }
+  };
+
+  const checkUseNumber = () => {
+    if (Number(item.useNumber) === Number(item.listUserAddCode.length)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <>
       <div className="voucherItem">
@@ -65,8 +83,18 @@ const VoucherItem = ({ item, userReducer, totalMoney }) => {
           <div className="voucherItem__hidden">
             <p>Đã có</p>
           </div>
+        ) : checkUsed() ? (
+          <div className="voucherItem__hidden">
+            <p>Đã dùng</p>
+          </div>
+        ) : checkUseNumber() ? (
+          <div className="voucherItem__hidden">
+            <p>Đã hết lượt</p>
+          </div>
         ) : checkProviso() ? (
-          <div className="voucherItem__hidden"><p>Không đủ điều kiện</p></div>
+          <div className="voucherItem__hidden">
+            <p>Không đủ điều kiện</p>
+          </div>
         ) : (
           <></>
         )}

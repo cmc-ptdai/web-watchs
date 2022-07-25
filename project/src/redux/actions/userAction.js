@@ -25,6 +25,7 @@ import {
   EDIT_USER,
   EDIT_USER_IMG,
   EDIT_USER_PW,
+  SET_NOTIFICATION_BIRTH_DAY
 } from '../actionType';
 
 export const getUser = (payload) => {
@@ -195,6 +196,13 @@ export const editUserPW = (payload) => {
   };
 };
 
+export const setNotificationBirthDay = (payload) => {
+  return {
+    type: SET_NOTIFICATION_BIRTH_DAY,
+    payload: payload
+  }
+}
+
 export const addVoucherUser = (payload) => async (dispatch) => {
   const data = await ApiUser.getUserById(payload.idUser);
   data.vouchers.push(payload.idVoucher);
@@ -210,6 +218,10 @@ export const deleteVoucherUser = (payload) => async (dispatch) => {
   const newListVoucherUser = data.vouchers.filter((elem) => elem !== payload.voucher.id);
   data.vouchers = newListVoucherUser;
   await ApiUser.addCart(data.id, data);
+  dispatch({
+    type: GET_USERS,
+    payload: data,
+  });
 };
 
 export const deleteVoucherAdmin = (payload) => async (dispatch) => {

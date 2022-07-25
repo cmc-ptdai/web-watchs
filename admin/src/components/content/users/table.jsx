@@ -104,6 +104,12 @@ const MyTable = ({dataTable}) => {
       ...getColumnSearchProps('email'),
     },
     {
+      title: 'Ngày sinh',
+      dataIndex: 'birthday',
+      key: 'birthday',
+      width: 150,
+    },
+    {
       title: 'Gender',
       dataIndex: 'gender',
       key: 'id',

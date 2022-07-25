@@ -14,11 +14,9 @@ const TrademarkType = () => {
   const [listKeySort, setListKeySort] = useState({});
 
   const fetchProducts = async () => {
-    console.log(param);
     try {
       const newData = await productApi.getAll();
       const response = newData.filter((item) => item.brand === param.id);
-      console.log(response, newData);
       setProducts(response);
       setListSort(response);
     } catch (error) {

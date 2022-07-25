@@ -12,14 +12,13 @@ import {
 import moment from "moment";
 import ApiVoucher from "../../../api/apiVoucher";
 import { v4 as uuidv4 } from "uuid";
+import FromEditVoucher from './FromEditVoucher'
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const dateFormat = 'YYYY-MM-DD';
 
 const Slide = () => {
   const [form] = Form.useForm();
-  const [form2] = Form.useForm();
   const [listVoucher, setListVoucher] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus] = useState(false);
@@ -28,7 +27,7 @@ const Slide = () => {
 
   useEffect(() => {
     fetchVoucher();
-  }, [status]);
+  }, [status, showModalEdit]);
 
   const fetchVoucher = async () => {
     const newData2 = await ApiVoucher.getAllVoucher();
@@ -54,6 +53,11 @@ const Slide = () => {
       title: "Tên Voucher",
       dataIndex: "name",
       key: "name",
+    },
+    {
+      title: "Số lượng voucher",
+      dataIndex: "useNumber",
+      key: "useNumber",
     },
     {
       title: "Tiêu đề",
@@ -109,12 +113,6 @@ const Slide = () => {
     form.resetFields();
   };
 
-  const handleCancel2 = () => {
-    setDataEdit(null)
-    setShowModalEdit(false);
-    form2.resetFields();
-  }
-
   const deleteVoucher = (id) => {
     ApiVoucher.deleteVoucher(id);
     setStatus(!status);
@@ -140,26 +138,12 @@ const Slide = () => {
   };
 
   const ShowFromEdit = (value) => {
-    form.resetFields();
-    form2.resetFields();
-    setDataEdit(() => value);
+    setDataEdit(value);
     setShowModalEdit(true);
   };
 
-  const onFinishEdit = (value) => {
-    const newValue = {
-      ...value,
-      id: dataEdit.id,
-      code: dataEdit.code,
-      listUserAddCode: dataEdit.listUserAddCode,
-      dateStart: value.dateStart[0]._d,
-      dateEnd: value.dateStart[1]._d,
-    };
-    setDataEdit(null);
-    ApiVoucher.editVoucher(newValue.id, newValue)
-    handleCancel2();
-    setStatus(!status);
-    fetchVoucher()
+  const statusFromEdit = (value) => {
+    setShowModalEdit(value)
   }
 
   return (
@@ -224,6 +208,18 @@ const Slide = () => {
           >
             <Input type="number" min="1" max="90" />
           </Form.Item>
+          <label>Số lượng voucher:</label>
+          <Form.Item
+            name="useNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number sale of product!",
+              },
+            ]}
+          >
+            <Input type="number" min="1" />
+          </Form.Item>
           <label>Điều kiện:</label>
           <Form.Item
             name="proviso"
@@ -260,98 +256,9 @@ const Slide = () => {
         </Form>
       </Modal>
 
-      <Modal
-        className="form__Edit"
-        visible={showModalEdit}
-        title="Chỉnh sửa sản phẩm"
-        onCancel={handleCancel2}
-      >
-        {dataEdit && (
-          <Form
-            name="editVoucher"
-            form={form2}
-            initialValues={{
-              name: dataEdit.name,
-              sale: dataEdit.sale,
-              content: dataEdit.content,
-              proviso: dataEdit.proviso,
-              dateStart: [moment(dataEdit.dateStart, dateFormat), moment(dataEdit.dateEnd, dateFormat)]
-            }}
-            onFinish={onFinishEdit}
-          >
-            <label>Tên voucher:</label>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your number sale of product!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <label>Tiêu đề:</label>
-          <Form.Item
-            name="content"
-            rules={[
-              {
-                required: true,
-                message: "Please input your number sale of product!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-            <label>Sale:</label>
-            <Form.Item
-              name="sale"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your number sale of product!",
-                },
-              ]}
-            >
-              <Input type="number" min="1" max="90" />
-            </Form.Item>
-            <label>Điều kiện:</label>
-            <Form.Item
-              name="proviso"
-              rules={[{ required: true, message: "Please input your type!" }]}
-            >
-              <Select placeholder="Chọn kiểu máy" allowClear name="proviso">
-                <Option value="silver">Hạng bạc</Option>
-                <Option value="gold">Hạng vàng</Option>
-                <Option value="diamond">Hạng kim cương</Option>
-                <Option value="all">Tất cả mọi người</Option>
-                <Option value="single">Một người</Option>
-              </Select>
-            </Form.Item>
-            <label>Thời hạn:</label>
-            <Form.Item
-              name="dateStart"
-              rules={[{ required: true, message: "Please input your type!" }]}
-            >
-              <RangePicker disabledDate={disabledDate}
-              />
-            </Form.Item>
-            <Form.Item className="groupButton">
-              <Button
-                className="btnSubmit"
-                type="primary"
-                danger
-                onClick={handleCancel2}
-              >
-                Huỷ
-              </Button>
-              <Button className="btnSubmit" type="primary" htmlType="submit">
-                Sửa
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
-      </Modal>
+      {
+        showModalEdit && ( <FromEditVoucher dataEdit={dataEdit}  statusFromEdit={statusFromEdit} />)
+      }
     </div>
   );
 };

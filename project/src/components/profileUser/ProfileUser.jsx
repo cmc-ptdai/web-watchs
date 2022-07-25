@@ -1,10 +1,11 @@
 import React , { useState, useEffect} from 'react';
 import './style.scss'
-import { Button, Form, Input, Radio, Modal, notification } from 'antd';
+import { Button, Form, Input, Modal, notification } from 'antd';
 import { useHistory } from "react-router-dom"
 import { useDispatch } from 'react-redux';
 import userApi from '../../api/userApi'
-import { editUser, editUserImg, editUserPW, getUser } from '../../redux/actions/userAction'
+import { editUserImg, editUserPW, getUser } from '../../redux/actions/userAction'
+import FormEditUser from './FormEditUser';
 
 const openNotification = (number) => {
   notification.info({
@@ -33,19 +34,7 @@ const ProfileUser = () => {
 
   useEffect(() => {
     fetchData()
-  }, [])
-  const onFinish = (values) => {
-    dispatch(editUser(values))
-    setTimeout(() => {
-      fetchData()
-    }, 200);
-    handleCancel()
-  }
-
-  const handleCancel =  () => {
-    setVisible(false)
-    form.resetFields();
-  }
+  }, [visible])
 
   const fetchData = async () => {
     const id = atob(localStorage.getItem('userID'))
@@ -90,6 +79,10 @@ const ProfileUser = () => {
     setVisible(true)
   }
 
+  const editStatus = (value) => {
+    setVisible(value)
+  }
+
   const ShowChangePwd = () => {
     setShowChangePassword(true)
   }
@@ -116,7 +109,11 @@ const ProfileUser = () => {
       handleCancelPassword()
       }, 500);
     }
-
+  }
+  const FormatDate = () => {
+    const date = new Date(user.birthday)
+    const c = date.getDate().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getFullYear().toString()
+    return c
   }
   return (
     <>
@@ -210,6 +207,9 @@ const ProfileUser = () => {
               <span>Họ tên:</span> {user.name}
             </div>
             <div className="profile-info-item">
+              <span>Ngày sinh:</span> {FormatDate()}
+            </div>
+            <div className="profile-info-item">
               <span>Số điện thoại:</span> {user.phone}
             </div>
             <div className="profile-info-item">
@@ -225,119 +225,9 @@ const ProfileUser = () => {
               <Button type="primary" onClick={ShowForm}>Chỉnh sửa thông tin</Button>
             </div>
           </div>
-          <div className="profile-form">
-            <Modal
-              visible={visible}
-              title="Điền thông tin"
-              onCancel={handleCancel}
-            >
-              <Form
-                name="basic"
-                form={form}
-                initialValues={{
-                  phone: user.phone,
-                  email: user.email,
-                  name: user.name,
-                  address: user.address,
-                  gender: user.gender,
-                }}
-                onFinish={onFinish}
-              >
-                <p>Tên đăng nhập: {user.userName}</p>
-                <label>Họ tên:</label>
-                <Form.Item
-                  name="name"
-                  rules={[
-                    ({ getFieldValue }) => ({
-                      validator(rule, value = "") {
-                        if (value.length > 25 || value.length < 10) {
-                          return Promise.reject("Tối đa 25 kí tự");
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    })
-                  ]}
-                >
-                  <Input/>
-                </Form.Item>
-                <label>Số điện thoại:</label>
-                <Form.Item
-                  name="phone"
-                  rules={[
-                    ({ getFieldValue }) => ({
-                      validator(rule, value = "") {
-                        const re = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-                        if (!re.test(value)) {
-                          return Promise.reject("chưa đúng định dạng số điện thoại");
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    })
-                  ]}
-                >
-                  <Input/>
-                </Form.Item>
-                <label>Email:</label>
-                <Form.Item
-                  name="email"
-                  rules={[
-                    ({ getFieldValue }) => ({
-                      validator(rule, value = "") {
-                        //eslint-disable-next-line
-                        const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-                        if (!re.test(value)) {
-                          return Promise.reject("email chưa đúng đinh dạng email @,com,gmail,.....");
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    })
-                  ]}
-                >
-                  <Input/>
-                </Form.Item>
-                <label>Địa chỉ:</label>
-                <Form.Item
-                  name="address"
-                  rules={[
-                    ({ getFieldValue }) => ({
-                      validator(rule, value = "") {
-                        if (value.length > 200 || value.length <= 0) {
-                          return Promise.reject("tối đa 200 kí tự");
-                        } else {
-                          return Promise.resolve();
-                        }
-                      }
-                    })
-                  ]}
-                >
-                  <Input/>
-                </Form.Item>
-
-                <label>Giới tính:</label>
-                <Form.Item
-                  name="gender"
-                >
-                  <Radio.Group>
-                    <Radio value="nam">Nam</Radio>
-                    <Radio value="nư">Nữ</Radio>
-                    <Radio value="khac">Khác</Radio>
-                  </Radio.Group>
-                </Form.Item>
-
-                <Form.Item  className="groupButton">
-                  <Button className="btnSubmit" type="primary" danger onClick={handleCancel}>
-                    Huỷ
-                  </Button>
-                  <Button className="btnSubmit" type="primary" htmlType="submit" >
-                    Chỉnh sửa
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Modal>
-          </div>
+          {
+            visible && (<FormEditUser user={user} editStatus={editStatus}/>)
+          }
         </div>
         <div className="col-5">
           {

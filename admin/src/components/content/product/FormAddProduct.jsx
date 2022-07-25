@@ -203,9 +203,8 @@ const FromAddProduct = (props) => {
               rules={[{ required: true, message: "Please input your type!" }]}
             >
               <Select placeholder="Chọn kiểu máy" allowClear name="model">
-                <Option value="quartz">Quartz</Option>
-                <Option value="automatic">Automatic</Option>
-                <Option value="quartzpin">Quartz/pin</Option>
+                <Option value="1">Quartz</Option>
+                <Option value="2">Automatic</Option>
               </Select>
             </Form.Item>
             <label>Thương hiệu:</label>

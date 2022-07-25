@@ -3,12 +3,14 @@ import productReducer from './products'
 import userReducer from './user'
 import searchProduct from './search'
 import listComponent from './listComment'
+import birthday from './birthday'
 
 const rootReduce = combineReducers({
   productReducer,
   userReducer,
   searchProduct,
-  listComponent
+  listComponent,
+  birthday
 })
 
 export default rootReduce
