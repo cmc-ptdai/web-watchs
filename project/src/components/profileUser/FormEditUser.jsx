@@ -36,8 +36,14 @@ const FormEditUser = ({ user, editStatus }) => {
     return current && current > moment().endOf('day');
   };
   const FormatDate = () => {
-    const date = new Date(user.birthday)
+    let date = ''
+    if (user.birthday === '') {
+      date = new Date()
+    } else {
+      date = new Date(user.birthday)
+    }
     const c = date.getFullYear().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getDate().toString()
+    console.log(c);
     return c
   }
   return (
@@ -62,9 +68,10 @@ const FormEditUser = ({ user, editStatus }) => {
               name="name"
               rules={[
                 ({ getFieldValue }) => ({
-                  validator(rule, value = '') {
-                    if (value.length > 25 || value.length < 10) {
-                      return Promise.reject('Tối đa 25 kí tự');
+                  validator(rule, value) {
+                    console.log(value.length);
+                    if (value.length > 50 || value.length < 5) {
+                      return Promise.reject('Tối đa 50 kí tự');
                     } else {
                       return Promise.resolve();
                     }

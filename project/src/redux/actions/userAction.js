@@ -25,7 +25,8 @@ import {
   EDIT_USER,
   EDIT_USER_IMG,
   EDIT_USER_PW,
-  SET_NOTIFICATION_BIRTH_DAY
+  SET_NOTIFICATION_BIRTH_DAY,
+  ADD_USER_FACEBOOK
 } from '../actionType';
 
 export const getUser = (payload) => {
@@ -185,6 +186,13 @@ export const editUser = (payload) => {
 export const editUserImg = (payload) => {
   return {
     type: EDIT_USER_IMG,
+    payload,
+  };
+};
+
+export const addUserFacebook = (payload) => {
+  return {
+    type: ADD_USER_FACEBOOK,
     payload,
   };
 };

@@ -25,7 +25,8 @@ import {
   ADD_USER,
   EDIT_USER,
   EDIT_USER_IMG,
-  EDIT_USER_PW
+  EDIT_USER_PW,
+  ADD_USER_FACEBOOK
 } from '../actionType'
 
 const initialState = {
@@ -508,6 +509,32 @@ const useReducer  = (state = initialState, action) => {
       }
       userApi.addCart(newUser.id, newUser)
       return state
+    }
+
+    case ADD_USER_FACEBOOK : {
+      const newUser = {
+        id: action.payload.userID,
+        img: action.payload.picture.data.url,
+        email: action.payload.email,
+        address:"",
+        phone: "",
+        role: 'user',
+        birthday: "",
+        name: action.payload.name,
+        userName: action.payload.name,
+        gender: "",
+        password:"",
+        cart: [],
+        order: [],
+        vouchers: [],
+        dateCreate: new Date(),
+        dateUpdate: new Date(),
+      }
+      userApi.addUser(newUser)
+      return {
+        ...state,
+        user: newUser
+      }
     }
     default:
       return state

@@ -32,6 +32,9 @@ const Home = () => {
   }, []);
 
   const checkBirthDay = (value) => {
+    if (value.birthday === '') {
+      return
+    }
     const date = new Date();
     const date2 = new Date(value.birthday)
     const c =  date.getDate().toString() + '/' + (date.getMonth() + 1).toString()
@@ -40,7 +43,6 @@ const Home = () => {
       dispatch(setNotificationBirthDayAction())
       setVisibleAlert(true)
     }
-
   };
   const handleCancel = () => {
     setVisibleAlert(false);

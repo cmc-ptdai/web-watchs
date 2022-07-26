@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Input, Modal, Select, notification } from 'antd';
 import './cart.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 import {
   incrementProject as incrementProjectAction,
   decrementProject as decrementProjectAction,
@@ -18,7 +19,7 @@ import {
   deleteListItemCartNoUser as deleteListItemCartNoUserAction,
   deleteVoucherUser as deleteVoucherUserAction,
   deleteVoucherAdmin as deleteVoucherAdminAction,
-  editVoucherAdmin as editVoucherAdminAction
+  editVoucherAdmin as editVoucherAdminAction,
 } from '../../redux/actions/userAction';
 import { deleteItemByPayCart as deleteItemByPayCartAction } from './../../redux/actions/products';
 import ProductApi from '../../api/productApi';
@@ -58,6 +59,7 @@ const Cart = () => {
   const [statusListVoucher, setShowListVoucher] = useState(false);
   const [voucher, setVoucher] = useState(null);
   const [valueSearchVoucher, setValueSearchVoucher] = useState('');
+  const [statusCheckUser, setStatusCheckUser] = useState(false);
 
   useEffect(() => {
     setProducts(dataProducts);
@@ -411,6 +413,10 @@ const Cart = () => {
 
   // pay cart user
   const PayCart = async () => {
+    if (checkProfileUser() !== '') {
+      setStatusCheckUser(true)
+      return;
+    }
     if (transportFee === null) {
       openNotification('Hãy chọn hình thức vận chuyển cho hoá đơn của bạn');
       return;
@@ -449,16 +455,16 @@ const Cart = () => {
       if (voucher) {
         if (voucher.proviso === 'single') {
           setTimeout(() => {
-            dispatch(deleteVoucherAdminAction(voucher))
+            dispatch(deleteVoucherAdminAction(voucher));
           }, 500);
         } else {
           setTimeout(() => {
-            deleteVoucher(voucher)
-            editVoucherAdmin(voucher)
+            deleteVoucher(voucher);
+            editVoucherAdmin(voucher);
           }, 500);
         }
       }
-      setVoucher(null)
+      setVoucher(null);
     } else {
       setVisible(true);
     }
@@ -466,6 +472,10 @@ const Cart = () => {
   };
 
   const PayCartOnline = async () => {
+    if (checkProfileUser() !== '') {
+      setStatusCheckUser(true)
+      return;
+    }
     setStatus(!status);
     if (user.id) {
       let money = 0;
@@ -521,18 +531,18 @@ const Cart = () => {
       if (voucher) {
         if (voucher.proviso === 'single') {
           setTimeout(() => {
-            dispatch(deleteVoucherAdminAction(voucher))
+            dispatch(deleteVoucherAdminAction(voucher));
           }, 500);
         } else {
           setTimeout(() => {
-            deleteVoucher(voucher)
-            editVoucherAdmin(voucher)
+            deleteVoucher(voucher);
+            editVoucherAdmin(voucher);
           }, 500);
         }
       }
-      setVoucher(null)
+      setVoucher(null);
     }
-    openNotification("Đơn hàng của bạn đã đươc đặt thành công")
+    openNotification('Đơn hàng của bạn đã đươc đặt thành công');
     setCheckPaypal(false);
   };
 
@@ -570,16 +580,15 @@ const Cart = () => {
 
   const deleteVoucher = (item) => {
     if (item.proviso === 'single') {
-
     } else {
-      dispatch(deleteVoucherUserAction({voucher: item, user: user}));
+      dispatch(deleteVoucherUserAction({ voucher: item, user: user }));
     }
   };
 
   const editVoucherAdmin = (item) => {
     const newData = { ...item };
     newData.listUserAddCode.push(user.id);
-    dispatch(editVoucherAdminAction(newData))
+    dispatch(editVoucherAdminAction(newData));
   };
 
   const checkDate = (value) => {
@@ -617,6 +626,20 @@ const Cart = () => {
     }
   };
 
+  const handleCancelCheckUser = () => {
+    setStatusCheckUser(false)
+  }
+
+  const checkProfileUser = () => {
+    let c = ''
+    if (user.phone === '') {
+      c = c + "Tài khoản của bạn chưa có số điện thoại"
+    }
+    if (user.address === '') {
+      c = c + ' và địa chỉ'
+    }
+    return c
+  }
   return (
     <div className="cart">
       {products.length > 0 && (
@@ -762,7 +785,7 @@ const Cart = () => {
                   ({ getFieldValue }) => ({
                     validator(rule, value = '') {
                       //eslint-disable-next-line
-                      const re =/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                      const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                       if (value.length > 0 && !re.test(value)) {
                         return Promise.reject('email chưa đúng đinh dạng');
                       } else {
@@ -866,8 +889,9 @@ const Cart = () => {
                           <div className="voucherItem__hidden">
                             <p>Đã lượt sử dụng</p>
                           </div>
-                        ) : (<></>)
-                      }
+                        ) : (
+                          <></>
+                        )}
                         <div className="voucherItem__number" style={{ textAlign: 'center' }}>
                           {item.sale}%
                         </div>
@@ -893,6 +917,31 @@ const Cart = () => {
               </Modal>
             </>
           )}
+        </div>
+      </div>
+      <div className="cart__mymodel">
+        <div className="cart__mymodel__alert">
+          <Modal
+            title="Thông báo"
+            visible={statusCheckUser}
+            onCancel={handleCancelCheckUser}
+          >
+            <div>
+              <div>
+                <p>{checkProfileUser()} hãy thêm để thực hiện thanh toán</p>
+              </div>
+              <div className="cart__mymodel__alert-btn">
+                  <Link to="/profileUser">
+                  <Button type="primary" style={{marginRight: '10px'}}>
+                    Đồng ý
+                  </Button>
+                  </Link>
+                  <Button danger type="primary" onClick={handleCancelCheckUser}>
+                    Huỷ
+                  </Button>
+                </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>

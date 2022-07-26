@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Modal } from 'antd';
-import { useDispatch } from 'react-redux'
-import {Link , useHistory } from "react-router-dom"
-import UserApi from '../../api/userApi'
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import UserApi from '../../api/userApi';
 import './style.scss';
 import {
-  pushCartLocalInCartUser as pushCartLocalInCartUserAction
-} from '../../redux/actions/userAction'
-import Facebook from './Facebook'
+  pushCartLocalInCartUser as pushCartLocalInCartUserAction,
+  addUserFacebook as addUserFacebookAction,
+} from '../../redux/actions/userAction';
+import FacebookLogin from './Facebook';
 
 const tailLayout = {
-  wrapperCol: { offset: 6, span: 18 },
+  wrapperCol: { offset: 9, span: 18 },
 };
+
+const tailLayout2 = {
+  wrapperCol: { offset: 3 },
+};
+
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },
@@ -20,43 +26,45 @@ const layout = {
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [listUser, setListUser] = useState([])
-  const [user, setUser] = useState({})
-  const [visible, setVisible] = useState(false)
-  const [notificationPassword, setNotificationPassword] = useState(null)
-  const [newPassword, setNewPassword] = useState('')
+  const [listUser, setListUser] = useState([]);
+  const [user, setUser] = useState({});
+  const [visible, setVisible] = useState(false);
+  const [notificationPassword, setNotificationPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState('');
 
   const fetchUser = async () => {
-    const response = await UserApi.getUser()
-    setListUser(response)
-  }
+    const response = await UserApi.getUser();
+    setListUser(response);
+  };
 
-  useEffect (() => {
+  useEffect(() => {
     fetchUser();
-    setNotificationPassword(null)
-  },[])
+    setNotificationPassword(null);
+  }, []);
 
   const onFinish = (values) => {
-    const user = listUser.filter(item => (item.userName === values.username && item.password === values.password))
+    const user = listUser.filter(
+      (item) => item.userName === values.username && item.password === values.password
+    );
     if (user.length > 0) {
-      const cartLocal = JSON.parse(localStorage.getItem('cart'))
+      const passwordBase = btoa(user[0].id);
+      localStorage.setItem('userID', passwordBase);
+      const cartLocal = JSON.parse(localStorage.getItem('cart'));
       if (cartLocal.length > 0) {
         setUser(user[0]);
         setVisible(true);
       } else {
-        const passwordBase = btoa(user[0].id)
-        localStorage.setItem('userID', passwordBase);
         // if (history.location.pathname === '/login') {
         //   history.push('/')
         // } else {
         //   history.goBack()
         // }
         setTimeout(() => {
-          history.push('/')
+          history.push('/');
         }, 400);
       }
     } else {
-      alert("sai tài khoản hoặc mật khẩu")
+      alert('sai tài khoản hoặc mật khẩu');
     }
   };
 
@@ -66,54 +74,70 @@ const Login = () => {
   };
 
   const noAddCartLocal = () => {
-    const passwordBase = btoa(user.id)
-    localStorage.setItem('userID', passwordBase);
+    // const passwordBase = btoa(user.id)
+    // localStorage.setItem('userID', passwordBase);
     setUser({});
     setTimeout(() => {
-      history.push('/')
+      history.push('/');
     }, 500);
     setVisible(false);
-  }
+  };
 
   const yesAddCartLocal = () => {
     const cartLocal = JSON.parse(localStorage.getItem('cart'));
-    const newCartLocal = []
+    const newCartLocal = [];
     const valueDispatch = {
       user: user,
       cartLocal: cartLocal,
-    }
-    dispatch(pushCartLocalInCartUserAction(valueDispatch))
-    localStorage.setItem('cart', JSON.stringify(newCartLocal))
-    const passwordBase = btoa(user.id)
-    localStorage.setItem('userID', passwordBase);
+    };
+    dispatch(pushCartLocalInCartUserAction(valueDispatch));
+    localStorage.setItem('cart', JSON.stringify(newCartLocal));
+    // const passwordBase = btoa(user.id)
+    // localStorage.setItem('userID', passwordBase);
     setTimeout(() => {
-      history.push('/')
+      history.push('/');
     }, 500);
     setVisible(false);
-  }
-
-  const onFinishPasswordRetrieval = (values) => {
-    const user = listUser.filter(item => (item.email === values.email && item.userName === values.userName ))
-    if (user.length > 0) {
-      setNotificationPassword(true)
-      setNewPassword(user[0].password)
-    } else {
-      setNotificationPassword(false)
-    }
   };
 
+  const onFinishPasswordRetrieval = (values) => {
+    const user = listUser.filter(
+      (item) => item.email === values.email && item.userName === values.userName
+    );
+    if (user.length > 0) {
+      setNotificationPassword(true);
+      setNewPassword(user[0].password);
+    } else {
+      setNotificationPassword(false);
+    }
+  };
+  const loginFacebook = (response) => {
+    const user = listUser.filter((item) => item.id === response.userID);
+    if (user.length > 0) {
+      console.log("đã có user");
+      const passwordBase = btoa(user[0].id);
+      localStorage.setItem('userID', passwordBase);
+      setUser(user[0]);
+      setTimeout(() => {
+        history.push('/');
+      }, 400);
+    } else {
+      console.log("tạo user mới");
+      const passwordBase = btoa(response.userID);
+      localStorage.setItem('userID', passwordBase);
+      dispatch(addUserFacebookAction(response))
+      setTimeout(() => {
+        history.push('/');
+      }, 400);
+    }
+  };
 
   return (
     <div className="login">
       <div className="row">
         <div className="col-6 login__left">
           <p>Nếu bạn đã có tài khoản, đăng nhập tại đây</p>
-          <Form
-            name="login"
-            {...layout}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-          >
+          <Form name="login" {...layout} initialValues={{ remember: true }} onFinish={onFinish}>
             <Form.Item
               label="Username"
               name="username"
@@ -130,18 +154,16 @@ const Login = () => {
               <Input.Password />
             </Form.Item>
 
-            <Form.Item {...tailLayout}>
+            <Form.Item {...tailLayout2} className="login__btn">
               <Button className="login__btn--login" type="primary" htmlType="submit">
                 Đăng nhập
               </Button>
-              <Link to='/signup'>
+              <FacebookLogin listUser={user} loginFacebook={loginFacebook} />
+              <Link to="/signup">
                 <Button type="primary" danger htmlType="submit">
                   Đăng ký
                 </Button>
               </Link>
-
-              <Facebook />
-
             </Form.Item>
           </Form>
         </div>
@@ -168,17 +190,16 @@ const Login = () => {
             >
               <Input />
             </Form.Item>
-            {
-              notificationPassword === false && (
-                <div style={{ marginBottom: '20px', color: 'red'}}> email hoặc số điện thoại không trung khớp </div>
-              )
-            }
+            {notificationPassword === false && (
+              <div style={{ marginBottom: '20px', color: 'red' }}>
+                {' '}
+                email hoặc số điện thoại không trung khớp{' '}
+              </div>
+            )}
 
-            {
-              notificationPassword === true && (
-                <div style={{ marginBottom: '20px'}}> mật khẩu của bạn là: {newPassword}</div>
-              )
-            }
+            {notificationPassword === true && (
+              <div style={{ marginBottom: '20px' }}> mật khẩu của bạn là: {newPassword}</div>
+            )}
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
                 Lấy lại mật khẩu
@@ -188,24 +209,23 @@ const Login = () => {
         </div>
       </div>
       <div className="login__modal">
-        <Modal
-          title="Thông báo"
-          visible={visible}
-          onCancel={handleCancel}
-        >
-          <p>bạn đang có một số sản phẩm trong giỏ hàng đã thêm lúc chưa đăng nhập, bạn có muốn thêm sản phẩm đó vào giở hàng của mình không?</p>
-        <div className="group__button__modal">
-          <Button type="primary" danger onClick={noAddCartLocal}>
-            không
-          </Button>
-          <Button type="primary" onClick={yesAddCartLocal}>
-            Dồng ý
-          </Button>
-        </div>
+        <Modal title="Thông báo" visible={visible} onCancel={handleCancel}>
+          <p>
+            bạn đang có một số sản phẩm trong giỏ hàng đã thêm lúc chưa đăng nhập, bạn có muốn thêm
+            sản phẩm đó vào giở hàng của mình không?
+          </p>
+          <div className="group__button__modal">
+            <Button type="primary" danger onClick={noAddCartLocal}>
+              không
+            </Button>
+            <Button type="primary" onClick={yesAddCartLocal}>
+              Dồng ý
+            </Button>
+          </div>
         </Modal>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

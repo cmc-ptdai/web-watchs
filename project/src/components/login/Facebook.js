@@ -1,26 +1,24 @@
-import { useState } from 'react';
+import React from 'react';
 import FacebookLogin from 'react-facebook-login';
+import './style.scss'
 
-const Facebook = () => {
-  const [data, setData] = useState(null);
-
-  const componentClicked = () => {
-    console.log('click');
-  }
+const Facebook = ({loginFacebook}) => {
 
   const responseFacebook = (response) => {
-    console.log(response);
-  }
+    if (response.picture) {
+      loginFacebook(response)
+    }
+  };
   return (
     <div>
-      <FacebookLogin
-        appId="3137377463145830"
-        autoLoad={true}
+        <FacebookLogin
+        appId="527333432520083"
+        autoLoad={false}
         fields="name,email,picture"
-        onClick={componentClicked}
+        scope="public_profile,user_friends"
         callback={responseFacebook}
-        icon="fa-facebook"
-      />
+        cssClass="login__btn--facebook"
+        ></FacebookLogin>
     </div>
   );
 };
