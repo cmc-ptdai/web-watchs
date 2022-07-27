@@ -4,13 +4,15 @@ import userReducer from './userReducer'
 import orderReducer from './orderReducer'
 import accLoginReducer from './accLoginReducer'
 import trademarkReducer from './trademarkReducer'
+import suppliersReducer from './suppliersReducer'
 
 const rootReduce = combineReducers({
   productReducer,
   userReducer,
   orderReducer,
   accLoginReducer,
-  trademarkReducer
+  trademarkReducer,
+  suppliersReducer
 })
 
 export default rootReduce

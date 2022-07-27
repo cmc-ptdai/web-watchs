@@ -41,7 +41,7 @@ const Login = () => {
       createCookie('idUserName', user[0].id, 1000)
       setTimeout(() => {
         return history.replace({ pathname: '/body' })
-      }, 500);
+      }, 100);
     } else {
       openNotification()
     }

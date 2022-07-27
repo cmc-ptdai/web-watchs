@@ -10,6 +10,7 @@ import apiEvaluate from "../../../api/apiEvaluates";
 import apiWarehouse from "../../../api/apiWarehouse";
 import apiTrademarks from "../../../api/apiTrademark";
 import apiCountry from "../../../api/apiCountry.js";
+import apiSuppliers from "../../../api/apiSuppliers";
 
 const { Option } = Select;
 
@@ -18,9 +19,11 @@ const FromAddProduct = (props) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [typeWatch, setTypeWatch] = useState("single");
+  const [typeModel, setTypeModel] = useState("1");
   const [imgInput, setImgInput] = useState("");
   const [listTrademark, setListTrademark] = useState();
   const [listCountry, setListCountry] = useState();
+  const [listSuppliers, setListSuppliers] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -28,9 +31,11 @@ const FromAddProduct = (props) => {
 
   const fetchData = async () => {
     const list = await apiTrademarks.getAllTrademark();
-    const listCountry = await apiCountry.getAllCountry()
+    const listCountry = await apiCountry.getAllCountry();
+    const listSuppliers = await apiSuppliers.getAllSuppliers();
     setListTrademark(list);
-    setListCountry(listCountry)
+    setListCountry(listCountry);
+    setListSuppliers(listSuppliers)
   };
   const changeType = (e) => {
     setTypeWatch(e);
@@ -103,6 +108,9 @@ const FromAddProduct = (props) => {
       };
     });
   };
+  const changeModel = (e) => {
+    setTypeModel(e);
+  };
   return (
     <div>
       {listTrademark && listCountry && (
@@ -146,6 +154,7 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
             <label>giá tiền:</label>
             <Form.Item
               name="price"
@@ -158,6 +167,7 @@ const FromAddProduct = (props) => {
             >
               <Input type="number" />
             </Form.Item>
+
             <label>giảm giá (%):</label>
             <Form.Item
               name="sale"
@@ -170,6 +180,25 @@ const FromAddProduct = (props) => {
             >
               <Input type="number" />
             </Form.Item>
+
+            <label>Nhà cung câp:</label>
+            <Form.Item
+              name="supplier"
+              rules={[{ required: true, message: "Please input your type!" }]}
+            >
+              <Select placeholder="Chọn nhà cung cấp" allowClear name="model">
+                {
+                  listSuppliers && (
+                    listSuppliers.map(item => {
+                      return (
+                        <Option value={item.id} key={item.id}>{item.name}</Option>
+                      )
+                    })
+                  )
+                }
+              </Select>
+            </Form.Item>
+
             <label>Số lượng sản phẩm:</label>
             <Form.Item
               name="countPay"
@@ -182,31 +211,40 @@ const FromAddProduct = (props) => {
             >
               <Input type="number" />
             </Form.Item>
+
             <label>Nguồn gốc:</label>
             <Form.Item
               name="country"
               rules={[{ required: true, message: "Please input your type!" }]}
             >
               <Select placeholder="Chọn nguồn gốc" allowClear name="country">
-                {
-                  listCountry.map(item => {
-                    return (
-                      <Option value={item.type} key={item.id}>{item.name}</Option>
-                    )
-                  })
-                }
+                {listCountry.map((item) => {
+                  return (
+                    <Option value={item.type} key={item.id}>
+                      {item.name}
+                    </Option>
+                  );
+                })}
               </Select>
             </Form.Item>
+
             <label>Kiểu máy:</label>
             <Form.Item
               name="model"
               rules={[{ required: true, message: "Please input your type!" }]}
             >
-              <Select placeholder="Chọn kiểu máy" allowClear name="model">
-                <Option value="1">Quartz</Option>
-                <Option value="2">Automatic</Option>
+              <Select
+                placeholder="Chọn kiểu máy"
+                onChange={changeModel}
+                allowClear
+                name="model"
+              >
+                <Option value="1">Quartz (pin)</Option>
+                <Option value="2">Automatic (cơ)</Option>
+                <Option value="3">Solar (năng lương ánh sáng)</Option>
               </Select>
             </Form.Item>
+
             <label>Thương hiệu:</label>
             <Form.Item
               name="brand"
@@ -226,6 +264,7 @@ const FromAddProduct = (props) => {
                 })}
               </Select>
             </Form.Item>
+
             <label>Giới tính:</label>
             <Form.Item
               name="gender"
@@ -241,6 +280,7 @@ const FromAddProduct = (props) => {
                 <Option value="doi">cả hai</Option>
               </Select>
             </Form.Item>
+
             <label>kiểu (đơn, đôi):</label>
             <Form.Item
               name="type"
@@ -256,9 +296,10 @@ const FromAddProduct = (props) => {
                 <Option value="pair">Đồng hồ đôi</Option>
               </Select>
             </Form.Item>
+
             {typeWatch === "single" ? (
               <>
-                <label>kích cỡ (mm):</label>
+                <label>kích cỡ mặt(mm):</label>
                 <Form.Item
                   name="size"
                   rules={[
@@ -273,7 +314,7 @@ const FromAddProduct = (props) => {
               </>
             ) : (
               <>
-                <label>kích cỡ nam (mm):</label>
+                <label>kích cỡ mặt nam (mm):</label>
                 <Form.Item
                   name="sizeNam"
                   rules={[
@@ -285,7 +326,7 @@ const FromAddProduct = (props) => {
                 >
                   <Input type="number" min="10" max="80" />
                 </Form.Item>
-                <label>kích cỡ nữ (mm):</label>
+                <label>kích cỡ mặt nữ (mm):</label>
                 <Form.Item
                   name="sizeNu"
                   rules={[
@@ -312,6 +353,7 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
             <label>Chất liệu dây:</label>
             <Form.Item
               name="ropeMaterial"
@@ -324,6 +366,28 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
+            <label>Độ rộng dây (mm):</label>
+            <Form.Item
+              name="wireWidth"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your number sale of product!",
+                },
+              ]}
+            >
+              <Input type="number" min="10" max="80" />
+            </Form.Item>
+
+            <label>Màu giây:</label>
+            <Form.Item
+              name="strapColor"
+              rules={[{ required: true, message: "Please input your type!" }]}
+            >
+              <Input />
+            </Form.Item>
+
             <label>Chất liệu mặt:</label>
             <Form.Item
               name="glassMaterial"
@@ -336,6 +400,65 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
+            <label>Độ dày mặt (mm):</label>
+            <Form.Item
+              name="faceThickness"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your number sale of product!",
+                },
+              ]}
+            >
+              <Input type="number" min="5" max="80" />
+            </Form.Item>
+
+            {typeModel === "1" ? (
+              <>
+                <label>Thời gian sử dụng pin (năm):</label>
+                <Form.Item name="batteryLife">
+                  <Input type="number" min="5" max="80"/>
+                </Form.Item>
+              </>
+            ) : (
+              <>
+                <label>Thời gian giữ cót (ngày):</label>
+                <Form.Item name="keepPower">
+                  <Input type="number" min="5"/>
+                </Form.Item>
+              </>
+            )}
+
+            <label>Loại mặt số:</label>
+            <Form.Item
+              name="faceType"
+              rules={[{ required: true, message: "Please input your type!" }]}
+            >
+              <Select placeholder="chọn loại mặt số" allowClear name="faceType">
+                <Option value="analog">Kim (Analog)</Option>
+                <Option value="digital">Điện tử (Digital)</Option>
+                <Option value="anaDigi">Kim - Điện tử(Analog - Digital)</Option>
+              </Select>
+            </Form.Item>
+
+            <label>Hình dáng mặt:</label>
+            <Form.Item
+              name="faceShape"
+              rules={[{ required: true, message: "Please input your type!" }]}
+            >
+              <Select
+                placeholder="chọn hình dáng mặt"
+                allowClear
+                name="faceShape"
+              >
+                <Option value="circle">Hình tròn</Option>
+                <Option value="square">Hình vuông</Option>
+                <Option value="rectangle">Hình chữ nhật</Option>
+                <Option value="other">Khác</Option>
+              </Select>
+            </Form.Item>
+
             <label>Độ chịu nước (m):</label>
             <Form.Item
               name="waterResistance"
@@ -348,6 +471,7 @@ const FromAddProduct = (props) => {
             >
               <Input type="number" min="5" />
             </Form.Item>
+
             <label>Chức năng khác:</label>
             <Form.Item
               name="other"
@@ -358,9 +482,10 @@ const FromAddProduct = (props) => {
                 },
               ]}
             >
-              <Input />
+              <Input value="" />
             </Form.Item>
-            <label>Bảo hiểm:</label>
+
+            <label>Bảo hành:</label>
             <Form.Item
               name="Insurance"
               rules={[
@@ -372,6 +497,7 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
             <label>Bảo hành quốc tế:</label>
             <Form.Item
               name="internationalWarranty"
@@ -384,6 +510,7 @@ const FromAddProduct = (props) => {
             >
               <Input />
             </Form.Item>
+
             <label>Ảnh mô tả sản phẩm:</label>
             <Form.Item
               name="img"

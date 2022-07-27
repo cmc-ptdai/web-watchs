@@ -1,0 +1,19 @@
+.children-warehouse {
+  margin-left: 50px;
+  display: flex;
+  justify-content: space-between;
+  p, .button1, .title {
+    width: 20%;
+  }
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .button1 {
+    button {
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}

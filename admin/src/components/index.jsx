@@ -136,6 +136,12 @@ function Body() {
               <Link to="/body/product">Products</Link>
             </Menu.Item>
             <Menu.Item
+              key="suppliers"
+              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+            >
+              <Link to="/body/suppliers">Suppliers</Link>
+            </Menu.Item>
+            <Menu.Item
               key="warehouse"
               icon={<TeamOutlined style={{ fontSize: "18px" }} />}
             >

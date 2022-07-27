@@ -49,6 +49,9 @@ const CardItem = ({item}) => {
         cover={<img alt="example" src={item.img}/>}
       >
         {
+          expiredProduct() && <div className="hidden-card"> Hết Hàng </div>
+        }
+        {
           item.sale > 0 && (<div className="item__card__sale">{item.sale}%</div>)
         }
         <p className="item__card__name">{item.name}</p >

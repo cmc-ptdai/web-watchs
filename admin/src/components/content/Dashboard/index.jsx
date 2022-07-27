@@ -641,7 +641,7 @@ const Dashboard = () => {
                 className="btnSubmit"
                 type="primary"
                 onClick={() => showWeek()}
-                disabled={value[0] === null ? true : false}
+                disabled={value && value[0] === null ? true : false}
               >
                 Xem
               </Button>
