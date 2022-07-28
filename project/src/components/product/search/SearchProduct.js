@@ -95,12 +95,8 @@ const SearchProduct = (props) => {
           ...newData[index],
           status: true,
         };
-      } else {
-        newData[index] = {
-          ...newData[index],
-          status: false,
-        };
       }
+
     });
     setCountry(newData);
     props.searchByCountry(item.type);
@@ -121,12 +117,13 @@ const SearchProduct = (props) => {
           ...newData[index],
           status: true,
         };
-      } else {
-        newData[index] = {
-          ...newData[index],
-          status: false,
-        };
       }
+      // else {
+      //   newData[index] = {
+      //     ...newData[index],
+      //     status: false,
+      //   };
+      // }
     });
     setTypeProduct(newData);
     props.searchByType(item.id);
@@ -168,13 +165,13 @@ const SearchProduct = (props) => {
                   key={index}
                   onClick={() => searchByPrice(item)}
                 >
-                  <p>
+                  <p style={{ margin: 'auto'}}>
                     {item.price1 === 0
                       ? 'Dưới '
                       : item.price1 === 10000000
                       ? 'Trên'
                       : item.price1 + ' -> '}
-                    {item.price2 === 9999999999999 ? '10000000' : item.price2}
+                    {item.price2 === 9999999999999 ? ' 10000000' : item.price2}
                   </p>
                 </li>
               );
