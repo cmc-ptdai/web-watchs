@@ -30,6 +30,8 @@ const ProfileProduct = () => {
   const dispatch = useDispatch()
 
   const user = useSelector(store => store.userReducer.user)
+  const user2 = useSelector(store => store)
+  console.log(user2);
   const listProduct = useSelector(store => store.productReducer)
 
   const [product, setProduct] = useState(null)

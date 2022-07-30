@@ -2,6 +2,11 @@
   .sort {
     text-align: right;
   }
+  .list-sort {
+    height: 800px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
   &__content {
     margin-top: 20px;
     padding: 0;

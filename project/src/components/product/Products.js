@@ -51,6 +51,22 @@ const Products = ({ gender }) => {
               Number(element[key]) >= listKeySort.price.price1 &&
               Number(element[key]) < listKeySort.price.price2
           );
+        } else if (key === 'water') {
+          newArr = newArr.filter(
+            (element) =>
+              Number(element.waterResistance) >= listKeySort.water.water1 &&
+              Number(element.waterResistance) < listKeySort.water.water2
+          );
+        } else if (key === 'strapColor') {
+          newArr = newArr.filter((element) => {
+            let status = false
+            listKeySort[key].forEach((item) => {
+              if (element[key].toLowerCase().indexOf(item.toLowerCase()) !== -1) {
+                status = true
+              }
+            })
+            return status;
+          });
         } else {
           newArr = newArr.filter((element) => {
             let status = false
@@ -63,14 +79,12 @@ const Products = ({ gender }) => {
           });
         }
       }
+      console.log(newArr);
       setListSort(newArr);
     } else {
       setListSort(products);
     }
   };
-
-  console.log(listKeySort);
-  console.log(listSort);
 
   const searchByPrice1 = (value) => {
     let newList = {};
@@ -92,6 +106,27 @@ const Products = ({ gender }) => {
     }
     setListKeySort(newList);
   };
+
+  const searchByWater = (value) => {
+    let newList = {};
+    if (listKeySort?.water) {
+      if (listKeySort.water.water1 === value.water1 && listKeySort.water.water2 === value.water2) {
+        delete listKeySort.water;
+        newList = { ...listKeySort };
+      } else {
+        newList = {
+          ...listKeySort,
+          water: value,
+        };
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        water: value,
+      };
+    }
+    setListKeySort(newList);
+  }
 
   const searchByType = (id) => {
     let newList = {};
@@ -140,7 +175,6 @@ const Products = ({ gender }) => {
         country: [id],
       };
     }
-    console.log(newList);
     setListKeySort(newList);
   };
 
@@ -190,6 +224,81 @@ const Products = ({ gender }) => {
       setListSort(newArr);
     }
   };
+
+  const searchByModel = (id) =>{
+    let newList = {};
+    if (listKeySort?.model) {
+      const data = listKeySort.model.filter(item => item !== id)
+      if (data.length === listKeySort.model.length) {
+        listKeySort.model.push(id);
+        newList = {...listKeySort}
+      } else if(data.length === 0) {
+        delete listKeySort.model
+        newList = { ...listKeySort};
+      } else {
+        newList = {
+          ...listKeySort,
+          model: data
+        }
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        model: [id],
+      };
+    }
+    setListKeySort(newList);
+  };
+
+  const searchByStrapColor = (name) => {
+    let newList = {};
+    if (listKeySort?.strapColor) {
+      const data = listKeySort.strapColor.filter(item => item !== name)
+      if (data.length === listKeySort.strapColor.length) {
+        listKeySort.strapColor.push(name);
+        newList = {...listKeySort}
+      } else if(data.length === 0) {
+        delete listKeySort.strapColor
+        newList = { ...listKeySort};
+      } else {
+        newList = {
+          ...listKeySort,
+          strapColor: data
+        }
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        strapColor: [name],
+      };
+    }
+    setListKeySort(newList);
+  }
+
+  const searchByFaceShape = (name) => {
+    let newList = {};
+    if (listKeySort?.faceShape) {
+      const data = listKeySort.faceShape.filter(item => item !== name)
+      if (data.length === listKeySort.faceShape.length) {
+        listKeySort.faceShape.push(name);
+        newList = {...listKeySort}
+      } else if(data.length === 0) {
+        delete listKeySort.faceShape
+        newList = { ...listKeySort};
+      } else {
+        newList = {
+          ...listKeySort,
+          faceShape: data
+        }
+      }
+    } else {
+      newList = {
+        ...listKeySort,
+        faceShape: [name],
+      };
+    }
+    setListKeySort(newList);
+  }
   return (
     <div className="products">
       <div className="col-12">
@@ -213,11 +322,15 @@ const Products = ({ gender }) => {
       </div>
 
       <div className="row">
-        <div className="col-lg-3">
+        <div className="col-lg-3 list-sort">
           <SearchProduct
             searchByPrice={searchByPrice1}
             searchByType={searchByType}
             searchByCountry={searchByCountry}
+            searchByWater={searchByWater}
+            searchByModel={searchByModel}
+            searchByStrapColor={searchByStrapColor}
+            searchByFaceShape={searchByFaceShape}
           />
         </div>
 

@@ -11,6 +11,7 @@ import apiWarehouse from "../../../api/apiWarehouse";
 import apiTrademarks from "../../../api/apiTrademark";
 import apiCountry from "../../../api/apiCountry.js";
 import apiSuppliers from "../../../api/apiSuppliers";
+import ApiListImportProductSuppliers from '../../../api/apiListProductSuppliers';
 
 const { Option } = Select;
 
@@ -44,6 +45,7 @@ const FromAddProduct = (props) => {
   const onFinish = (value) => {
     const newValue = {
       ...value,
+      supplier: props.typeSuppliers,
       id: uuidv4(),
       img: imgInput,
       dateAdd: new Date(),
@@ -64,14 +66,22 @@ const FromAddProduct = (props) => {
       listWarehouse: [
         {
           dateInput: new Date(),
-          numberCount: 0,
-          numberProduct: value.countPay,
+          numberProduct: Number(value.countPay),
         },
       ],
     };
+
+    const newSuppliers = {
+      idSuppliers: props.typeSuppliers,
+      idProduct: newValue.id,
+      dateInput :new Date(),
+      numberInput: newValue.countPay
+    }
+
     apiComment.addComment(comment);
     apiEvaluate.addEvaluates(evaluate);
     apiWarehouse.addWarehouse(warehouse);
+    ApiListImportProductSuppliers.addSuppliersAction(newSuppliers)
     dispatch(addProduct(newValue));
 
     setTimeout(async () => {
@@ -111,6 +121,13 @@ const FromAddProduct = (props) => {
   const changeModel = (e) => {
     setTypeModel(e);
   };
+
+  const checkSupplier = () => {
+    if (listSuppliers) {
+      const newList = listSuppliers.filter(supplier => supplier.id === props.typeSuppliers)
+      return newList[0].name
+    }
+  }
   return (
     <div>
       {listTrademark && listCountry && (
@@ -139,10 +156,10 @@ const FromAddProduct = (props) => {
                 ({ getFieldValue }) => ({
                   validator(rule, value = "") {
                     const userProduct = dataProduct.filter(
-                      (item) => item.name.toLowerCase() === value.toLowerCase()
+                      (item) => item.name.toLowerCase().replace(/\s/g, '') === value.toLowerCase().replace(/\s/g, '')
                     );
-                    if (value.length > 50) {
-                      return Promise.reject("Tối đa 50 kí tự");
+                    if (value.length > 150) {
+                      return Promise.reject("Tối đa 150 kí tự");
                     } else if (userProduct.length > 0) {
                       return Promise.reject("tên sản phẩm đã tồn tại");
                     } else {
@@ -182,7 +199,7 @@ const FromAddProduct = (props) => {
             </Form.Item>
 
             <label>Nhà cung câp:</label>
-            <Form.Item
+            {/* <Form.Item
               name="supplier"
               rules={[{ required: true, message: "Please input your type!" }]}
             >
@@ -197,7 +214,8 @@ const FromAddProduct = (props) => {
                   )
                 }
               </Select>
-            </Form.Item>
+            </Form.Item> */}
+            <p style={{ marginBottom: '10px'}}>{checkSupplier()}</p>
 
             <label>Số lượng sản phẩm:</label>
             <Form.Item
@@ -209,7 +227,7 @@ const FromAddProduct = (props) => {
                 },
               ]}
             >
-              <Input type="number" />
+              <Input type="number" min={1}/>
             </Form.Item>
 
             <label>Nguồn gốc:</label>
@@ -457,6 +475,19 @@ const FromAddProduct = (props) => {
                 <Option value="rectangle">Hình chữ nhật</Option>
                 <Option value="other">Khác</Option>
               </Select>
+            </Form.Item>
+
+            <label>Màu mặt:</label>
+            <Form.Item
+              name="faceColor"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input face color!",
+                },
+              ]}
+            >
+              <Input value="" />
             </Form.Item>
 
             <label>Độ chịu nước (m):</label>

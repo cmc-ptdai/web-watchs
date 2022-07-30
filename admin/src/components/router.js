@@ -26,7 +26,7 @@ const router = [
   {path: '/body/profileAdmin', exact: true, Component: ProfileAdmin},
   {path: '/body/slides', exact: true, Component: Slides},
   {path: '/body/trademark', exact: true, Component: ListTrademarks},
-  {path: '/body/product', exact: true, Component: Products},
+  {path: '/body/product/:id', exact: true, Component: Products},
   {path: '/body/orders', exact: true, Component: Orders},
   {path: '/body/warehouse', exact: true, Component: Warehouse},
   {path: '/body/suppliers', exact: true, Component: Suppliers},

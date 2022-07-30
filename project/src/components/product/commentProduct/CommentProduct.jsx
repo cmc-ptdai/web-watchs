@@ -103,7 +103,7 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
       const newComment = {
         id : uuidv4(),
         idProduct: data.id,
-        idComment: newId,
+        idComment: dataLocal.id,
         idUser: user.id,
         date: new Date(),
         name: user.name,
@@ -129,7 +129,6 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
   const editComment = (comment) => {
     setCommentEdit(comment);
   }
-
 
   const handleCancelFrom = () => {
     setCommentEdit(null)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Modal, Input, Form, Select } from "antd";
+import { Button, Modal, Input, Form } from "antd";
 import { editProduct, getProduct } from "../../../redux/action/productAction";
 import apiWarehouse from "../../../api/apiWarehouse";
 import userProduct from "../../../api/apiProduct";
@@ -8,10 +8,7 @@ import "./product.scss";
 import ApiListImportProductSuppliers from '../../../api/apiListProductSuppliers';
 import ApiSuppliers from '../../../api/apiSuppliers';
 
-const { Option } = Select;
-
 const AddProduct = (props) => {
-  console.log(props);
   const [form] = Form.useForm();
   const [warehouse, setWarehouse] = useState(null);
   const [listSuppliers, setListSuppliers] = useState(null);
@@ -41,7 +38,7 @@ const AddProduct = (props) => {
       numberProduct: Number(value.number),
     };
     const newSuppliers = {
-      idSuppliers: value.suppliers,
+      idSuppliers: props.data.supplier,
       idProduct: props.data.id,
       dateInput :new Date(),
       numberInput: value.number
@@ -58,6 +55,13 @@ const AddProduct = (props) => {
     props.editStatusFromAdd(false);
     form.resetFields();
   }
+
+  const checkSupplier = () => {
+    if (listSuppliers) {
+      const newList = listSuppliers.filter(supplier => supplier.id === props.data.supplier)
+      return newList[0].name
+    }
+  }
   return (
     <>
       <Modal
@@ -72,34 +76,15 @@ const AddProduct = (props) => {
             onFinish={handleSubmit}
           >
             <label>Tên nhà cung cấp :</label>
-            <Form.Item
-              name="suppliers"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name suppliers!",
-                },
-              ]}
-            >
-              <Select placeholder="Chọn nhà cung cấp" allowClear name="model">
-                {
-                  listSuppliers && (
-                    listSuppliers.map(item => {
-                      return (
-                        <Option value={item.id} key={item.id}>{item.name}</Option>
-                      )
-                    })
-                  )
-                }
-              </Select>
-            </Form.Item>
+            <p>{checkSupplier()}</p>
+
             <label>Số lượng :</label>
             <Form.Item
               name="number"
               rules={[
                 {
                   required: true,
-                  message: "Please input your name trademark!",
+                  message: "Please input number product!",
                 },
               ]}
             >

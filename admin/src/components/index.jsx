@@ -16,20 +16,23 @@ import { getUser } from "../redux/action/userAction";
 import { getProduct } from "../redux/action/productAction";
 import { getOrder } from "../redux/action/orderAction";
 import { getAccount } from "../redux/action/accLoginAction";
+import { getSuppliers } from "../redux/action/suppliersAction";
 
 import router from "./router";
 import userApi from "../api/apiUser";
 import productApi from "../api/apiProduct";
 import orderApi from "../api/apiOrders";
+import ApiSuppliers from "../api/apiSuppliers";
 
 const { Header, Content, Sider } = Layout;
-// const { SubMenu } = Menu;
+const { SubMenu } = Menu;
 
 function Body() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [collapsed, setCollapse] = useState(false);
   const accountUser = useSelector((store) => store.accLoginReducer);
+  const suppliersReducer = useSelector((store) => store.suppliersReducer);
   const [keyDf, setKeyDf] = useState(["dashboard"]);
 
   useEffect(() => {
@@ -42,6 +45,8 @@ function Body() {
       const listUser = await userApi.getAllUser();
       const listProduct = await productApi.getAllProduct();
       const listOrder = await orderApi.getAllOrders();
+      const listSuppliers = await ApiSuppliers.getAllSuppliers();
+      dispatch(getSuppliers(listSuppliers))
       if (idUser !== undefined) {
         const accountUser = await userApi.getUserById(idUser);
         dispatch(getAccount(accountUser));
@@ -74,7 +79,7 @@ function Body() {
     setCollapse(!collapsed);
   };
   const handleClickMenu = (e) => {
-    sessionStorage.setItem('keyDf', e.key);
+    sessionStorage.setItem("keyDf", e.key);
   };
 
   const logout = () => {
@@ -88,11 +93,11 @@ function Body() {
   if (getCookie("idUserName") === undefined || getCookie("idUserName") === "") {
     return <Redirect to="/" />;
   }
-  if (sessionStorage.getItem('keyDf')) {
-    const newData = [...keyDf]
-    if (sessionStorage.getItem('keyDf') !== newData[0]) {
-      newData[0] = sessionStorage.getItem('keyDf')
-      setKeyDf(newData)
+  if (sessionStorage.getItem("keyDf")) {
+    const newData = [...keyDf];
+    if (sessionStorage.getItem("keyDf") !== newData[0]) {
+      newData[0] = sessionStorage.getItem("keyDf");
+      setKeyDf(newData);
     }
   }
 
@@ -129,12 +134,27 @@ function Body() {
               <Link to="/body/orders">Orders</Link>
             </Menu.Item>
 
-            <Menu.Item
+            {/* <Menu.Item
               key="product"
               icon={<DropboxOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/product">Products</Link>
-            </Menu.Item>
+            </Menu.Item> */}
+
+            <SubMenu
+              key="sub2"
+              icon={<DropboxOutlined style={{ fontSize: "18px" }} />}
+              title="Products"
+            >
+              {suppliersReducer &&
+                suppliersReducer.map((item) => {
+                  return (
+                    <Menu.Item key={'product' + item.id}>
+                      <Link to={`/body/product/${item.id}`}>{item.name}</Link>
+                    </Menu.Item>
+                  );
+                })}
+            </SubMenu>
             <Menu.Item
               key="suppliers"
               icon={<TeamOutlined style={{ fontSize: "18px" }} />}

@@ -5,6 +5,8 @@ import { editProduct, getProduct } from "../../../redux/action/productAction";
 import userProduct from "../../../api/apiProduct";
 import "./product.scss";
 import apiSuppliers from "../../../api/apiSuppliers";
+import ApiTrademark from "../../../api/apiTrademark";
+import ApiCountry from "../../../api/apiCountry";
 
 const { Option } = Select;
 
@@ -12,9 +14,11 @@ const FromEditProduct = (props) => {
   const dataProduct = useSelector((store) => store.productReducer);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [data, setData] = useState({ ...props.data});
+  const [data, setData] = useState({ ...props.data });
   const [imgEdit, setImgEdit] = useState(data.img);
   const [listSuppliers, setListSuppliers] = useState(null);
+  const [trademarks, setTrademarks] = useState(null);
+  const [country, setCountry] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -22,13 +26,19 @@ const FromEditProduct = (props) => {
 
   const fetchData = async () => {
     const listSuppliers = await apiSuppliers.getAllSuppliers();
-    setListSuppliers(listSuppliers)
+    const listTrademark = await ApiTrademark.getAllTrademark();
+    const listCountry = await ApiCountry.getAllCountry()
+    setCountry(listCountry)
+    setTrademarks(listTrademark);
+    setListSuppliers(listSuppliers);
   };
 
   const onFinish = (values) => {
     const newData = {
       ...values,
       id: data.id,
+      model: data.model,
+      supplier: data.supplier,
       img: imgEdit,
       quantityPurchased: data.quantityPurchased,
       dateAdd: data.dateAdd,
@@ -73,6 +83,13 @@ const FromEditProduct = (props) => {
     });
   };
 
+  const checkSupplier = () => {
+    if (listSuppliers) {
+      const newList = listSuppliers.filter(supplier => supplier.id === data.supplier)
+      return newList[0].name
+    }
+  }
+
   return (
     <>
       <Modal
@@ -90,7 +107,6 @@ const FromEditProduct = (props) => {
             sale: data.sale,
             countPay: data.countPay,
             country: data.country,
-            model: data.model,
             brand: data.brand,
             gender: data.gender,
             size: data.size,
@@ -105,7 +121,6 @@ const FromEditProduct = (props) => {
             internationalWarranty: data.internationalWarranty,
             img: data.img,
             content: data.content,
-            supplier: data.supplier,
             wireWidth: data.wireWidth,
             strapColor: data.strapColor,
             faceThickness: data.faceThickness,
@@ -113,6 +128,7 @@ const FromEditProduct = (props) => {
             keepPower: data.keepPower,
             faceType: data.faceType,
             faceShape: data.faceShape,
+            faceColor: data.faceColor,
           }}
           onFinish={onFinish}
         >
@@ -127,10 +143,12 @@ const FromEditProduct = (props) => {
               ({ getFieldValue }) => ({
                 validator(rule, value = "") {
                   const userProduct = dataProduct.filter(
-                    (item) => item.name.toLowerCase() === value.toLowerCase() && item.id !== data.id
+                    (item) =>
+                      item.name.toLowerCase() === value.toLowerCase() &&
+                      item.id !== data.id
                   );
-                  if (value.length > 50) {
-                    return Promise.reject("Tối đa 50 kí tự");
+                  if (value.length > 150) {
+                    return Promise.reject("Tối đa 150 kí tự");
                   } else if (userProduct.length > 0) {
                     return Promise.reject("tên sản phẩm đã tồn tại");
                   } else {
@@ -170,22 +188,7 @@ const FromEditProduct = (props) => {
           </Form.Item>
 
           <label>Nhà cung câp:</label>
-            <Form.Item
-              name="supplier"
-              rules={[{ required: true, message: "Please input your type!" }]}
-            >
-              <Select placeholder="Chọn nhà cung cấp" allowClear name="model">
-              {
-                  listSuppliers && (
-                    listSuppliers.map(item => {
-                      return (
-                        <Option value={item.id} key={item.id}>{item.name}</Option>
-                      )
-                    })
-                  )
-                }
-              </Select>
-            </Form.Item>
+          <p style={{marginBottom: '10px'}}>{checkSupplier()}</p>
 
           <label>Số lượng sản phẩm:</label>
           <Form.Item
@@ -206,8 +209,15 @@ const FromEditProduct = (props) => {
             rules={[{ required: true, message: "Please input your type!" }]}
           >
             <Select placeholder="Chọn nguồn gốc" allowClear name="country">
-              <Option value="japan">Nhật Bản</Option>
-              <Option value="switzerland">Thuỵ sỹ</Option>
+              {
+                  country && (
+                    country.map(item => {
+                      return (
+                        <Option value={item.type} key={item.id}>{item.name}</Option>
+                      )
+                    })
+                  )
+                }
             </Select>
           </Form.Item>
 
@@ -222,8 +232,12 @@ const FromEditProduct = (props) => {
               <Option value="3">Quartz/pin</Option>
             </Select>
           </Form.Item> */}
-          <p style={{ marginBottom: '10px'}}>
-            {data.model === '1' ? "Quartz (pin)" : data.model === '2' ? "Automatic (cơ)" : "Solar (năng lương ánh sáng)"}
+          <p style={{ marginBottom: "10px" }}>
+            {data.model === "1"
+              ? "Quartz (pin)"
+              : data.model === "2"
+              ? "Automatic (cơ)"
+              : "Solar (năng lương ánh sáng)"}
           </p>
 
           <label>Thương hiệu:</label>
@@ -236,12 +250,15 @@ const FromEditProduct = (props) => {
               allowClear
               name="brand"
             >
-              <Option value="olympianus">Olym Pianus</Option>
-              <Option value="Ogival">Ogival</Option>
-              <Option value="SRWatch">SRWatch</Option>
-              <Option value="Orient">Orient</Option>
-              <Option value="ogival">Ogival</Option>
-              <Option value="casio">casio</Option>
+              {
+                  trademarks && (
+                    trademarks.map(item => {
+                      return (
+                        <Option value={item.id} key={item.id}>{item.name}</Option>
+                      )
+                    })
+                  )
+                }
             </Select>
           </Form.Item>
 
@@ -336,17 +353,17 @@ const FromEditProduct = (props) => {
           </Form.Item>
 
           <label>Độ rộng dây (mm):</label>
-            <Form.Item
-              name="wireWidth"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your number sale of product!",
-                },
-              ]}
-            >
-              <Input type="number" min="10" max="80" />
-            </Form.Item>
+          <Form.Item
+            name="wireWidth"
+            rules={[
+              {
+                required: true,
+                message: "Please input your number sale of product!",
+              },
+            ]}
+          >
+            <Input type="number" min="10" max="80" />
+          </Form.Item>
 
           <label>Màu giây:</label>
           <Form.Item
@@ -383,20 +400,20 @@ const FromEditProduct = (props) => {
           </Form.Item>
 
           {data.model === "1" ? (
-              <>
-                <label>Thời gian sử dụng pin (năm):</label>
-                <Form.Item name="batteryLife">
-                  <Input type="number" min="5" max="80"/>
-                </Form.Item>
-              </>
-            ) : (
-              <>
-                <label>Thời gian giữ cót (ngày):</label>
-                <Form.Item name="keepPower">
-                  <Input type="number" min="5"/>
-                </Form.Item>
-              </>
-            )}
+            <>
+              <label>Thời gian sử dụng pin (năm):</label>
+              <Form.Item name="batteryLife">
+                <Input type="number" min="5" max="80" />
+              </Form.Item>
+            </>
+          ) : (
+            <>
+              <label>Thời gian hoạt động (ngày):</label>
+              <Form.Item name="keepPower">
+                <Input type="number" min="5" />
+              </Form.Item>
+            </>
+          )}
 
           <label>Loại mặt số:</label>
           <Form.Item
@@ -425,6 +442,18 @@ const FromEditProduct = (props) => {
               <Option value="rectangle">Hình chữ nhật</Option>
               <Option value="other">Khác</Option>
             </Select>
+          </Form.Item>
+          <label>Màu mặt:</label>
+          <Form.Item
+            name="faceColor"
+            rules={[
+              {
+                required: true,
+                message: "Please input your face color!",
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
 
           <label>Độ chịu nước (m):</label>
@@ -480,7 +509,7 @@ const FromEditProduct = (props) => {
           </Form.Item>
 
           <label>Ảnh mô tả sản phẩm:</label>
-          <input type="file" onChange={inputFile} accept=".jpg, .jpeg, .png"/>
+          <input type="file" onChange={inputFile} accept=".jpg, .jpeg, .png" />
           {imgEdit && (
             <div className="form__edit__img">
               <img

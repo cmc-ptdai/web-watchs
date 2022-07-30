@@ -22,11 +22,6 @@ const Suppliers = () => {
   const [listProductSupplies, setListProductSupplies] = useState(null);
   const [ListDataSort, setListDataSort] = useState(null);
 
-  // useEffect(() => {
-  //   fetchProduct()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[])
-
   useEffect(() => {
     fetchList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,25 +29,12 @@ const Suppliers = () => {
 
   useEffect(() => {
     sortList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listProductSupplies, products]);
   const fetchList = async () => {
     const newData = await ApiListProductSuppliers.getAllSuppliers();
     setListProductSupplies(newData);
   };
-
-  // const fetchProduct = async () => {
-  //   const newData = await apiProduct.getAllProduct()
-  //   setListProduct(newData)
-  // }
-
-  // const fetchWarehouse = async () => {
-  //   const listWarehouse = await apiWarehouse.getWarehouse()
-  //   setWarehouses(listWarehouse)
-  //   setDateSearch(listWarehouse)
-  //   if (inputSearch !== null) {
-  //     searchProductDate()
-  //   }
-  // }
 
   const sortList = () => {
     const newProduct = [];
@@ -63,7 +45,6 @@ const Suppliers = () => {
         }
       });
     }
-
     if (products) {
       const listData = [];
       products.forEach((item) => {
@@ -123,18 +104,6 @@ const Suppliers = () => {
           >
             Reset
           </Button>
-
-          {/* <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText(selectedKeys[0])
-              setSearchedColumn(dataIndex)
-            }}
-          >
-            Filter
-          </Button> */}
         </Space>
       </div>
     ),
@@ -186,42 +155,15 @@ const Suppliers = () => {
       dataIndex: "name",
       key: "name",
       render: (text, record) => (
-        // <p>{ fetchNameProduct(text)}</p>
         <p>{text}</p>
       ),
     },
   ];
 
-  // const fetchNameProduct = (id) => {
-  //   const a = listProduct.filter(item => item.id === id);
-  //   if (a.length > 0) {
-  //     return a[0].name
-  //   }
-  //   return false
-  // }
-
   const deleteWarehouseItem = (item) => {
     ApiListProductSuppliers.deleteSuppliersAction(item.id)
     fetchList()
     setStatus(!status)
-    // dateSearch.forEach((elem,index2) => {
-    //   if (elem.id === id) {
-    //     for (let i = 0; i < elem.listWarehouse.length; i++) {
-    //       if (i === index) {
-    //         const newList =  elem.listWarehouse.filter((item,index1)=> index1 !== index)
-    //         const newItem = {
-    //           id: elem.id,
-    //           name: elem.name,
-    //           listWarehouse: newList
-    //         }
-    //         dateSearch[index2].listWarehouse = newList
-    //         apiWarehouse.editWarehouse(elem.id, newItem)
-    //         setStatus(!status)
-    //         break
-    //       }
-    //     }
-    //   }
-    // });
   };
 
   const onChangeInput = (date, dateString) => {

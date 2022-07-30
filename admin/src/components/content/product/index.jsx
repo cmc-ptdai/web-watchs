@@ -4,8 +4,10 @@ import { Button,  Input } from 'antd';
 import FormAddProduct from './FormAddProduct'
 import MyPagination from './MyPagination';
 import './product.scss'
+import { useParams } from 'react-router-dom'
 
 const Product = () => {
+  const param = useParams()
   const product = useSelector(store => store.productReducer)
   const [listProducts, setListProducts] = useState([])
   const [inputSearch, setInputSearch] = useState('')
@@ -13,10 +15,15 @@ const Product = () => {
   const [dataDf, setDataDf] = useState([])
 
   useEffect(() => {
-    setListProducts(product)
-    setDataDf(product)
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[product])
+  },[product, param])
+
+  const fetchData = () => {
+    const newList = product.filter(elem => elem.supplier === param.id)
+    setDataDf(newList)
+    setListProducts(newList)
+  }
 
   const searchProduct = () => {
     if (inputSearch === "") {
@@ -41,7 +48,7 @@ const Product = () => {
   return (
     <>
       {
-        statusFromAdd && <FormAddProduct editStatusFrom={editStatusFrom}/>
+        statusFromAdd && <FormAddProduct editStatusFrom={editStatusFrom} typeSuppliers={param.id}/>
       }
       <div className="tableUser">
         <div className="tableUser__action" style={{width: '90%'}}>

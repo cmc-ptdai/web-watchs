@@ -48,8 +48,8 @@ const ReplyNewComments = () => {
       title: 'date',
       dataIndex: 'date',
       key: 'date',
-      render: (text) => (
-        <p>{text.slice(0,10)}</p>
+      render: (text, record) => (
+        <p>{formatDate(record)}</p>
       )
     },
     {
@@ -135,8 +135,12 @@ const ReplyNewComments = () => {
     }
   ];
 
-  const handleOk = (record) => {
+  const formatDate = (record) =>{
+    const date = new Date(record.date);
+    return (date.getDate().toString() + '/' + (date.getMonth() + 1).toString() +'/'+ date.getFullYear().toString())
+  }
 
+  const handleOk = (record) => {
     const a = record?.children
     if (a) {
       for (let i = 0; i < commentProduct.comments.length; i++) {
@@ -225,7 +229,7 @@ const ReplyNewComments = () => {
         onCancel={handleCancelForm}
       >
         <Form
-          name="basic"
+          name="basicdđ"
           form={form}
           onFinish={onFinish}
         >
