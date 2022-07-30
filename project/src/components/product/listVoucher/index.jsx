@@ -29,16 +29,16 @@ const ListVoucher = () => {
   const fetchVoucher = async () => {
     const newData = await ApiVoucher.getAllVoucher();
     const dataFil = newData.filter((item) => {
-      const newDate = new Date(item.dateStart.slice(0, 10));
-      const newDate2 = new Date(item.dateEnd.slice(0, 10));
+      const newDate = new Date(item.dateStart);
+      const newDate2 = new Date(item.dateEnd);
       // const c = newDate.getFullYear().toString() + '/' + (newDate.getMonth() + 1).toString() + '/' + newDate.getDate().toString()
       // console.log(c);
-      //const date = new Date()
+      const date = new Date()
       // const e = date.getFullYear().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getDate().toString()
       // console.log(e);
 
-      // console.log('hết',item);
-      // console.log(date.getTime() , newDate.getTime() ,item.proviso);
+      //console.log('hết',item);
+      //console.log(date.getTime() , newDate.getTime() ,item.proviso);
       if (
         newDate.getTime() <= new Date().getTime() &&
         new Date().getTime() <= newDate2.getTime() &&
@@ -49,6 +49,7 @@ const ListVoucher = () => {
         return false;
       }
     });
+    console.log(dataFil);
     setListVoucher(dataFil);
   };
   return (

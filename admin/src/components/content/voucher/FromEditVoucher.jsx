@@ -27,9 +27,9 @@ const FromEditVoucher = ({dataEdit, statusFromEdit}) => {
     form.resetFields();
     statusFromEdit(false)
   };
-  const disabledDate = (current) => {
-    return current && current < moment().endOf("day");
-  };
+  // const disabledDate = (current) => {
+  //   return current && current < moment().endOf("day");
+  // };
   return (
     <>
       <Modal
@@ -121,7 +121,7 @@ const FromEditVoucher = ({dataEdit, statusFromEdit}) => {
               name="dateStart"
               rules={[{ required: true, message: "Please input your type!" }]}
             >
-              <RangePicker disabledDate={disabledDate} />
+              <RangePicker />
             </Form.Item>
             <Form.Item className="groupButton">
               <Button

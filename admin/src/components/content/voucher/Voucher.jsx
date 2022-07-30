@@ -9,7 +9,7 @@ import {
   Select,
   DatePicker,
 } from "antd";
-import moment from "moment";
+//import moment from "moment";
 import ApiVoucher from "../../../api/apiVoucher";
 import { v4 as uuidv4 } from "uuid";
 import FromEditVoucher from './FromEditVoucher'
@@ -34,9 +34,9 @@ const Slide = () => {
     setListVoucher(newData2);
   };
 
-  const disabledDate = (current) => {
-    return current && current < moment().endOf("day");
-  };
+  // const disabledDate = (current) => {
+  //   return current && current < moment().endOf("day");
+  // };
 
   const columns = [
     {
@@ -238,7 +238,8 @@ const Slide = () => {
             name="dateStart"
             rules={[{ required: true, message: "Please input your type!" }]}
           >
-            <RangePicker disabledDate={disabledDate} />
+            {/* <RangePicker disabledDate={disabledDate} /> */}
+            <RangePicker/>
           </Form.Item>
           <Form.Item className="groupButton">
             <Button

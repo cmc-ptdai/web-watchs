@@ -166,6 +166,13 @@ const useReducer  = (state = initialState, action) => {
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
+
+      if (action.payload.newAddress !== null) {
+        console.log(action.payload.newAddress);
+        newOder.address = action.payload.newAddress
+      }
+
+      console.log(newOder);
       order.push(newOder.id)
       orderApi.addOrder(newOder)
       userApi.addCart(idUser, user)

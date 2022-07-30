@@ -60,6 +60,9 @@ const Cart = () => {
   const [voucher, setVoucher] = useState(null);
   const [valueSearchVoucher, setValueSearchVoucher] = useState('');
   const [statusCheckUser, setStatusCheckUser] = useState(false);
+  const [editAddress, setEditAddress] = useState(false);
+  const [addressEdit, setAddressEdit] = useState(null);
+  const [useAddress, setUseAddress]  = useState(false);
 
   useEffect(() => {
     setProducts(dataProducts);
@@ -67,6 +70,34 @@ const Cart = () => {
     fetchApiVoucher();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, status]);
+
+  useEffect(() => {
+    sumOfMoney()
+  },[voucher, transportFee])
+
+  const sumOfMoney = () => {
+    let price = 0;
+    selectedRowKeys.forEach((item) => {
+      const index = dataProducts.findIndex((elem) => elem.id === item);
+      price =
+        price +
+        (dataProducts[index].count * dataProducts[index].price -
+          (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
+    });
+    if (voucher) {
+      price = price - (price * Number(voucher.sale)) / 100;
+    }
+    if (transportFee) {
+      if (transportFee === 'fastShipping') {
+        price = price + 30000;
+      }
+      if (transportFee === 'normalShipping') {
+        price = price + 15000;
+      }
+    }
+
+    setTotalMoney(price);
+  }
 
   const fetchApiVoucher = async () => {
     const newList = await ApiVoucher.getAllVoucher();
@@ -272,50 +303,61 @@ const Cart = () => {
     }, 100);
   };
 
-  const sumOfMoney = (transportFee1) => {
-    let price = 0;
-    selectedRowKeys.forEach((item) => {
-      const index = dataProducts.findIndex((elem) => elem.id === item);
-      price =
-        price +
-        (dataProducts[index].count * dataProducts[index].price -
-          (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
-    });
-    if (transportFee1) {
-      if (transportFee1 === 'fastShipping') {
-        if (voucher) {
-          price = price - (price * Number(voucher.sale)) / 100;
-        }
-        price = price + 30000;
-      }
-      if (transportFee1 === 'normalShipping') {
-        if (voucher) {
-          price = price - (price * Number(voucher.sale)) / 100;
-        }
-        price = price + 15000;
-      }
-      if (transportFee1?.sale) {
-        price = price - (price * Number(transportFee1.sale)) / 100;
-        if (transportFee === 'fastShipping') {
-          price = price + 30000;
-        }
-        if (transportFee === 'normalShipping') {
-          price = price + 15000;
-        }
-      }
-    } else {
-      if (voucher) {
-        price = price - (price * Number(voucher.sale)) / 100;
-      }
-      if (transportFee === 'fastShipping') {
-        price = price + 30000;
-      }
-      if (transportFee === 'normalShipping') {
-        price = price + 15000;
-      }
-    }
-    setTotalMoney(price);
-  };
+  // const sumOfMoney = (transportFee1) => {
+  //   let price = 0;
+  //   selectedRowKeys.forEach((item) => {
+  //     const index = dataProducts.findIndex((elem) => elem.id === item);
+  //     price =
+  //       price +
+  //       (dataProducts[index].count * dataProducts[index].price -
+  //         (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
+  //   });
+  //   if (transportFee1) {
+  //     if (transportFee1 === 'fastShipping') {
+  //       if (voucher) {
+  //         price = price - (price * Number(voucher.sale)) / 100;
+  //       }
+  //       price = price + 30000;
+  //     }
+  //     if (transportFee1 === 'normalShipping') {
+  //       if (voucher) {
+  //         price = price - (price * Number(voucher.sale)) / 100;
+  //       }
+  //       price = price + 15000;
+  //     }
+  //     if (transportFee1?.sale) {
+  //       price = price - (price * Number(transportFee1.sale)) / 100;
+  //       if (transportFee === 'fastShipping') {
+  //         price = price + 30000;
+  //       }
+  //       if (transportFee === 'normalShipping') {
+  //         price = price + 15000;
+  //       }
+  //     }
+  //   } else if (transportFee1 === undefined) {
+  //     if (voucher) {
+  //       price = price - (price * Number(voucher.sale)) / 100;
+  //     }
+  //   } else if (transportFee1 === 'deleteVoucher') {
+  //     if (transportFee === 'fastShipping') {
+  //       price = price + 30000;
+  //     }
+  //     if (transportFee === 'normalShipping') {
+  //       price = price + 15000;
+  //     }
+  //   } else {
+  //     if (voucher) {
+  //       price = price - (price * Number(voucher.sale)) / 100;
+  //     }
+  //     if (transportFee === 'fastShipping') {
+  //       price = price + 30000;
+  //     }
+  //     if (transportFee === 'normalShipping') {
+  //       price = price + 15000;
+  //     }
+  //   }
+  //   setTotalMoney(price);
+  // };
 
   const increment = (id) => {
     const index = listProduct.findIndex((item) => item.id === id);
@@ -421,6 +463,7 @@ const Cart = () => {
       openNotification('Hãy chọn hình thức vận chuyển cho hoá đơn của bạn');
       return;
     }
+
     if (user.id) {
       const listPayCart = [];
       const newListKey = [];
@@ -443,6 +486,7 @@ const Cart = () => {
           payments: 'off',
           transport: transportFee,
           money: totalMoney,
+          newAddress: addressEdit
         })
       );
       openNotification('Đơn hàng của bạn đã đươc đặt thành công');
@@ -517,12 +561,12 @@ const Cart = () => {
           payments: 'online',
           transport: 'free',
           money: totalMoney,
+          newAddress: addressEdit
         })
       );
       setTimeout(() => {
         dispatch(deleteListItemCartAction(newListKey));
         dispatch(deleteItemByPayCartAction(listPayCart));
-        openNotification('Đơn hàng của bạn đã đươc đặt thành công');
       }, 200);
       setSelectedRowKeys([]);
       setTransportFee(null);
@@ -548,7 +592,6 @@ const Cart = () => {
 
   const onchangeShip = (e) => {
     setTransportFee(e);
-    sumOfMoney(e);
   };
 
   const hasSelected = selectedRowKeys.length > 0;
@@ -575,7 +618,6 @@ const Cart = () => {
   const addVoucher = (item) => {
     setVoucher(item);
     setShowListVoucher(false);
-    sumOfMoney(item);
   };
 
   const deleteVoucher = (item) => {
@@ -618,6 +660,10 @@ const Cart = () => {
     setValueSearchVoucher('');
   };
 
+  const handleCancelEditAddress = () => {
+    setEditAddress(false)
+  }
+
   const checkUseNumber = (item) => {
     if (Number(item.useNumber) === Number(item.listUserAddCode.length)) {
       return true;
@@ -639,6 +685,19 @@ const Cart = () => {
       c = c + ' và địa chỉ'
     }
     return c
+  }
+
+  const changeInputEditAddress = (e) => {
+    setAddressEdit(e.target.value)
+  }
+
+  const useAddressNew = () =>{
+    setUseAddress(true)
+    setEditAddress(false)
+  }
+
+  const deleteChoseVoucher = () => {
+    setVoucher(null)
   }
   return (
     <div className="cart">
@@ -663,22 +722,11 @@ const Cart = () => {
         <>
           <div className="cart__voucher">
             {voucher && selectedRowKeys.length > 0 && (
-              <div
-                style={{
-                  background: '#ee4d2d',
-                  height: '32px',
-                  lineHeight: '32px',
-                  textAlign: 'center',
-                  color: '#fff',
-                  fontSize: '15px',
-                  fontWeight: 'bold',
-                  marginRight: '10px',
-                  padding: '0px 10px',
-                }}
-              >
+              <div className="voucher__item">
                 <p>
-                  {voucher.content} sale {voucher.sale} %{' '}
+                  {voucher.content} sale {voucher.sale} %
                 </p>
+                <span onClick={deleteChoseVoucher}>x</span>
               </div>
             )}
             {selectedRowKeys.length > 0 && (
@@ -692,6 +740,26 @@ const Cart = () => {
           </div>
         </>
       )}
+
+      {
+        user.id && selectedRowKeys.length > 0 && (
+          <div
+            style={{ textAlign: 'right', marginBottom: '10px'}}
+          >
+            <b>Địa chỉ giao hàng: </b>
+            {
+              useAddress && addressEdit ? (
+                <span>{addressEdit}</span>
+              ) : (
+                <span>{user.address}</span>
+              )
+            }
+            <Button type="primary" onClick={() => setEditAddress(true)} style={{marginLeft: '10px'}}>
+              Thay đổi
+            </Button>
+          </div>
+        )
+      }
       <div className="cart__button">
         <Button
           type="primary"
@@ -932,9 +1000,9 @@ const Cart = () => {
               </div>
               <div className="cart__mymodel__alert-btn">
                   <Link to="/profileUser">
-                  <Button type="primary" style={{marginRight: '10px'}}>
-                    Đồng ý
-                  </Button>
+                    <Button type="primary" style={{marginRight: '10px'}}>
+                      Đồng ý
+                    </Button>
                   </Link>
                   <Button danger type="primary" onClick={handleCancelCheckUser}>
                     Huỷ
@@ -943,6 +1011,28 @@ const Cart = () => {
             </div>
           </Modal>
         </div>
+      </div>
+      <div className="cart__mymodel">
+        <div className="cart__mymodel__alert">
+          <Modal
+            title="Thay đổi địa chỉ gia hàng"
+            visible={editAddress}
+            onCancel={handleCancelEditAddress}
+          >
+            <div>
+              <p>Nhập địa chỉ bạn muốn chúng tôi gửi hàng đến:</p>
+              <Input type="text" onChange={changeInputEditAddress} value={addressEdit}/>
+              <div className="cart__mymodel__alert-btn" style={{marginTop: '10px'}}>
+                  <Button type="primary" onClick={useAddressNew} style={{marginRight: '10px',}}>
+                    sử dụng
+                  </Button>
+                  <Button danger type="primary" onClick={handleCancelEditAddress}>
+                    Huỷ
+                  </Button>
+                </div>
+            </div>
+          </Modal>
+          </div>
       </div>
     </div>
   );
