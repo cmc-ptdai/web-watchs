@@ -6,7 +6,6 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 const TableNoAction = ({dataTable}) => {
-  console.log(dataTable);
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
 

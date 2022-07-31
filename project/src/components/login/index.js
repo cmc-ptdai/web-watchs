@@ -114,7 +114,6 @@ const Login = () => {
   const loginFacebook = (response) => {
     const user = listUser.filter((item) => item.id === response.userID);
     if (user.length > 0) {
-      console.log("đã có user");
       const passwordBase = btoa(user[0].id);
       localStorage.setItem('userID', passwordBase);
       setUser(user[0]);
@@ -122,7 +121,6 @@ const Login = () => {
         history.push('/');
       }, 400);
     } else {
-      console.log("tạo user mới");
       const passwordBase = btoa(response.userID);
       localStorage.setItem('userID', passwordBase);
       dispatch(addUserFacebookAction(response))
