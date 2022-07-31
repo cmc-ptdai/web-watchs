@@ -43,7 +43,6 @@ const FormEditUser = ({ user, editStatus }) => {
       date = new Date(user.birthday)
     }
     const c = date.getFullYear().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getDate().toString()
-    console.log(c);
     return c
   }
   return (
@@ -69,7 +68,6 @@ const FormEditUser = ({ user, editStatus }) => {
               rules={[
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
-                    console.log(value.length);
                     if (value.length > 50 || value.length < 5) {
                       return Promise.reject('Tối đa 50 kí tự');
                     } else {

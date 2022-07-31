@@ -79,7 +79,6 @@ const Products = ({ gender }) => {
           });
         }
       }
-      console.log(newArr);
       setListSort(newArr);
     } else {
       setListSort(products);

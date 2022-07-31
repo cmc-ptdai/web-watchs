@@ -9,7 +9,6 @@ import { Link, NavLink } from 'react-router-dom';
 const MyMenu = () => {
   const [isAffix, setIsAffix] = useState(false);
   const myUser = useSelector((store) => store.userReducer.user);
-  console.log(myUser.id);
   const menu = [
     {
       title: 'Trang chủ',
