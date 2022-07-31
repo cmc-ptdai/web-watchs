@@ -48,6 +48,7 @@ const FromAddProduct = (props) => {
       supplier: props.typeSuppliers,
       id: uuidv4(),
       img: imgInput,
+      status: true,
       dateAdd: new Date(),
       dateUpdate: new Date(),
     };

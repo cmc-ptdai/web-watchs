@@ -217,25 +217,25 @@ const Dashboard = () => {
         "/" +
         i.toString();
       switch (new Date(date1).getDay()) {
-        case 0:
+        case 1:
           listDate.push("Monday");
           break;
-        case 1:
+        case 2:
           listDate.push("Tuesday");
           break;
-        case 2:
+        case 3:
           listDate.push("Wednesday");
           break;
-        case 3:
+        case 4:
           listDate.push("Thursday");
           break;
-        case 4:
+        case 5:
           listDate.push("Friday");
           break;
-        case 5:
+        case 6:
           listDate.push("Saturday");
           break;
-        case 6:
+        case 0:
           listDate.push("Sunday");
           break;
         default:

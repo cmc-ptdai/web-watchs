@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, Modal, Select, Form } from "antd";
+import { Button, Input, Modal, Select, Form, Switch  } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { editProduct, getProduct } from "../../../redux/action/productAction";
 import userProduct from "../../../api/apiProduct";
@@ -19,6 +19,7 @@ const FromEditProduct = (props) => {
   const [listSuppliers, setListSuppliers] = useState(null);
   const [trademarks, setTrademarks] = useState(null);
   const [country, setCountry] = useState(null);
+  const [statusProduct, setStatusProduct] = useState(data.status);
 
   useEffect(() => {
     fetchData();
@@ -38,6 +39,7 @@ const FromEditProduct = (props) => {
       ...values,
       id: data.id,
       model: data.model,
+      status: statusProduct,
       supplier: data.supplier,
       img: imgEdit,
       quantityPurchased: data.quantityPurchased,
@@ -60,6 +62,9 @@ const FromEditProduct = (props) => {
     props.editStatusFrom(false);
   };
 
+  const onChangeStatus = (checked) => {
+    setStatusProduct(checked)
+  }
   const inputFile = async (e) => {
     const file = e.target.files[0];
     const fileBase64 = await converterBase64(file);
@@ -201,6 +206,11 @@ const FromEditProduct = (props) => {
             ]}
           >
             <p>{data.countPay}</p>
+          </Form.Item>
+
+          <label>Trạng thái sản phẩm:</label>
+          <Form.Item name="status">
+            <Switch checked={statusProduct} onChange={onChangeStatus}/>
           </Form.Item>
 
           <label>Nguồn gốc:</label>

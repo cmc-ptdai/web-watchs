@@ -1,22 +1,21 @@
-import React, { useEffect, useState} from 'react';
-import { Table, Button, DatePicker,Input, Space } from 'antd';
-import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from "react";
+import { Table, Button, DatePicker, Input, Space } from "antd";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
 //import apiProduct from '../../../api/apiProduct'
-import apiWarehouse from '../../../api/apiWarehouse'
-import './warehouse.scss'
+import apiWarehouse from "../../../api/apiWarehouse";
+import "./warehouse.scss";
 
 const { RangePicker } = DatePicker;
 
 const Warehouse = () => {
-
   //const [listProduct, setListProduct] = useState(null)
-  const [warehouses, setWarehouses] = useState(null)
-  const [status, setStatus] = useState(false)
-  const [inputSearch, setInputSearch] = useState(null)
-  const [dateSearch, setDateSearch] = useState([])
-  const [searchText, setSearchText] = useState('')
-  const [searchedColumn, setSearchedColumn] = useState('')
+  const [warehouses, setWarehouses] = useState(null);
+  const [status, setStatus] = useState(false);
+  const [inputSearch, setInputSearch] = useState(null);
+  const [dateSearch, setDateSearch] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
 
   // useEffect(() => {
   //   fetchProduct()
@@ -24,9 +23,9 @@ const Warehouse = () => {
   // },[])
 
   useEffect(() => {
-    fetchWarehouse()
+    fetchWarehouse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[status])
+  }, [status]);
 
   // const fetchProduct = async () => {
   //   const newData = await apiProduct.getAllProduct()
@@ -34,23 +33,30 @@ const Warehouse = () => {
   // }
 
   const fetchWarehouse = async () => {
-    const listWarehouse = await apiWarehouse.getWarehouse()
-    setWarehouses(listWarehouse)
-    setDateSearch(listWarehouse)
+    const listWarehouse = await apiWarehouse.getWarehouse();
+    setWarehouses(listWarehouse);
+    setDateSearch(listWarehouse);
     if (inputSearch !== null) {
-      searchProductDate()
+      searchProductDate();
     }
-  }
+  };
 
-  const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
       <div style={{ padding: 8 }}>
         <Input
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          style={{ width: 188, marginBottom: 8, display: 'block' }}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
         />
         <Space>
           <Button
@@ -65,7 +71,7 @@ const Warehouse = () => {
 
           <Button
             onClick={() => {
-              handleReset(clearFilters)
+              handleReset(clearFilters);
             }}
             size="small"
             style={{ width: 90 }}
@@ -87,19 +93,24 @@ const Warehouse = () => {
         </Space>
       </div>
     ),
-    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    filterIcon: (filtered) => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
     onFilter: (value, record) =>
       record[dataIndex]
-        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
-        : '',
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : "",
 
-    render: text =>
+    render: (text) =>
       searchedColumn === dataIndex ? (
         <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text.toString() : ""}
         />
       ) : (
         text
@@ -108,31 +119,31 @@ const Warehouse = () => {
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
-    setSearchText(selectedKeys[0])
-    setSearchedColumn(dataIndex)
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
 
-  const handleReset = clearFilters => {
+  const handleReset = (clearFilters) => {
     clearFilters();
-    setSearchText('')
+    setSearchText("");
   };
 
   const columns = [
     {
-      title: 'Id product',
-      dataIndex: 'id',
-      key: 'id',
+      title: "Id product",
+      dataIndex: "id",
+      key: "id",
       width: 530,
-      ...getColumnSearchProps('id'),
+      ...getColumnSearchProps("id"),
     },
     {
-      title: 'Name product',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name product",
+      dataIndex: "name",
+      key: "name",
       render: (text, record) => (
         // <p>{ fetchNameProduct(text)}</p>
         <p>{text}</p>
-      )
+      ),
     },
   ];
 
@@ -145,113 +156,129 @@ const Warehouse = () => {
   // }
 
   const deleteWarehouseItem = (id, index) => {
-    dateSearch.forEach((elem,index2) => {
+    dateSearch.forEach((elem, index2) => {
       if (elem.id === id) {
         for (let i = 0; i < elem.listWarehouse.length; i++) {
           if (i === index) {
-            const newList =  elem.listWarehouse.filter((item,index1)=> index1 !== index)
+            const newList = elem.listWarehouse.filter(
+              (item, index1) => index1 !== index
+            );
             const newItem = {
               id: elem.id,
               name: elem.name,
-              listWarehouse: newList
-            }
-            dateSearch[index2].listWarehouse = newList
-            apiWarehouse.editWarehouse(elem.id, newItem)
-            setStatus(!status)
-            break
+              listWarehouse: newList,
+            };
+            dateSearch[index2].listWarehouse = newList;
+            apiWarehouse.editWarehouse(elem.id, newItem);
+            setStatus(!status);
+            break;
           }
         }
       }
     });
-  }
+  };
 
   const onChangeInput = (date, dateString) => {
-    setInputSearch(dateString)
-  }
+    setInputSearch(dateString);
+  };
 
   const searchProductDate = () => {
-    const listWarehouseSearch = []
-    dateSearch.forEach((elem,index2) => {
+    const listWarehouseSearch = [];
+    dateSearch.forEach((elem, index2) => {
       for (let i = 0; i < elem.listWarehouse.length; i++) {
-        if (elem.listWarehouse[i].dateInput.slice(0,10) >= inputSearch[0] && elem.listWarehouse[i].dateInput.slice(0,10) <= inputSearch[1]) {
-          listWarehouseSearch.push(elem)
-          break
+        console.log(
+          checkDate(elem.listWarehouse[i].dateInput),
+          inputSearch[0],
+          inputSearch[1]
+        );
+        if (
+          checkDate(elem.listWarehouse[i].dateInput) >= inputSearch[0] &&
+          checkDate(elem.listWarehouse[i].dateInput) <= inputSearch[1]
+        ) {
+          listWarehouseSearch.push(elem);
+          break;
         }
       }
     });
     setWarehouses(listWarehouseSearch);
-  }
+  };
 
   const resetSearch = () => {
-    setInputSearch(null)
+    setInputSearch(null);
 
-    setStatus(!status)
-  }
+    setStatus(!status);
+  };
+
+  const checkDate = (date) => {
+    const newDate = new Date(date);
+    const c =
+      newDate.getFullYear().toString() +
+      "-" +
+      (newDate.getMonth() + 1 < 10
+        ? "0" + (newDate.getMonth() + 1)
+        : newDate.getMonth() + 1
+      ).toString() +
+      "-" +
+      (newDate.getDate() < 10
+        ? "0" + newDate.getDate()
+        : newDate.getDate()
+      ).toString();
+    return c;
+  };
   return (
     <>
       <div className="search-order-date">
-        <RangePicker  onChange={onChangeInput}/>
+        <RangePicker onChange={onChangeInput} />
         <div className="search-order-date-button">
-          <Button
-            onClick={searchProductDate}
-            type="primary"
-          >
+          <Button onClick={searchProductDate} type="primary">
             Tim Kiếm
           </Button>
 
-          <Button
-            onClick={resetSearch}
-            danger
-          >
+          <Button onClick={resetSearch} danger>
             Reset
           </Button>
         </div>
       </div>
-      {
-        warehouses && (
-          <Table
-            className="components-table-demo-nested"
-            columns={columns}
-            expandable={{
-              expandedRowRender: (record) => (
-                record.listWarehouse.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <div className="children-warehouse">
-                        {
-                          index === 0 && (
-                            <>
-                              <div className="title">ngày nhập</div>
-                              <div className="title"> số lượng nhâp</div>
-                              <div className="title">action</div>
-                            </>
-                          )
-                        }
-                      </div>
-                      <div className="children-warehouse">
-                        <p>ngày nhập: {item.dateInput.slice(0,10).split('-').reverse().join('-')}</p>
-                        <p>số lượng nhâp: {item.numberProduct}</p>
-                        <div className="button1">
-                          <Button
-                            onClick={() => deleteWarehouseItem(record.id, index)}
-                            danger>
-                            delete
-                          </Button>
-                        </div>
+      {warehouses && (
+        <Table
+          className="components-table-demo-nested"
+          columns={columns}
+          expandable={{
+            expandedRowRender: (record) =>
+              record.listWarehouse.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <div className="children-warehouse">
+                      {index === 0 && (
+                        <>
+                          <div className="title">ngày nhập</div>
+                          <div className="title"> số lượng nhâp</div>
+                          <div className="title">action</div>
+                        </>
+                      )}
+                    </div>
+                    <div className="children-warehouse">
+                      <p>ngày nhập: {checkDate(item.dateInput)}</p>
+                      <p>số lượng nhâp: {item.numberProduct}</p>
+                      <div className="button1">
+                        <Button
+                          onClick={() => deleteWarehouseItem(record.id, index)}
+                          danger
+                        >
+                          delete
+                        </Button>
                       </div>
                     </div>
-                  )
-                }
-                )
-              ),
-            }}
-            dataSource={warehouses}
-            rowKey="id"
-          />
-        )
-      }
+                  </div>
+                );
+              }),
+          }}
+          dataSource={warehouses}
+          rowKey="id"
+        />
+      )}
     </>
   );
-}
+};
 
 export default Warehouse;
