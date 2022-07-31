@@ -64,7 +64,7 @@ const OrderItem = ({dataOrder, status, changeOrder}) => {
         <div className="Order-footer">
           <p>
             <i className="fad fa-usd-circle" />
-            Số tiền phải trả:
+              Tổng số tiền:
             <span>
               {dataOrder.payments === "online" ? 0 : dataOrder.money} VND
             </span>

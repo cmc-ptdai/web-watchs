@@ -33,7 +33,7 @@ const ListVoucher = () => {
       const newDate2 = new Date(item.dateEnd);
       // const c = newDate.getFullYear().toString() + '/' + (newDate.getMonth() + 1).toString() + '/' + newDate.getDate().toString()
       // console.log(c);
-      const date = new Date()
+      //const date = new Date()
       // const e = date.getFullYear().toString() + '/' + (date.getMonth() + 1).toString() + '/' + date.getDate().toString()
       // console.log(e);
 
@@ -49,7 +49,6 @@ const ListVoucher = () => {
         return false;
       }
     });
-    console.log(dataFil);
     setListVoucher(dataFil);
   };
   return (

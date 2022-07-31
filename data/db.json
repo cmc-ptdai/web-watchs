@@ -161,7 +161,7 @@
       "name": "ĐỒNG HỒ OLYM PIANUS OP89322GSK-T",
       "price": "3130000",
       "sale": "10",
-      "countPay": 141,
+      "countPay": 140,
       "country": "japan",
       "brand": "14",
       "gender": "nam",
@@ -186,7 +186,7 @@
       "model": "2",
       "supplier": "2",
       "img": "https://xwatch.vn/images/products/2021/11/05/large/olym-pianus-op89322gsk-t_1636084476.jpg",
-      "quantityPurchased": 76,
+      "quantityPurchased": 77,
       "dateAdd": "2021-10-31",
       "dateUpdate": "2022-07-30T14:01:19.760Z"
     },
@@ -2917,6 +2917,31 @@
       "address": "Hà nội",
       "dateCreate": "2022-07-30T20:34:11.268Z",
       "dateUpdate": "2022-07-30T20:34:11.268Z"
+    },
+    {
+      "id": "3bab13c3-6b34-4306-8a66-50df0c351cad",
+      "idUser": "",
+      "listProduct": [
+        {
+          "id": "1",
+          "name": "ĐỒNG HỒ OLYM PIANUS OP89322GSK-T",
+          "img": "https://xwatch.vn/images/products/2021/11/05/large/olym-pianus-op89322gsk-t_1636084476.jpg",
+          "price": "3130000",
+          "sale": "10",
+          "countPay": 141,
+          "count": 1
+        }
+      ],
+      "address": "18T1 theGolden An khánh, Hoài đức, Hà Ni",
+      "email": "phamthao@gmail.com",
+      "phone": "0963311231",
+      "username": "Phùng Thế Đại",
+      "transportFee": "fastShipping",
+      "money": 2847000,
+      "payments": "off",
+      "status": "cancelled",
+      "dateCreate": "2022-07-31T07:05:59.672Z",
+      "dateUpdate": "2022-07-31T07:05:59.672Z"
     }
   ],
   "comments": [

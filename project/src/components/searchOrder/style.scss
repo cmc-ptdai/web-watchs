@@ -1,0 +1,81 @@
+.searchOrder {
+  min-height: 400px;
+  &__search {
+    display: flex;
+    width: 60%;
+    margin: auto;
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .Order {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin: 20px 0px;
+    &-item {
+      margin-top: 20px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      &-img {
+        width: 20%;
+        img {
+          width: 120px;
+          height: 90px;
+        }
+      }
+      &-name {
+        width: 20%;
+      }
+      &-count {
+        width: 5%;
+      }
+      &-sale {
+        width: 5%;
+      }
+      &-price {
+        width: 20%;
+      }
+    }
+    &-footer {
+      padding: 20px;
+      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        i {
+          margin-right: 5px;
+          font-size: 23px;
+          font-weight: bold;
+          color: #fe9705;
+        }
+        span {
+          margin-left: 10px;
+          font-size: 23px;
+          font-weight: bold;
+          color: #fe9705;
+        }
+      }
+      button {
+        background-color: #fe9705 !important;
+        border-radius: 5px;
+        color: #fff;
+        border: none;
+        font-weight: 500;
+        margin: 0;
+        &:hover {
+          background-color: #ffa629 !important;
+        }
+      }
+    }
+  }
+}

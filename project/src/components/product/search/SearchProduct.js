@@ -454,11 +454,7 @@ const SearchProduct = (props) => {
                   style={{ paddingLeft: '0px' }}
                 >
                   <p style={{ margin: 'auto' }}>
-                    {item.water1 === 0
-                      ? 'Dưới '
-                      : item.water1 === 200
-                      ? 'Trên'
-                      : item.water1 + ' m' + ' -> '}
+                    {item.water1 === 0 ? 'Dưới ' : item.water1 === 200 ? 'Trên' : item.water1 + ' m -> '}
                     {item.water2 === 9999999999999 ? ' 200' : item.water2} m
                   </p>
                 </li>

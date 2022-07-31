@@ -73,6 +73,7 @@ const Cart = () => {
 
   useEffect(() => {
     sumOfMoney()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[voucher, transportFee])
 
   const sumOfMoney = () => {
@@ -902,7 +903,7 @@ const Cart = () => {
                 onCancel={handleCancelAlertOrder}
               >
                 <p>Đơn hàng của bạn đã được đặt thành công</p>
-                <p>Đây là mã đơn hàng của bạn: {idOrder}</p>
+                <p>Đây là mã đơn hàng của bạn: <b>{idOrder}</b></p>
                 <p>
                   Bạn có thắc mắc gì về đơn hàng có thể liên hệ đến số điện thoại 0963310336 để được
                   tư vấn

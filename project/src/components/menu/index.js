@@ -1,22 +1,19 @@
-import React, { useState } from 'react'
-import './style.scss'
-import MenuItem from './MenuItem'
-import { useSelector } from 'react-redux'
-import Search from './search/Search'
+import React, { useState } from 'react';
+import './style.scss';
+import MenuItem from './MenuItem';
+import { useSelector } from 'react-redux';
+import Search from './search/Search';
 import { Affix } from 'antd';
-import { Link } from 'react-router-dom'
-
-
+import { Link, NavLink } from 'react-router-dom';
 
 const MyMenu = () => {
-  const [isAffix, setIsAffix] = useState(false)
-  const myUser = useSelector(store => store.userReducer.user)
-
-
+  const [isAffix, setIsAffix] = useState(false);
+  const myUser = useSelector((store) => store.userReducer.user);
+  console.log(myUser.id);
   const menu = [
     {
       title: 'Trang chủ',
-      path: '/'
+      path: '/',
     },
     {
       title: 'Sản Phẩm',
@@ -24,7 +21,7 @@ const MyMenu = () => {
       children: [
         {
           title: 'Đồng hồ nam',
-          path: '/nam'
+          path: '/nam',
         },
         {
           title: 'Đồng hồ nữ',
@@ -33,66 +30,82 @@ const MyMenu = () => {
         {
           title: 'Đồng hồ đôi',
           path: '/doi',
-        }
-      ]
+        },
+      ],
     },
     {
       title: 'Thương hiệu',
-      path: '/trademark'
+      path: '/trademark',
     },
     {
       title: 'Giới thiệu',
-      path: '/introduce'
+      path: '/introduce',
     },
     {
       title: 'Tin tức',
-      path: '/posts'
+      path: '/posts',
     },
     {
       title: 'Liên hệ',
-      path: '/concat'
-    }
-  ]
+      path: '/concat',
+    },
+  ];
   return (
     <>
-      <Affix offsetTop={0}  onChange={(affixed) => setIsAffix(affixed)}>
+      <Affix offsetTop={0} onChange={(affixed) => setIsAffix(affixed)}>
         <div className="list__menu">
           <div className="row">
-            <div className="col-1">
-            </div>
+            <div className="col-1"></div>
 
             <div className="col-4 col-sm-4 col-xl-8">
               <nav className="navbar navbar-expand-lg navbar-light ">
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
                   <i className="fas fa-bars"></i>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                   <ul className="nav">
                     <MenuItem dataChildren={menu} />
+                    {myUser.id === undefined && (
+                      <li className="nav-item">
+                        <NavLink activeClassName="active" className="nav-link" to="/SearchOrder">
+                          tra cứu
+                        </NavLink>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </nav>
-              </div>
-            <div className="col-56 col-sm-6 col-xl-2"> <Search/> </div>
+            </div>
+            <div className="col-56 col-sm-6 col-xl-2">
+              {' '}
+              <Search />{' '}
+            </div>
             <div className="col-1">
               <div className="cart">
-                {
-                  isAffix &&
+                {isAffix && (
                   <Link to="/cart">
                     <i className="fab fa-opencart">
-                      {
-                        myUser && (<span>{myUser.cart.length > 50 ? '50+' : myUser.cart.length}</span>)
-                      }
+                      {myUser && (
+                        <span>{myUser.cart.length > 50 ? '50+' : myUser.cart.length}</span>
+                      )}
                     </i>
                   </Link>
-                }
+                )}
               </div>
             </div>
           </div>
         </div>
       </Affix>
     </>
-  )
-}
+  );
+};
 
 export default MyMenu;

@@ -85,7 +85,6 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
 
   const handleSubmitComment =  () => {
     if (valueComment) {
-      let newId = ''
       data.comments.forEach((item, index) => {
         if (item.id === dataComment.id) {
           const newDate = new Date()
@@ -96,7 +95,6 @@ const CommentProduct = ({dataComment, dataProduct, listUser, data, changeStatus,
             comment: valueComment,
             date: newDate
           }
-          newId = newData.id
           data.comments[index].children.push(newData);
         }
       })
