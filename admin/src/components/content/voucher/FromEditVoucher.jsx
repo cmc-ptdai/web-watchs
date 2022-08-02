@@ -11,13 +11,27 @@ const FromEditVoucher = ({dataEdit, statusFromEdit}) => {
   const [form] = Form.useForm();
 
   const onFinishEdit = (value) => {
+    const date1 = new Date(value.dateStart[0]._d);
+    const c =
+      date1.getFullYear().toString() +
+      "/" +
+      ((date1.getMonth() + 1) < 10 ? '0' + (date1.getMonth() + 1): (date1.getMonth() + 1)).toString() +
+      "/" +
+      (date1.getDate() < 10 ? '0' + date1.getDate() : date1.getDate()).toString();
+    const date2 = new Date(value.dateStart[1]._d);
+    const a =
+      date2.getFullYear().toString() +
+      "/" +
+      ((date2.getMonth() + 1) < 10 ? '0' + (date2.getMonth() + 1): (date2.getMonth() + 1)).toString() +
+      "/" +
+      (date2.getDate() < 10 ? '0' + date2.getDate() : date2.getDate()).toString();
     const newValue = {
       ...value,
       id: dataEdit.id,
       code: dataEdit.code,
       listUserAddCode: dataEdit.listUserAddCode,
-      dateStart: value.dateStart[0]._d,
-      dateEnd: value.dateStart[1]._d,
+      dateStart: c,
+      dateEnd: a,
     };
     ApiVoucher.editVoucher(newValue.id, newValue);
     handleCancel();

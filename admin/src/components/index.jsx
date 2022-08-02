@@ -8,6 +8,12 @@ import {
   ShoppingCartOutlined,
   AppstoreFilled,
   DropboxOutlined,
+  GlobalOutlined,
+  HomeOutlined,
+  SnippetsOutlined,
+  WalletOutlined,
+  PieChartOutlined,
+  WindowsOutlined
 } from "@ant-design/icons";
 import "./style.scss";
 import { Switch, Route, Link, Redirect, useHistory } from "react-router-dom";
@@ -157,37 +163,37 @@ function Body() {
             </SubMenu>
             <Menu.Item
               key="suppliers"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<HomeOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/suppliers">Suppliers</Link>
             </Menu.Item>
             <Menu.Item
               key="warehouse"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<PieChartOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/warehouse">Warehouse</Link>
             </Menu.Item>
             <Menu.Item
               key="trademark"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<GlobalOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/trademark">Trademark</Link>
             </Menu.Item>
             <Menu.Item
               key="voucher"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<WalletOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/voucher">Voucher</Link>
             </Menu.Item>
             <Menu.Item
               key="slides"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<WindowsOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/slides">Slides</Link>
             </Menu.Item>
             <Menu.Item
               key="listPosts"
-              icon={<TeamOutlined style={{ fontSize: "18px" }} />}
+              icon={<SnippetsOutlined style={{ fontSize: "18px" }} />}
             >
               <Link to="/body/listPosts">Posts</Link>
             </Menu.Item>

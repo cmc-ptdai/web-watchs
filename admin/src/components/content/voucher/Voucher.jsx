@@ -12,7 +12,7 @@ import {
 //import moment from "moment";
 import ApiVoucher from "../../../api/apiVoucher";
 import { v4 as uuidv4 } from "uuid";
-import FromEditVoucher from './FromEditVoucher'
+import FromEditVoucher from "./FromEditVoucher";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -116,21 +116,36 @@ const Slide = () => {
   const deleteVoucher = (id) => {
     ApiVoucher.deleteVoucher(id);
     setStatus(!status);
-    fetchVoucher()
+    fetchVoucher();
   };
 
-  const addSlide = () => {
+  const addVoucher = () => {
     setShowModal(true);
   };
 
   const onFinish = (value) => {
+    const date1 = new Date(value.dateStart[0]._d);
+    const c =
+      date1.getFullYear().toString() +
+      "/" +
+      ((date1.getMonth() + 1) < 10 ? '0' + (date1.getMonth() + 1): (date1.getMonth() + 1)).toString() +
+      "/" +
+      (date1.getDate() < 10 ? '0' + date1.getDate() : date1.getDate()).toString();
+    const date2 = new Date(value.dateStart[1]._d);
+    const a =
+      date2.getFullYear().toString() +
+      "/" +
+      ((date2.getMonth() + 1) < 10 ? '0' + (date2.getMonth() + 1): (date2.getMonth() + 1)).toString() +
+      "/" +
+      (date2.getDate() < 10 ? '0' + date2.getDate() : date2.getDate()).toString();
     const newValue = {
       ...value,
       code: uuidv4(),
       listUserAddCode: [],
-      dateStart: value.dateStart[0]._d,
-      dateEnd: value.dateStart[1]._d,
+      dateStart: c,
+      dateEnd: a,
     };
+    // console.log(newValue);
     ApiVoucher.addVoucher(newValue);
     setStatus(!status);
     handleCancel();
@@ -143,14 +158,15 @@ const Slide = () => {
   };
 
   const statusFromEdit = (value) => {
-    setShowModalEdit(value)
-  }
+    setShowModalEdit(value);
+    setStatus(!status);
+  };
 
   return (
     <div className="table__slide">
       <Button
         type="primary"
-        onClick={addSlide}
+        onClick={addVoucher}
         style={{ marginBottom: "20px" }}
       >
         Add voucher
@@ -239,7 +255,7 @@ const Slide = () => {
             rules={[{ required: true, message: "Please input your type!" }]}
           >
             {/* <RangePicker disabledDate={disabledDate} /> */}
-            <RangePicker/>
+            <RangePicker />
           </Form.Item>
           <Form.Item className="groupButton">
             <Button
@@ -257,9 +273,9 @@ const Slide = () => {
         </Form>
       </Modal>
 
-      {
-        showModalEdit && ( <FromEditVoucher dataEdit={dataEdit}  statusFromEdit={statusFromEdit} />)
-      }
+      {showModalEdit && (
+        <FromEditVoucher dataEdit={dataEdit} statusFromEdit={statusFromEdit} />
+      )}
     </div>
   );
 };

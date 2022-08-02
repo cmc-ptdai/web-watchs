@@ -66,6 +66,13 @@ const OrderItem = ({dataOrder, status, changeOrder}) => {
             <i className="fad fa-usd-circle" />
               Tổng số tiền:
             <span>
+              {dataOrder.money} VND
+            </span>
+          </p>
+          <p>
+            <i className="fad fa-usd-circle" />
+              Số tiền cần thanh toán:
+            <span>
               {dataOrder.payments === "online" ? 0 : dataOrder.money} VND
             </span>
           </p>

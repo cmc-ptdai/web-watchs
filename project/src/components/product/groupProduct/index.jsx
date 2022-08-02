@@ -40,7 +40,7 @@ const GroupProduct = ({ title, products, type }) => {
                       </div>
                     );
                   } else {
-                    return false
+                    return false;
                   }
                 })}
               </Slider>
@@ -61,11 +61,13 @@ const GroupProduct = ({ title, products, type }) => {
               </Slider>
             </div>
           )}
-          <div className="group-product__seeMore">
-            <Link to={'/' + type}>
-              xem thêm <i className="fad fa-chevron-double-right"></i>
-            </Link>
-          </div>
+          {type !== 'productHot' && (
+            <div className="group-product__seeMore">
+              <Link to={'/' + type}>
+                xem thêm <i className="fad fa-chevron-double-right"></i>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </>
