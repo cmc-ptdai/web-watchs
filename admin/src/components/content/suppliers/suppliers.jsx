@@ -184,7 +184,7 @@ const Suppliers = () => {
           "-" +
           month +
           "-" +
-          date.getDate().toString();
+          (date.getDate() < 10 ? '0' + date.getDate(): date.getDate()).toString();
         const dateTime = new Date(c).getTime();
         const dateTime1 = new Date(inputSearch[0]).getTime();
         const dateTime2 = new Date(inputSearch[1]).getTime();
@@ -205,8 +205,8 @@ const Suppliers = () => {
 
   const formatDate = (dateInput) => {
     const date = new Date(dateInput);
-    const month =date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString();
-    const c = date.getFullYear().toString() + "-" + month + "-" + date.getDate().toString();
+    const month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1).toString() : (date.getMonth() + 1).toString();
+    const c = date.getFullYear().toString() + "-" + month + "-" + (date.getDate() < 10 ? '0' + date.getDate(): date.getDate()).toString();
     return c
   }
   return (
