@@ -568,7 +568,7 @@ const Dashboard = () => {
           </div>
         </Link>
 
-        <Link to="/body/product" className="dashboard-status-item">
+        <Link to="#" className="dashboard-status-item" style={{cursor: "default"}}>
           <div className="dashboard-status-item-icon">
             <i className="fad fa-boxes"></i>
           </div>
@@ -783,7 +783,7 @@ const Dashboard = () => {
           </Modal>
         </div>
         <div className="dashboard-chart-comment">
-          <Link to="/body" className="dashboard-chart-comment-item">
+          <Link to="#" className="dashboard-chart-comment-item" style={{cursor: "default"}}>
             <div className="dashboard-chart-comment-item-icon">
               <i className="fad fa-users"></i>
             </div>

@@ -229,7 +229,7 @@ const ProfileProduct = () => {
           </div>
 
           <Tabs defaultActiveKey={keyDf} type="card">
-            <TabPane tab="Thông tin chung" key="1">
+            <TabPane tab="Thông tin chung" key="1" style={{height: '300px'}}>
               <textarea
                 className="content-product"
                 readOnly

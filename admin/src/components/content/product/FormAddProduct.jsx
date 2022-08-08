@@ -437,14 +437,14 @@ const FromAddProduct = (props) => {
               <>
                 <label>Thời gian sử dụng pin (năm):</label>
                 <Form.Item name="batteryLife">
-                  <Input type="number" min="5" max="80"/>
+                  <Input type="number" min="1" max="80"/>
                 </Form.Item>
               </>
             ) : (
               <>
                 <label>Thời gian giữ cót (ngày):</label>
                 <Form.Item name="keepPower">
-                  <Input type="number" min="5"/>
+                  <Input type="number" min="1"/>
                 </Form.Item>
               </>
             )}
