@@ -20,6 +20,7 @@ const Pending = (props) => {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
   const [dataOrder, setDataOrder] = useState([])
+  const [dataOrderDf, setDataOrderDf] = useState([])
   const [statusFrom, setStatusFrom] = useState(null)
   const [dataEditOrder, setDataEditOrder] = useState({})
   const [dateSearch, setDateSearch] = useState([])
@@ -39,6 +40,7 @@ const Pending = (props) => {
       const newListOrders = listOrder.filter(item => item.status === props.statusProps)
       setDataOrder(newListOrders);
       setListProduct(newData)
+      setDataOrderDf(newListOrders)
     } catch (error) {
       console.log(error);
     }
@@ -196,9 +198,9 @@ const Pending = (props) => {
       dataIndex: 'dateCreate',
       key: 'dateCreate',
       width: 200,
-      sorter: (a, b) => moment(a.dateCreate).format('x') - moment(b.dateCreate).format('x'),
+      //sorter: (a, b) => moment(a.dateCreate).format('x') - moment(b.dateCreate).format('x'),
       render: (text) => (
-        <p>{text.slice(0,10)}</p>
+        <p>{formatDate(text)}</p>
       )
     },
     {
@@ -206,9 +208,9 @@ const Pending = (props) => {
       dataIndex: 'dateUpdate',
       key: 'dateUpdate',
       width: 200,
-      sorter: (a, b) => moment(a.dateCreate).format('x') - moment(b.dateCreate).format('x'),
+      //sorter: (a, b) => moment(a.dateCreate).format('x') - moment(b.dateCreate).format('x'),
       render: (text) => (
-        <p>{text.slice(0,10)}</p>
+        <p>{formatDate(text)}</p>
       )
     },
     {
@@ -251,6 +253,20 @@ const Pending = (props) => {
 
   }
 
+  const formatDate = (text) => {
+    if (text) {
+    const date = new Date(text)
+    const date1 =
+      date.getFullYear().toString() +
+      "-" +
+      ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)).toString() +
+      "-" +
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()).toString();
+      return date1
+    }
+    return text
+  }
+
   const editStatusFrom = (childData) => {
     setStatusFrom(childData)
   };
@@ -276,12 +292,56 @@ const Pending = (props) => {
     setDateSearch(dateString)
   }
 
-  const searchProductDate = () => {
+  const searchProductDate = () => {    
     if (props.statusProps === 'pending') {
-      const newList =  dataOrder.filter(item => (item.dateCreate.slice(0,10) >= dateSearch[0] && item.dateCreate.slice(0,10) <= dateSearch[1]))
+      const newList =  dataOrderDf.filter(item => {
+        const date = new Date(item.dateCreate)
+        const dateCreate =
+        date.getFullYear().toString() +
+        "-" +
+        ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)).toString() +
+        "-" +
+        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()).toString();
+
+        const date2 = new Date(item.dateCreate)
+        const dateUpdate =
+        date2.getFullYear().toString() +
+        "-" +
+        ((date2.getMonth() + 1) < 10 ? '0' + (date2.getMonth() + 1) : (date2.getMonth() + 1)).toString() +
+        "-" +
+        (date2.getDate() < 10 ? '0' + date2.getDate() : date2.getDate()).toString();
+        
+        if (new Date(dateCreate).getTime() >= new Date(dateSearch[0]).getTime() && new Date(dateUpdate).getTime() <= new Date(dateSearch[1]).getTime()) {
+          return true;
+        } else {
+          return false;
+        }
+      })
       setDataOrder(newList)
     } else {
-      const newList =  dataOrder.filter(item => (item.dateUpdate.slice(0,10) >= dateSearch[0] && item.dateUpdate.slice(0,10) <= dateSearch[1]))
+      const newList = dataOrderDf.filter(item => {
+        const date = new Date(item.dateCreate)
+        const dateCreate =
+        date.getFullYear().toString() +
+        "-" +
+        ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)).toString() +
+        "-" +
+        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()).toString();
+
+        const date2 = new Date(item.dateCreate)
+        const dateUpdate =
+        date2.getFullYear().toString() +
+        "-" +
+        ((date2.getMonth() + 1) < 10 ? '0' + (date2.getMonth() + 1) : (date2.getMonth() + 1)).toString() +
+        "-" +
+        (date2.getDate() < 10 ? '0' + date2.getDate() : date2.getDate()).toString();
+        
+        if (new Date(dateCreate).getTime() >= new Date(dateSearch[0]).getTime() && new Date(dateUpdate).getTime() <= new Date(dateSearch[1]).getTime()) {
+          return true;
+        } else {
+          return false;
+        }
+      })
       setDataOrder(newList)
     }
   }

@@ -82,8 +82,8 @@ const Cart = () => {
       const index = dataProducts.findIndex((elem) => elem.id === item);
       price =
         price +
-        (dataProducts[index].count * dataProducts[index].price -
-          (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
+        (Number(dataProducts[index].count) * Number(dataProducts[index].price) -
+          (Number(dataProducts[index].count) * Number(dataProducts[index].price) * Number(dataProducts[index].sale)) / 100);
     });
     if (voucher) {
       price = price - (price * Number(voucher.sale)) / 100;
@@ -203,7 +203,7 @@ const Cart = () => {
         return (
           <div className="cart__box-text">
             <p>
-              {(record.price * record.count - (record.price * record.count * record.sale) / 100)
+              {(Number(record.price) * Number(record.count) - (Number(record.price) * Number(record.count) * Number(record.sale)) / 100)
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
               VND
@@ -252,8 +252,8 @@ const Cart = () => {
       const index = dataProducts.findIndex((elem) => elem.id === item);
       price =
         price +
-        (dataProducts[index].count * dataProducts[index].price -
-          (dataProducts[index].count * dataProducts[index].price * dataProducts[index].sale) / 100);
+        (Number(dataProducts[index].count) * Number(dataProducts[index].price) -
+          (Number(dataProducts[index].count) * Number(dataProducts[index].price) * Number(dataProducts[index].sale)) / 100);
     });
     setTotalMoney(price);
 
@@ -527,7 +527,7 @@ const Cart = () => {
       selectedRowKeys.forEach((item) => {
         products.forEach((elem) => {
           if (item === elem.id) {
-            money = money + (elem.price * elem.count - (elem.price * elem.count * elem.sale) / 100);
+            money = money + (Number(elem.price) * Number(elem.count) - (Number(elem.price) * Number(elem.count) * Number(elem.sale)) / 100);
           }
         });
       });

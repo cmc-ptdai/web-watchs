@@ -261,8 +261,9 @@ const useReducer  = (state = initialState, action) => {
           newData = {
             id: action.payload.product.id,
             name: action.payload.product.name,
+            countPay: action.payload.product.countPay,
             img: action.payload.product.img,
-            sale: action.payload.sale,
+            sale: action.payload.product.sale,
             price: action.payload.product.price,
             count: action.payload.number,
           }

@@ -6,7 +6,7 @@ import apiOrder from '../../api/order'
 
 const ListOrderUser = ({statusProps}) => {
   const [ordersApi , setOrdersApi] = useState([]);
-  const [statusChange , setStatusChange] = useState(null);
+  const [statusChange , setStatusChange] = useState(false);
 
   const listOrderUser = useSelector(store => store.userReducer.user.order)
 
@@ -15,8 +15,8 @@ const ListOrderUser = ({statusProps}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusChange, listOrderUser])
 
-  const changeOrder = (id) => {
-    setStatusChange(id);
+  const changeOrder = () => {
+    setStatusChange(!statusChange);
   }
 
   const fetchOrder = async () => {

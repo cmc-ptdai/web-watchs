@@ -30,7 +30,7 @@ const OrderItem = ({dataOrder, status, changeOrder}) => {
         orderApi.editOrder(listOrder[index].id, listOrder[index])
       }
     }
-    changeOrder(dataOrder.id)
+    changeOrder()
     dispatch(incrementProjectDeleteOrder({ dataOrder: dataOrder, product: listProducts}))
     dispatch(getProduct())
   }
