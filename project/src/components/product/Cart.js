@@ -700,6 +700,36 @@ const Cart = () => {
   const deleteChoseVoucher = () => {
     setVoucher(null)
   }
+
+  const checkUsed = (item) => {
+    for (let i = 0; i < item.listUserAddCode.length; i++) {
+      if (item.listUserAddCode[i] === user.id) {
+        return true;
+      }
+    }
+  };
+
+  const checkProviso = (item) => {
+    if (item.proviso === 'all') {
+      return false;
+    }
+
+    let rankUser = '';
+    if (totalMoney <= 20000000) {
+      rankUser = 'silver';
+    }
+    if (totalMoney > 20000000 && totalMoney <= 50000000) {
+      rankUser = 'gold';
+    }
+    if (totalMoney > 50000000) {
+      rankUser = 'diamond';
+    }
+    if (rankUser === item.proviso) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   return (
     <div className="cart">
       {products.length > 0 && (
@@ -950,13 +980,21 @@ const Cart = () => {
                   listVoucher.map((item) => {
                     return (
                       <div className="voucherItem" key={item.id} style={{ marginBottom: '10px' }}>
-                        {checkDate(item) ? (
+                        {checkUsed(item) ? (
+                          <div className="voucherItem__hidden">
+                            <p>Đã dùng</p>
+                          </div>
+                        ) : checkDate(item) ? (
                           <div className="voucherItem__hidden">
                             <p>Đã hết hạn</p>
                           </div>
                         ) : checkUseNumber(item) ? (
                           <div className="voucherItem__hidden">
-                            <p>Đã lượt sử dụng</p>
+                            <p>Đã hết lượt sử dụng</p>
+                          </div>
+                        ) : checkProviso(item) ? (
+                          <div className="voucherItem__hidden">
+                            <p>Không đủ điều kiện</p>
                           </div>
                         ) : (
                           <></>

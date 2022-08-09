@@ -176,25 +176,36 @@ const Dashboard = () => {
   const showWeek = () => {
     const date1 =
       value[0]._d.getFullYear().toString() +
-      "/" +
-      (value[0]._d.getMonth() + 1).toString() +
-      "/" +
-      value[0]._d.getDate().toString();
+      "-" +
+      ((value[0]._d.getMonth() + 1) < 10 ? '0' + (value[0]._d.getMonth() + 1) : (value[0]._d.getMonth() + 1)).toString() +
+      "-" +
+      (value[0]._d.getDate() < 10 ? '0' + value[0]._d.getDate() : value[0]._d.getDate()).toString();
+    
     const date2 =
-      value[1]._d.getFullYear().toString() +
-      "/" +
-      (value[1]._d.getMonth() + 1).toString() +
-      "/" +
-      value[1]._d.getDate().toString();
+    value[1]._d.getFullYear().toString() +
+    "-" +
+    ((value[1]._d.getMonth() + 1) < 10 ? '0' + (value[1]._d.getMonth() + 1) : (value[1]._d.getMonth() + 1)).toString() +
+    "-" +
+    (value[1]._d.getDate() < 10 ? '0' + value[1]._d.getDate() : value[1]._d.getDate()).toString();
+    
     const timeDate1 = new Date(date1).getTime();
     const timeDate2 = new Date(date2).getTime();
     const listDate = [];
+    
     const newListProduct = listOrder.filter((item) => {
       if (item.status !== "cancelled") {
         const dateOrder = new Date(item.dateCreate);
+        const dateOrder1 =
+          dateOrder.getFullYear().toString() +
+          "-" +
+          ((dateOrder.getMonth() + 1) < 10 ? '0' + (dateOrder.getMonth() + 1) : (dateOrder.getMonth() + 1)).toString() +
+          "-" +
+          (dateOrder.getDate() < 10 ? '0' + dateOrder.getDate() : dateOrder.getDate()).toString();
+        const dateOrderTime = new Date(dateOrder1).getTime();
+        console.log(dateOrderTime >= timeDate1,  dateOrderTime <= timeDate2);
         if (
-          dateOrder.getTime() >= timeDate1 &&
-          dateOrder.getTime() <= timeDate2
+          dateOrderTime >= timeDate1 &&
+          dateOrderTime <= timeDate2
         ) {
           return true;
         } else {
@@ -208,15 +219,10 @@ const Dashboard = () => {
     const newDataChart = { ...data };
     newDataChart.datasets[0].data = [];
     newDataChart.datasets[1].data = [];
-    newDataChart.labels = listDate;
-    for (let i = value[0]._d.getDate(); i <= value[1]._d.getDate(); i++) {
-      const date1 =
-        value[0]._d.getFullYear().toString() +
-        "/" +
-        (value[0]._d.getMonth() + 1).toString() +
-        "/" +
-        i.toString();
-      switch (new Date(date1).getDay()) {
+
+    for (let i = 0; i <= 7; i++) {
+      const gettime  = timeDate1 + (i * 86400000);
+      switch (new Date(gettime).getDay()) {
         case 1:
           listDate.push("Monday");
           break;
@@ -244,13 +250,14 @@ const Dashboard = () => {
       let totalMoney = 0;
       let totalOrder = 0;
       newListProduct.forEach((item) => {
-        const date =
-          new Date(item.dateCreate).getFullYear().toString() +
-          "/" +
-          (new Date(item.dateCreate).getMonth() + 1).toString() +
-          "/" +
-          new Date(item.dateCreate).getDate().toString();
-        if (date1 === date) {
+        const date = new Date(item.dateCreate)
+        const dateString =
+          date.getFullYear().toString() +
+          "-" +
+          ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)).toString() +
+          "-" +
+          (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()).toString();
+        if (gettime === new Date(dateString).getTime()) {
           totalMoney = totalMoney + item.money / 1000000;
           totalOrder = totalOrder + 1;
         }
@@ -258,6 +265,7 @@ const Dashboard = () => {
       newDataChart.datasets[0].data.push(totalMoney);
       newDataChart.datasets[1].data.push(totalOrder);
     }
+    newDataChart.labels = listDate;
     setData(newDataChart);
     handleCancelModal();
   };

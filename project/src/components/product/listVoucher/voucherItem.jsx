@@ -89,7 +89,7 @@ const VoucherItem = ({ item, userReducer, totalMoney }) => {
           </div>
         ) : checkUseNumber() ? (
           <div className="voucherItem__hidden">
-            <p>Đã hết lượt</p>
+            <p>Đã hết lượt sử dụng</p>
           </div>
         ) : checkProviso() ? (
           <div className="voucherItem__hidden">
