@@ -51,7 +51,7 @@ const ProductItem = ({data}) => {
     <>
       <div className="productItem">
         <div className="productItem__countPay">
-          {data.countPay <= 0 ? 'Hết Hàng' : data.countPay }
+          {(data.countPay) <= 0 ? 'Hết Hàng' : (data.countPay) }
         </div>
         <div className="productItem__add" onClick={showFromAdd}>
           Add
@@ -69,6 +69,7 @@ const ProductItem = ({data}) => {
         </div>
         <div className="productItem__info">
           <div className="productItem__info__left">
+            <p>Sản phẩm pending: {data.productPending}</p>
             <p className="productItem__info__left--name">{data.name}</p>
             {
               data.sale > 0 &&  <p className="productItem__info__left--sale">{(data.price - (data.price * data.sale / 100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND </p>

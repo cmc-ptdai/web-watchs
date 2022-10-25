@@ -5,6 +5,7 @@ import FormAddProduct from './FormAddProduct'
 import MyPagination from './MyPagination';
 import './product.scss'
 import { useParams } from 'react-router-dom'
+import ApiProduct from '../../../api/apiProduct'
 
 const Product = () => {
   const param = useParams()
@@ -19,8 +20,9 @@ const Product = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[product, param])
 
-  const fetchData = () => {
-    const newList = product.filter(elem => elem.supplier === param.id)
+  const fetchData = async () => {
+    const newDataPeoduct = await ApiProduct.getAllProduct()
+    const newList = newDataPeoduct.filter(elem => elem.supplier === param.id)
     setDataDf(newList)
     setListProducts(newList)
   }

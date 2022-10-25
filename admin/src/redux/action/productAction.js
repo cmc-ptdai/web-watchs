@@ -4,7 +4,8 @@ import {
   EDIT_PRODUCT,
   DELETE_PRODUCT,
   COUNT_PRODUCT,
-  INCREMENT_PROJECT
+  INCREMENT_PROJECT,
+  DELEVERT_ORDER
 } from '../actionType'
 
 
@@ -46,6 +47,13 @@ export const countProduct = (payload) => {
 export const incrementProduct = (payload) => {
   return {
     type: INCREMENT_PROJECT,
+    payload
+  }
+}
+
+export const deliveredOrder = (payload) => {
+  return {
+    type: DELEVERT_ORDER,
     payload
   }
 }

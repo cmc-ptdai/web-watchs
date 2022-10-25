@@ -3,7 +3,7 @@ import { Select, Input, Modal, Table, Button } from 'antd';
 import './orders.scss'
 import { useDispatch } from 'react-redux';
 import { editOrder } from '../../../redux/action/orderAction'
-import { countProduct, incrementProduct } from '../../../redux/action/productAction'
+import { countProduct, incrementProduct, deliveredOrder } from '../../../redux/action/productAction'
 import apiProduct from '../../../api/apiProduct'
 import apiOrders from '../../../api/apiOrders'
 
@@ -213,6 +213,9 @@ const FromEditOrder = (props) => {
     if (dataForm.status === "cancelled") {
       dispatch(incrementProduct({ dataOrder :newData, product: listProduct}))
     }
+    if (dataForm.status === "delivered") {
+      dispatch(deliveredOrder({ dataOrder :newData, product: listProduct}))
+    }
     if (props.data.status === "pending") {
       const listDataDelete = []
       dataLocal.listProduct.forEach((item, index) => {
@@ -267,10 +270,8 @@ const FromEditOrder = (props) => {
                 {
                   props.statusOrder === 'delivery' && <Option value="delivered">Delivered</Option>
                 }
-
-                {
-                  props.statusOrder === 'pending' && <Option value="cancelled">Cancelled</Option>
-                }
+                <Option value="cancelled">Cancelled</Option>
+      
               </Select>
             </>
           )

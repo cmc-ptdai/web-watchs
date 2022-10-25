@@ -6,7 +6,8 @@ import {
   DELETE_PRODUCT,
   EDIT_PRODUCT,
   COUNT_PRODUCT,
-  INCREMENT_PROJECT
+  INCREMENT_PROJECT,
+  DELEVERT_ORDER
 } from '../actionType'
 
 const initialState = []
@@ -57,7 +58,25 @@ const productReducer = (state = initialState, action) => {
           if (item.id === action.payload.product[i].id) {
             const newProduct = {
               ...action.payload.product[i],
-              countPay: action.payload.product[i].countPay + item.count
+              productPending: action.payload.product[i].productPending - item.count,
+              countPay: action.payload.product[i].countPay + item.count,
+            }
+            console.log(newProduct);
+            productApi.editProducts(newProduct.id, newProduct)
+            return
+          }
+        }
+      })
+      return state
+    }
+    case DELEVERT_ORDER: {
+      action.payload.dataOrder.listProduct.forEach(item => {
+        for (let i = 0; i < action.payload.product.length; i++) {
+          if (item.id === action.payload.product[i].id) {
+            const newProduct = {
+              ...action.payload.product[i],
+              productPending: action.payload.product[i].productPending - item.count,
+              quantityPurchased: action.payload.product[i].quantityPurchased + item.count
             }
             productApi.editProducts(newProduct.id, newProduct)
             return

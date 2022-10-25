@@ -41,15 +41,29 @@ export const setEvaluate = (payload) => {
 
 export const deleteItemByPayCart = (payload) => async (dispatch) =>{
   const newArr = await apiProduct.getAll();
+  // newArr.forEach(item => {
+  //   payload.forEach( async (elem) => {
+  //     if (item.id === elem.id) {
+  //       const newProductPending = Number(item.productPending) + Number(elem.count)
+  //       const newElem = {
+  //         ...item,
+  //         productPending: newProductPending
+  //       }
+  //       await apiProduct.updateProduct(item.id, newElem)
+  //     }
+  //   })
+  // })
   newArr.forEach(item => {
     payload.forEach( async (elem) => {
       if (item.id === elem.id) {
         const newCount = Number(item.countPay) - Number(elem.count)
-        const newQuantityPurchased = Number(item.quantityPurchased) + Number(elem.count)
+        //const newQuantityPurchased = Number(item.quantityPurchased) + Number(elem.count)
+        const newProductPending = Number(item.productPending) + Number(elem.count)
         const newElem = {
           ...item,
           countPay: newCount,
-          quantityPurchased: newQuantityPurchased
+          //quantityPurchased: newQuantityPurchased,
+          productPending: newProductPending
         }
         await apiProduct.updateProduct(item.id, newElem)
       }
